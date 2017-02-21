@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {ButtonGroup, Button} from 'react-bootstrap';
 import {DOMEvent, FieldProps, FormField,
-  FormFieldOption} from '../../../../types';
+  FormFieldOption} from '../../types';
 
 export default class UiButtonGroup extends Component {
   props: FieldProps

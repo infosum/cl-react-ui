@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {ButtonGroup} from 'react-bootstrap';
 import {CrudConfig, ListActions as ListActionsType,
-  ListRow, User} from '../../../types';
+  ListRow, User} from '../types';
 
 type Props = {
   actions: ListActionsType[],

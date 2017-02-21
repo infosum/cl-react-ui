@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {FormControl} from 'react-bootstrap';
 import {DOMEvent, FieldProps,
-  FormFieldOption} from '../../../../types';
+  FormFieldOption} from '../../types';
 
 export default class Lookup extends Component {
   props: FieldProps

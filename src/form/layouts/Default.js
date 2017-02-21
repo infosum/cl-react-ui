@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {Alert, Well} from 'react-bootstrap';
-import {FormLayout} from '../../../../types';
+import {FormLayout} from '../../types';
 
 class UiFormLayoutDefault extends Component {
 
@@ -28,15 +28,14 @@ class UiFormLayoutDefault extends Component {
                 </Alert>);
     }
     return (<div className="row">
-
-            <div className="col-xs-6">
+              <div className="col-xs-6">
                 <h2 className="topBar">{form.title}</h2>
                 {alert}
                 <Well>
-                <form onSubmit={onSubmit}>
-                    {allFields}
-                    {actions}
-                </form>
+                  <form onSubmit={onSubmit}>
+                      {allFields}
+                      {actions}
+                  </form>
                 </Well>
             </div>
         </div>);

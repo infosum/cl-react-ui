@@ -1,13 +1,13 @@
 var webpack = require('webpack'),
-  libraryName = 'validate-promise',
+  libraryName = 'cl-react-ui',
   path = require('path'),
   entry = [
     './src/index.js'
   ],
   plugins = [
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
-  loaders = [
+  rules = [
     {test: /\.js$/, exclude: /(node_modules)/, loader: 'babel-loader'}
   ];
 
@@ -23,7 +23,7 @@ module.exports = {
     umdNamedDefine: true
   },
   module: {
-    loaders: loaders
+    rules: rules
   },
   externals: [
     {

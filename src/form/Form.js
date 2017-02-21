@@ -6,7 +6,7 @@ import * as fieldComponents from './fields';
 import * as layouts from './layouts';
 import uuid from 'node-uuid';
 import {DOMEvent, FormActions, FormConfig,
-  FormErrors, FormField, FormFields, ListRow} from '../../../types';
+  FormErrors, FormField, FormFields, ListRow} from '../types';
 
 type Props = {
   actions: FormActions,

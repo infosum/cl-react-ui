@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Radio} from 'react-bootstrap';
 import {DOMEvent, FieldProps,
-  FormFieldOption} from '../../../../types';
+  FormFieldOption} from '../../types';
 
 declare type FakeEvent = {
   target: {

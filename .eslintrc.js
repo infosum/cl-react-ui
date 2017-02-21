@@ -2,21 +2,29 @@ module.exports = {
   "extends": "google",
   "parser": "babel-eslint",
   "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module",
-      "ecmaFeatures": {
-          "jsx": true,
-          experimentalObjectRestSpread: true
-      }
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      experimentalObjectRestSpread: true
+    }
   },
-  "plugins": ["flowtype"],
+
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs"
+  },
+  "plugins": ["react", "flowtype"],
   "env": {
     "browser": true,
     "node": true,
+    "es6": true,
     "mocha": true
   },
   "rules": {
+    "comma-dangle": ["error", "never"],
     "semi": 2,
+    "arrow-parens": 0,
     "indent": ["error", 2],
     "quotes": [2, "single"],
     "one-var": ["error", "always"],
@@ -39,17 +47,20 @@ module.exports = {
       "never"
     ],
     "flowtype/no-primitive-constructor-types": 2,
-    "flowtype/no-weak-types": 2,
     "flowtype/object-type-delimiter": [
       2,
       "comma"
     ],
-    "flowtype/require-parameter-type": 2,
+    "flowtype/require-parameter-type": [
+      2,
+      {
+        "excludeArrowFunctions": "expressionsOnly"
+      }
+    ],
     "flowtype/require-return-type": [
       2,
-      "always",
       {
-        "annotateUndefined": "never"
+        "excludeArrowFunctions": "expressionsOnly"
       }
     ],
     "flowtype/require-valid-file-annotation": 2,
@@ -69,21 +80,17 @@ module.exports = {
       2,
       "never"
     ],
-    "flowtype/type-id-match": [
-      2,
-      "^([A-Z][a-z0-9]+)+Type$"
-    ],
     "flowtype/union-intersection-spacing": [
       2,
       "always"
     ],
     "flowtype/use-flow-type": 1,
-    "flowtype/valid-syntax": 1,
     "flowtype/no-weak-types": [2, {
-        "any": false,
-        "Object": false,
-        "Function": false
-    }]
+      "any": false,
+      "Object": false,
+      "Function": false
+    },
+    "react/jsx-uses-vars": 1]
   }
 
 }

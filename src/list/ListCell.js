@@ -1,5 +1,5 @@
 // @flow
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
 
 type Props = {
   data: string | number

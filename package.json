@@ -1,14 +1,50 @@
 {
   "name": "cl-react-ui",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Cognitive Logic React UI",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config ./webpack.config.js",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "test": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "UI, Forms, Lists, Tables"
+  ],
+  "author": "Rob Clayburn",
+  "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.16.0",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-react": "^6.10.0",
+    "flow-bin": "^0.39.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
     "webpack": "^2.2.1"
+  },
+  "babel": {
+    "plugins": [
+      "transform-flow-strip-types"
+    ],
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cognitivelogic/cl-react-ui.git"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
   }
 }

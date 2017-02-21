@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import {Alert, Modal, closeButton} from 'react-bootstrap';
-import {FormLayout} from '../../../../types';
+import {FormLayout} from '../../types';
 
 /**
  * Layout for rendering form in a Bootstrap modal

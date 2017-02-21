@@ -1,16 +1,20 @@
 // @flow
-import React, {Component} from 'react';
+import React, {Component, Element} from 'react';
 import ListRow from './ListRow';
 import {Table, FormControl, Alert, Well,
   Checkbox, Modal, Row, Col} from 'react-bootstrap';
 import UiForm from '../form/Form';
-import {getToken} from '../../../app/utils/auth';
 import ListActions from './ListActions';
 import {CrudConfig, DOMEvent, ListActions as ListActionsType,
   ListRow as ListRowType,
-  User} from '../../../types';
+  User} from '../types';
 
 type Props = {
+  access: {
+    add: boolean,
+    edit: boolean,
+    view: boolean
+  },
   actions: ListActionsType,
   form: Object,
   user: User,
@@ -109,11 +113,13 @@ class UiList extends Component {
    * Build the list's headings
    * @return {Array} Hedings
    */
-  headings(): React$Element<any>[] {
+  headings(): Element<any>[] {
     const columnNames = Object.keys(this.columns),
-      headings = columnNames.map((heading: ListRowType, key: number) => {
+      headings = columnNames.map((heading: string, key: number): Element<any> => {
         let th = this.columns[heading];
-        return <th key={th.id} className={th.class}>{th.label}</th>;
+        return (<th key={th.id} className={th.class}>
+          {th.label}
+        </th>);
       });
     headings.unshift(<th key="select-all">
         <Checkbox data-action="check-all" onClick={e => this.toggleAll(e)} />
@@ -125,7 +131,7 @@ class UiList extends Component {
    * Build the list's rows
    * @return {Array.Dom} Rows
    */
-  rows(): React$Element<any> {
+  rows(): Element<any>[] {
     const {data, selected, actions, config} = this.props;
     let rows = data.filter(this.filterRows)
     .map((row: ListRowType, key: number) => {
@@ -168,13 +174,16 @@ class UiList extends Component {
  * @param {Object} state New state
  */
   handleUpdate(e: Event, state: {id: string} = {id: ''}) {
-    const {actions, config} = this.props,
-      token = getToken();
+    const {actions, config, access} = this.props;
     this.setState({rowUpdating: true});
     if (state.id === '') {
-      actions.add(config.view, state, token);
+      if (access.add) {
+        actions.add(config.view, state);
+      }
     } else {
-      actions.edit(config.view, state, token);
+      if (access.edit) {
+        actions.edit(config.view, state);
+      }
     }
   }
 
@@ -190,7 +199,7 @@ class UiList extends Component {
    * Render search field
    * @return {Dom} node
    */
-  search(): React$Element<any> | null {
+  search(): Element<any> | null {
     const {config} = this.props;
     if (config.list.searchall) {
       return (<FormControl type="search" onChange={e => this.handleChange(e)}
@@ -203,7 +212,7 @@ class UiList extends Component {
    * Render
    * @return {Dom} Node
    */
-  render(): React$Element<any> {
+  render(): Element<any> {
     let list,
       {user, selected, data, errors, config, actions, form} = this.props,
       ui = actions.ui,

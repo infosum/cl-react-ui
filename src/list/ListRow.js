@@ -1,10 +1,10 @@
 // @flow
 import React, {Component} from 'react';
 import ListCell from './ListCell';
-import Tip from '../decorators/Tip';
+import Tip from '../components/Tip';
 import {Checkbox} from 'react-bootstrap';
 import {ListActions, ListColumns,
-  ListRow as ListRowType} from '../../../types';
+  ListRow as ListRowType} from '../types';
 
 type Props = {
   actions: ListActions,
