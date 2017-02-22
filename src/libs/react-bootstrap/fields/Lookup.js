@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {FormControl} from 'react-bootstrap';
 import {DOMEvent, FieldProps,
-  FormFieldOption} from '../../types';
+  FormFieldOption} from '../../../types';
 
 export default class Lookup extends Component {
   props: FieldProps
@@ -27,7 +27,7 @@ export default class Lookup extends Component {
    * @return {Object} Partial store data to use for list population
    */
   getStoreData(): Object {
-    let i, group;
+    let group;
     this.groupedData = {};
 
     const {field, row} = this.props,
@@ -38,16 +38,13 @@ export default class Lookup extends Component {
     } else {
       group = field.options.optGroup;
     }
-
-    for (i = 0; i < storeData.length; i++) {
-      let data = storeData[i],
-        thisGroup = data[group];
+    storeData.forEach(data => {
+      let thisGroup = data[group];
       if (this.groupedData[thisGroup] === undefined) {
         this.groupedData[thisGroup] = [];
       }
       this.groupedData[thisGroup].push(data);
-    }
-
+    })
     return this.groupedData;
   }
 
@@ -74,12 +71,10 @@ export default class Lookup extends Component {
 
     Object.keys(storeData).forEach((optGroup: string) => {
       let opts = storeData[optGroup]
+      .filter((option) => optionFilter(option))
       .map((option: FormFieldOption, k: number) => {
         let ref = 'lookup-option-' + k;
-        if (optionFilter(option)) {
-          return <option key={ref} value={option[key]}>{option[label]}</option>;
-        }
-        return null;
+        return <option key={ref} value={option[key]}>{option[label]}</option>;
       });
 
       if (optGroup === 'undefined') {

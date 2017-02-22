@@ -1,12 +1,16 @@
 // @flow
 import React, {Component} from 'react';
-import {Button, FormGroup, ControlLabel,
-  FormControl, HelpBlock, Checkbox} from 'react-bootstrap';
-import * as fieldComponents from './fields';
+import * as libs from '../libs';
 import * as layouts from './layouts';
 import uuid from 'node-uuid';
-import {DOMEvent, FormActions, FormConfig,
+import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
+
+let libType = 'reactBootstrap',
+  lib = libs[libType],
+  fields = lib.fields,
+  FormControl = lib.FormControl,
+  Button = lib.Button;
 
 type Props = {
   actions: FormActions,
@@ -30,11 +34,13 @@ class UiForm extends Component {
 
   state: {
     form: Object,
-    data: Object
+    data: Object,
+    state: Object
   }
   fields: FormFields
   actions: FormActions
   handleChange: (e: DOMEvent, name: string) => {}
+  handleBlur: (name) => {}
   onSubmit: (e: DOMEvent, data: Object) => {}
 
   /**
@@ -46,7 +52,8 @@ class UiForm extends Component {
     const {config, onSubmit} = this.props;
     this.state = {
       form: config.form,
-      data: {}
+      data: {},
+      state: {}
     };
 
     this.fields = config.form.fields;
@@ -55,8 +62,16 @@ class UiForm extends Component {
     this.makeState();
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.onSubmit = onSubmit.bind(this);
+    this.applyFieldFunctions();
     this.applyDataToForm(this.state.data);
+  }
+
+  componentWillReceiveProps(newProps: Props) {
+    const {config} = newProps;
+    this.fields = config.form.fields;
+    this.applyFieldFunctions();
   }
 
   /**
@@ -103,6 +118,7 @@ class UiForm extends Component {
   getValidationState(name: string): string | void {
     let field = this.fields[name],
       {errors} = this.props,
+      state = this.state.state,
       i = 0,
       value = this.state.data[name],
       res = [],
@@ -110,25 +126,30 @@ class UiForm extends Component {
       serverSuccess = (errors[name] && errors[name].length === 0);
 
     if (field.validate !== undefined) {
-      for (i === 0; i < field.validate.length; i++) {
-        res.push(field.validate[i](value));
-      }
+      res = field.validate.map(v => v(value))
+      // for (i === 0; i < field.validate.length; i++) {
+      //   res.push(field.validate[i](value));
+      // }
     }
     if (!field.pristine) {
       if (res.indexOf('error') !== -1 || serverError) {
-        return 'error';
+         state[name] = 'error';
       }
-      if (res.indexOf('warning') !== -1) {
-        return 'warning';
+      else if (res.indexOf('warning') !== -1) {
+        state[name] = 'warning';
+      } else {
+        state[name] = 'success';
       }
-      return 'success';
+    } else {
+       if (serverError) {
+      state[name] = 'error';
     }
-    if (serverError) {
-      return 'error';
+      if (serverSuccess) {
+        state[name] = 'success';
+      }
     }
-    if (serverSuccess) {
-      return 'success';
-    }
+
+    this.setState(state);
   }
 
   /**
@@ -146,7 +167,7 @@ class UiForm extends Component {
     let keys = Object.keys(this.actions),
       buttons = keys.map((k: string, index: number) => {
         let action = this.actions[k],
-          evnt = '',
+          evnt = () => {},
           handle;
 
         if (action.action) {
@@ -202,8 +223,13 @@ class UiForm extends Component {
     const {formUpdate, config} = this.props,
       field = this.fields[name];
     this.fields[name].pristine = false;
-    formUpdate(config.view, field, name, e.target.value);
-
+    if (typeof formUpdate === 'function') {
+      formUpdate(config.view, field, name, e.target.value);
+    }
+    let data = this.state.data;
+    data[name] = e.target.value;
+    this.setState({data});
+    console.log('state.data', data);
     if (field.onChange) {
       field.onChange(this);
     }
@@ -226,15 +252,25 @@ class UiForm extends Component {
    */
   makeHelp(name: string): React$Element<any>[] {
     const {errors} = this.props;
-    let hi,
-      help = [];
+    let help = [];
     if (errors && errors[name]) {
-      for (hi = 0; hi < errors[name].length; hi++) {
-        let key = 'help-' + name + '-' + hi;
-        help.push(<HelpBlock key={key}>{errors[name][hi]}</HelpBlock>);
-      }
+      help = errors[name].map((error, i) => {
+        let key = 'help-' + name + '-' + i,
+        HelpBlock = lib.HelpBlock;
+        return <HelpBlock key={key}>
+            {error}
+          </HelpBlock>;
+      });
     }
     return help;
+  }
+
+  /**
+   * Handle field blur - check validation state
+   */
+  handleBlur(name: string) {
+    this.fields[name].pristine = false;
+    this.getValidationState(name);
   }
 
   /**
@@ -243,67 +279,36 @@ class UiForm extends Component {
    * @param {Object} field Field
    * @return {Node} FormGroup - field, help and label
    */
-  makeField(name: string, field: FormField): React$Element<any> {
+  makeField(name: string, field: FormField): React$Element<any> | null {
     // Ucase first the name
     const value = this.state.data[name];
-    let control, iType, checked, type,
+    let control, iType, checked,
+      {ControlLabel, FormGroup, HelpBlock} = lib,
+      type = field.type && field.type[0].toUpperCase()
+      + field.type.slice(1),
       label = field.type === 'hidden' || field.label === '' ?
         null : <ControlLabel>{field.label}</ControlLabel>;
 
-    if (typeof field.type === 'function') {
-      // React component....
-      type = uuid.v4();
-      fieldComponents[type] = field.type;
-    } else {
-      type = field.type && field.type[0].toUpperCase()
-      + field.type.slice(1);
-    }
-    if (fieldComponents[type]) {
-      let FieldComponent = fieldComponents[type];
-      control = <FieldComponent
-                  value={value}
-                  field={field}
-                  name={name}
-                  row={this.state.data}
-                  onChange={e => this.handleChange(e, name)}></FieldComponent>;
-    } else {
-      iType = field.type ? field.type : 'text';
-      switch (iType) {
-      case 'checkbox':
-        checked = (value === true || value === '1' || value === 'true');
-        if (checked) {
-          control = (<Checkbox checked
-            value={value}
-            onChange={e => this.handleChange(e, name)}>
-              {field.label} {value}
-            </Checkbox>);
-        } else {
-          control = (<Checkbox
-            value={value}
-            onChange={e => this.handleChange(e, name)}>
-              {field.label} {value}
-            </Checkbox>);
-        }
 
-        break;
-      default:
-        control = <FormControl
-                type={iType}
-                value={value}
-                placeholder={field.placeholder}
-                onChange={e => this.handleChange(e, name)}
-            />;
-        break;
-      }
+    if (!fields[type]) {
+      console.warn('no field type: ' + type);
+      return null;
     }
+    let FieldComponent = fields[type];
 
     return (<FormGroup
         key= {field.id}
         controlId={field.id}
-        validationState={this.getValidationState(name)}
+        validationState={this.state.state[name]}
         >
         {label}
-        {control}
+        <FieldComponent
+          value={value}
+          field={field}
+          name={name}
+          row={this.state.data}
+          onBlur={this.handleBlur}
+          onChange={e => this.handleChange(e, name)} />
         <FormControl.Feedback />
         <HelpBlock>{field.help}</HelpBlock>
         {this.makeHelp(name)}
@@ -311,33 +316,46 @@ class UiForm extends Component {
   }
 
   /**
+   * If a field type is a function then its a react element
+   * Create a uuid for it and assign it to the list of field
+   * renderers
+   */
+  applyFieldFunctions() {
+    Object.keys(this.fields).forEach(name => {
+        let type,
+          field = this.fields[name];
+        if (typeof field.type === 'function') {
+          // React component....
+          type = uuid.v4();
+          this.fields[type] = field.type;
+        }
+    });
+  }
+
+  /**
    * Render
    * @return {Node} Dom node
    */
   render(): React$Element<any> {
-    this.makeState();
     const {errors} = this.props,
       buttons = this.buttons(),
       FormLayout = this.formLayout();
 
-    let fields = {},
-      name, field;
+    let fields = {};
 
-    for (name in this.fields) {
-      if (this.fields.hasOwnProperty(name)) {
-        field = this.fields[name];
-
-        if (!this.access(field)) {
-          break;
-        }
-
+    Object.keys(this.fields)
+      .filter(name => this.access(this.fields[name]))
+      .forEach(name => {
+        let field = this.fields[name];
         fields[name] = this.makeField(name, field);
-      }
-    }
+    });
 
-    return (<FormLayout form={this.state.form}
-      fields={fields} actions={buttons}
-      errors={errors} onSubmit={this.onSubmit} />);
+    return (<FormLayout
+              actions={buttons}
+              errors={errors}
+              fields={fields}
+              form={this.state.form}
+              onSubmit={this.onSubmit} />);
   }
 }
 

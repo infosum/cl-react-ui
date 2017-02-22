@@ -1,18 +1,76 @@
 {
-  "name": "cl-react-ui",
-  "version": "1.0.0",
-  "description": "Cognitive Logic React UI",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "webpack --config ./webpack.config.js",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "test": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'"
-  },
-  "keywords": [
-    "UI, Forms, Lists, Tables"
+  "_args": [
+    [
+      {
+        "raw": "cl-react-ui",
+        "scope": null,
+        "escapedName": "cl-react-ui",
+        "name": "cl-react-ui",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/rob/deckard-ui"
+    ]
   ],
-  "author": "Rob Clayburn",
-  "license": "MIT",
+  "_from": "cl-react-ui@latest",
+  "_id": "cl-react-ui@1.0.0",
+  "_inCache": true,
+  "_location": "/cl-react-ui",
+  "_nodeVersion": "6.3.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/cl-react-ui-1.0.0.tgz_1487677696073_0.6988162251655012"
+  },
+  "_npmUser": {
+    "name": "cognitivelogic",
+    "email": "it@cognitivelogic.com"
+  },
+  "_npmVersion": "4.1.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cl-react-ui",
+    "scope": null,
+    "escapedName": "cl-react-ui",
+    "name": "cl-react-ui",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cl-react-ui/-/cl-react-ui-1.0.0.tgz",
+  "_shasum": "971ba47cb7728129d61e817c8179dbb6ffde2f57",
+  "_shrinkwrap": null,
+  "_spec": "cl-react-ui",
+  "_where": "/home/rob/deckard-ui",
+  "author": {
+    "name": "Rob Clayburn"
+  },
+  "babel": {
+    "plugins": [
+      "transform-flow-strip-types"
+    ],
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/cognitivelogic/cl-react-ui/issues"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7",
+    "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2",
+    "reactstrap": "^4.2.0"
+  },
+  "description": "Cognitive Logic React UI",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
@@ -30,21 +88,35 @@
     "mocha": "^3.2.0",
     "webpack": "^2.2.1"
   },
-  "babel": {
-    "plugins": [
-      "transform-flow-strip-types"
-    ],
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ]
+  "directories": {},
+  "dist": {
+    "shasum": "971ba47cb7728129d61e817c8179dbb6ffde2f57",
+    "tarball": "https://registry.npmjs.org/cl-react-ui/-/cl-react-ui-1.0.0.tgz"
   },
+  "gitHead": "be79290660b5cbbe7ee1d7cdb8323f84c4dd1d2e",
+  "homepage": "https://github.com/cognitivelogic/cl-react-ui#readme",
+  "keywords": [
+    "UI, Forms, Lists, Tables"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "maintainers": [
+    {
+      "name": "cognitivelogic",
+      "email": "it@cognitivelogic.com"
+    }
+  ],
+  "name": "cl-react-ui",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cognitivelogic/cl-react-ui.git"
   },
-  "dependencies": {
-    "node-uuid": "^1.4.7"
-  }
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "test": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'"
+  },
+  "version": "1.0.0"
 }
