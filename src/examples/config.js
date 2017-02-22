@@ -2,6 +2,7 @@
 
 export default {
   view: 'drone',
+  lib: 'reactstrap',
   list: {
     columns: {
       drone_id: {

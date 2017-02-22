@@ -6,11 +6,7 @@ import uuid from 'node-uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
 
-let libType = 'reactBootstrap',
-  lib = libs[libType],
-  fields = lib.fields,
-  FormControl = lib.FormControl,
-  Button = lib.Button;
+let lib, fields, FormControl, Button;
 
 type Props = {
   actions: FormActions,
@@ -23,6 +19,7 @@ type Props = {
   errors: FormErrors,
   formUpdate: Function,
   layout: string,
+  lib?: string,
   onSubmit: Function
 };
 
@@ -55,6 +52,13 @@ class UiForm extends Component {
       data: {},
       state: {}
     };
+
+    let libType = config.lib || 'reactBootstrap';
+    lib = libs[libType];
+    fields = lib.fields;
+    FormControl = lib.FormControl;
+    Button = lib.Button;
+
 
     this.fields = config.form.fields;
     this.actions = config.form.actions;
@@ -294,7 +298,8 @@ class UiForm extends Component {
       console.warn('no field type: ' + type);
       return null;
     }
-    let FieldComponent = fields[type];
+    let FieldComponent = fields[type],
+      Feedback = lib.Feedback;
 
     return (<FormGroup
         key= {field.id}
@@ -309,7 +314,7 @@ class UiForm extends Component {
           row={this.state.data}
           onBlur={this.handleBlur}
           onChange={e => this.handleChange(e, name)} />
-        <FormControl.Feedback />
+          <Feedback />
         <HelpBlock>{field.help}</HelpBlock>
         {this.makeHelp(name)}
     </FormGroup>);

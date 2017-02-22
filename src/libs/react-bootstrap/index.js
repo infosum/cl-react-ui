@@ -20,12 +20,14 @@ let fields = {
     Select,
     Text,
     Textarea
-  };
+  },
+  Feedback = FormControl.Feedback;
 
 export {
   Button,
   ControlLabel,
   fields,
+  Feedback,
   FormControl,
   FormGroup,
   HelpBlock

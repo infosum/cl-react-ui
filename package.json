@@ -66,6 +66,7 @@
     "node-uuid": "^1.4.7",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "reactstrap": "^4.2.0"
