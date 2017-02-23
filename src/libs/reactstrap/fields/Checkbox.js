@@ -1,13 +1,16 @@
-import {Checkbox} from 'reactstrap';
+import React from 'react';
+import {Input, Label} from 'reactstrap';
 
-export default ({value, name, handleChange, label}) => {
-  let control,
-    checked = (value === true || value === '1' || value === 'true');
+export default ({value, name, onChange, field}) => {
+  let checked = (value === true || value === '1' || value === 'true'),
+    {label} = field;
 
-  return (<Checkbox
-    checkeed={checked}
-      value={value}
-      onChange={e => handleChange(e, name)}>
-        {label}
-      </Checkbox>);
+  return (<Label check>
+            <Input
+              type="checkbox"
+              checked={checked}
+              value={'1'}
+              onClick={e => onChange(name, e.target.checked)} />{' '}
+                {label}
+          </Label>);
 }

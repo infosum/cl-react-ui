@@ -1,9 +1,9 @@
 import React from 'react';
-import {FormControl} from 'react-bootstrap';
+import {Input} from 'reactstrap';
 
 export default ({value, name, onChange, onBlur, placeholder = ''}) => {
-  return <FormControl
-            type="text"
+  return <Input
+            type="date"
             value={value}
             placeholder={placeholder}
             onBlur={() => onBlur(name)}

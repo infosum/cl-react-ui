@@ -1,5 +1,5 @@
-import Checkbox from './fields/Checkbox';
 import Date from './fields/Date';
+import Checkbox from './fields/Checkbox';
 import FormActions from './FormActions';
 import FormGroup from './fields/FormGroup';
 import Hidden from './fields/Hidden';
@@ -8,13 +8,17 @@ import Radiolist from './fields/Radiolist';
 import Select from './fields/Select';
 import Text from './fields/Text';
 import Textarea from './fields/Textarea';
-import {default as ButtonGroup} from './fields/ButtonGroup';
 import * as layouts from './layouts';
 
-import {Button, ControlLabel, Form, FormControl, HelpBlock} from 'react-bootstrap';
+import {Button, Label as ControlLabel, FormControl,
+  FormFeedback as Feedback, Form, FormText as HelpBlock} from 'reactstrap';
 
-let fields = {
-    ButtonGroup,
+// @todo implement these...
+// let fields = {
+//     ButtonGroup,
+//   };
+
+  let fields = {
     Checkbox,
     Date,
     Hidden,
@@ -23,8 +27,7 @@ let fields = {
     Select,
     Text,
     Textarea
-  },
-  Feedback = FormControl.Feedback;
+  };
 
 export {
   Button,

@@ -1,9 +1,9 @@
 import React from 'react';
-import {FormControl} from 'react-bootstrap';
+import {Input} from 'reactstrap';
 
 export default ({value, name, onChange, placeholder = ''}) => {
-  return <FormControl
-            componentClass="textarea"
+  return <Input
+            type="hidden"
             value={value}
             placeholder={placeholder}
             onChange={e => onChange(name, e.target.value)}

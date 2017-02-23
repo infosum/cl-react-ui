@@ -1,12 +1,11 @@
 // @flow
 import React, {Component} from 'react';
 import * as libs from '../libs';
-import * as layouts from './layouts';
 import uuid from 'node-uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
 
-let lib, fields, FormControl, Button;
+let lib, fields, FormControl, layouts, Button;
 
 type Props = {
   actions: FormActions,
@@ -37,7 +36,7 @@ class UiForm extends Component {
   fields: FormFields
   actions: FormActions
   handleChange: (e: DOMEvent, name: string) => {}
-  handleBlur: (name) => {}
+  handleBlur: (name: string) => {}
   onSubmit: (e: DOMEvent, data: Object) => {}
 
   /**
@@ -56,9 +55,9 @@ class UiForm extends Component {
     let libType = config.lib || 'reactBootstrap';
     lib = libs[libType];
     fields = lib.fields;
+    layouts = lib.layouts;
     FormControl = lib.FormControl;
     Button = lib.Button;
-
 
     this.fields = config.form.fields;
     this.actions = config.form.actions;
@@ -131,9 +130,6 @@ class UiForm extends Component {
 
     if (field.validate !== undefined) {
       res = field.validate.map(v => v(value))
-      // for (i === 0; i < field.validate.length; i++) {
-      //   res.push(field.validate[i](value));
-      // }
     }
     if (!field.pristine) {
       if (res.indexOf('error') !== -1 || serverError) {
@@ -152,7 +148,7 @@ class UiForm extends Component {
         state[name] = 'success';
       }
     }
-
+    console.log('state', state);
     this.setState(state);
   }
 
@@ -160,7 +156,7 @@ class UiForm extends Component {
    * Build form buttons
    * @return {Array} Buttons
    */
-  buttons(): React$Element<any>[] {
+  /*buttons(): React$Element<any>[] {
     const {actions, className} = this.props;
 
     // Merge property actions (if any) with the form config actions
@@ -168,8 +164,8 @@ class UiForm extends Component {
       this.actions = {...actions, ...this.actions};
     }
 
-    let keys = Object.keys(this.actions),
-      buttons = keys.map((k: string, index: number) => {
+    let buttons = Object.keys(this.actions)
+      .map((k: string, index: number) => {
         let action = this.actions[k],
           evnt = () => {},
           handle;
@@ -196,7 +192,7 @@ class UiForm extends Component {
       });
 
     return buttons;
-  }
+  }*/
 
   /**
    * Check field access, if no access property then return true
@@ -220,18 +216,19 @@ class UiForm extends Component {
 
   /**
    * Update the form's state
-   * @param {Event} e . (or mock event)
    * @param {String} name Field name
+   * @param {String|number} value Field value
    */
-  handleChange(e: DOMEvent, name: string) {
+  handleChange(name: string, value: string | number) {
+    debugger;
     const {formUpdate, config} = this.props,
       field = this.fields[name];
     this.fields[name].pristine = false;
     if (typeof formUpdate === 'function') {
-      formUpdate(config.view, field, name, e.target.value);
+      formUpdate(config.view, field, name, value);
     }
     let data = this.state.data;
-    data[name] = e.target.value;
+    data[name] = value;
     this.setState({data});
     console.log('state.data', data);
     if (field.onChange) {
@@ -250,26 +247,6 @@ class UiForm extends Component {
   }
 
   /**
-   * Build field help blocks
-   * @param {String} name Field name
-   * @return {Array.Node} HelpBlock nodes
-   */
-  makeHelp(name: string): React$Element<any>[] {
-    const {errors} = this.props;
-    let help = [];
-    if (errors && errors[name]) {
-      help = errors[name].map((error, i) => {
-        let key = 'help-' + name + '-' + i,
-        HelpBlock = lib.HelpBlock;
-        return <HelpBlock key={key}>
-            {error}
-          </HelpBlock>;
-      });
-    }
-    return help;
-  }
-
-  /**
    * Handle field blur - check validation state
    */
   handleBlur(name: string) {
@@ -285,39 +262,26 @@ class UiForm extends Component {
    */
   makeField(name: string, field: FormField): React$Element<any> | null {
     // Ucase first the name
-    const value = this.state.data[name];
-    let control, iType, checked,
-      {ControlLabel, FormGroup, HelpBlock} = lib,
+    let {errors} = this.props,
+      error = errors[name] || [],
+      FormGroup = lib.FormGroup,
       type = field.type && field.type[0].toUpperCase()
-      + field.type.slice(1),
-      label = field.type === 'hidden' || field.label === '' ?
-        null : <ControlLabel>{field.label}</ControlLabel>;
-
+        + field.type.slice(1);
 
     if (!fields[type]) {
-      console.warn('no field type: ' + type);
       return null;
     }
-    let FieldComponent = fields[type],
-      Feedback = lib.Feedback;
 
-    return (<FormGroup
-        key= {field.id}
-        controlId={field.id}
-        validationState={this.state.state[name]}
-        >
-        {label}
-        <FieldComponent
-          value={value}
-          field={field}
-          name={name}
-          row={this.state.data}
-          onBlur={this.handleBlur}
-          onChange={e => this.handleChange(e, name)} />
-          <Feedback />
-        <HelpBlock>{field.help}</HelpBlock>
-        {this.makeHelp(name)}
-    </FormGroup>);
+    return <FormGroup
+      errors={error}
+      FieldComponent={fields[type]}
+      field={field}
+      name={name}
+      row={this.state.data}
+      onBlur={this.handleBlur}
+      onChange={(name, value) => this.handleChange(name, value)}
+      value={this.state.data[name]}
+      validationState={this.state.state[name]} />
   }
 
   /**
@@ -343,7 +307,10 @@ class UiForm extends Component {
    */
   render(): React$Element<any> {
     const {errors} = this.props,
-      buttons = this.buttons(),
+      FormActions = lib.FormActions,
+      buttons = <FormActions
+                  actions={this.actions}
+                  onSubmit={e => this.onSubmit(e, this.state.data)}/>,
       FormLayout = this.formLayout();
 
     let fields = {};

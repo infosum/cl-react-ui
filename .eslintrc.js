@@ -89,8 +89,7 @@ module.exports = {
       "any": false,
       "Object": false,
       "Function": false
-    },
-    "react/jsx-uses-vars": 1]
+    }]
   }
 
 }

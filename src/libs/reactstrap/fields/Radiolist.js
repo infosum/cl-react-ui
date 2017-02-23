@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {Radio} from 'react-bootstrap';
+import {Input, Label} from 'reactstrap';
 import {DOMEvent, FieldProps,
   FormFieldOption} from '../../../types';
 
@@ -37,16 +37,23 @@ export default class Select extends Component {
    * @return {Node} Dom
    */
   render(): React$Element<any> {
-    const {field, value} = this.props,
+    const {field, value, onBlur, name} = this.props,
       opts = field.options.map((option: FormFieldOption, k: number) => {
         let active = option.value === value,
           fakeE: FakeEvent = {
             target: {value: option.value}
           };
-        return (<Radio key={k} active={active} value={option.value}
-          onClick={e => this.handleChange(fakeE)}>
-          {option.label}
-          </Radio>);
+        return (
+          <Label check>
+            <Input
+              type="radio"
+              key={k}
+              active={active}
+              value={option.value}
+              onBlur={() => onBlur(name)}
+              onClick={e => this.handleChange(fakeE)} />
+                {' '}{option.label}
+          </Label>);
       });
 
     return (<div>

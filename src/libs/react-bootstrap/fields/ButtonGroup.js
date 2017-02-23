@@ -51,7 +51,7 @@ export default class UiButtonGroup extends Component {
   handleChange(e: DOMEvent) {
     const {onChange, name} = this.props;
     this.state.value = e.target.value;
-    onChange(e, name);
+    onChange(name, e.target.value);
   }
 
   /**

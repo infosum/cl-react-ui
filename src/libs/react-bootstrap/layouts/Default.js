@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {Alert, Well} from 'react-bootstrap';
-import {FormLayout} from '../../types';
+import {FormLayout} from '../../../types';
 
 class UiFormLayoutDefault extends Component {
 
@@ -13,15 +13,10 @@ class UiFormLayoutDefault extends Component {
    * @return {Node} Dom
    */
   render(): React$Element<any> {
-    let alert = null,
-      n;
+    let alert = null;
     const {form, fields, actions, errors, onSubmit} = this.props,
-      allFields = [];
-    for (n in fields) {
-      if (fields.hasOwnProperty(n)) {
-        allFields.push(fields[n]);
-      }
-    }
+      allFields = Object.keys(fields).map(n => fields[n]);
+
     if (errors.message) {
       alert = (<Alert bsStyle="danger">
                     <p>{errors.message}</p>

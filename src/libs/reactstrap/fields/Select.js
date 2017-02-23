@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {FormControl} from 'react-bootstrap';
+import {Input} from 'reactstrap';
 import {DOMEvent, FieldProps,
   FormFieldOption} from '../../../types';
 
@@ -37,17 +37,20 @@ export default class Select extends Component {
    * @return {Node} Dom
    */
   render(): React$Element<any> {
-    const {field, value} = this.props,
-      opts = field.options.map((option: FormFieldOption, k: number) => {
-        let key = 'select-option-' + k;
-        return <option key={key} value={option.value}>{option.label}</option>;
-      });
+    const {field, value, onBlur, name} = this.props,
+      opts = field.options.map((option: FormFieldOption, k: number) =>
+        <option key={'select-option-' + k} value={option.value}>
+          {option.label}
+        </option>
+      );
 
-    return (<FormControl componentClass="select"
+    return (<Input
+      type="select"
       value={value}
+      onBlur={() => onBlur(name)}
       onChange={e => this.handleChange(e)}>
       {opts}
-    </FormControl>);
+     </Input>);
   }
 }
 

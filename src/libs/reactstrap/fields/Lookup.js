@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {FormControl} from 'react-bootstrap';
+import {Input} from 'reactstrap';
 import {DOMEvent, FieldProps,
   FormFieldOption} from '../../../types';
 
@@ -107,14 +107,15 @@ export default class Lookup extends Component {
   render(): React$Element<any> {
     let storeData = this.getStoreData(),
       opts = this.mapDataToOpts(storeData);
-    const {value} = this.props;
+    const {value, onBlur, name} = this.props;
 
-    return (<FormControl componentClass="select"
+    return (<Input type="select"
         value={value}
+        onBlur={() => onBlur(name)}
         onChange={(e: DOMEvent) => {
           this.handleChange(e);
         }}>
         {opts}
-      </FormControl>);
+      </Input>);
   }
 }

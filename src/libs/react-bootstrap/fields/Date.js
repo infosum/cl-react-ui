@@ -6,6 +6,6 @@ export default ({value, name, onChange, placeholder = ''}) => {
             type="date"
             value={value}
             placeholder={placeholder}
-            onChange={e => onChange(e, name)}
+            onChange={e => onChange(name, e.target.value)}
         />;
 }

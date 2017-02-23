@@ -25,7 +25,8 @@ describe('form.field.ButtonGroup', () => {
         options: oneButton
       };
       component = shallow(
-          <ButtonGroup field={field} value="" name="buttonGroup" onChange={onChange}/>
+          <ButtonGroup field={field} value="" name="buttonGroup"
+            onChange={onChange}/>
         );
     });
 
@@ -45,7 +46,8 @@ describe('form.field.ButtonGroup', () => {
         options: twoButtons
       };
       component = shallow(
-          <ButtonGroup field={field} value="2" name="buttonGroup" onChange={onChange}/>
+          <ButtonGroup field={field} value="2" name="buttonGroup"
+            onChange={onChange}/>
         );
     });
     it('should show two buttons', () => {
@@ -73,7 +75,8 @@ describe('form.field.ButtonGroup', () => {
         ]
       };
       component = shallow(
-          <ButtonGroup field={field} value="1" name="buttonGroup" onChange={onChange}/>
+          <ButtonGroup field={field} value="1" name="buttonGroup"
+            onChange={onChange}/>
         );
     });
     it('should have a star icon', () => {
