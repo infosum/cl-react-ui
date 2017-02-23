@@ -1,7 +1,10 @@
+// @flow
 import React from 'react';
 import {Input} from 'reactstrap';
+import {FormFieldProps} from '../../../types';
 
-export default ({value, name, onChange, onBlur, placeholder = ''}) => {
+export default ({value, name, onChange, onBlur, field}: FormFieldProps) => {
+  const {placeholder} = field;
   return <Input
             type="date"
             value={value}

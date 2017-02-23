@@ -35,6 +35,26 @@ export type CrudConfig = {
   view: string
 };
 
+export type FormFieldOption: Object;
+
+export type FormFieldProps = {
+  value: string,
+  name: string,
+  onChange: Function,
+  onBlur: Function,
+  field: {
+    help?: string,
+    id: string,
+    label: string,
+    placeholder?: string,
+    pristine: boolean,
+    type: 'text',
+    vaidationState?: string,
+    validate: *[],
+    value: string
+  }
+};
+
 export type DOMEvent = ElementEvent<HTMLInputElement>;
 
 export type TipConfig = {

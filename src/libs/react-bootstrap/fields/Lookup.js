@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import {FormControl} from 'react-bootstrap';
-import {DOMEvent, FieldProps,
+import {DOMEvent, FieldProps, FormFieldProps,
   FormFieldOption} from '../../../types';
 
 export default class Lookup extends Component {

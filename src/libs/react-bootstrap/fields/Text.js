@@ -1,7 +1,10 @@
+//@flow
 import React from 'react';
 import {FormControl} from 'react-bootstrap';
+import {FormFieldOption} from '../../../types';
 
-export default ({value, name, onChange, onBlur, placeholder = ''}) => {
+export default ({value, name, onChange, onBlur, field}: FormFieldOption) => {
+  const {placeholder} = field;
   return <FormControl
             type="text"
             value={value}

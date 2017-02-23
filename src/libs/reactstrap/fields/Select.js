@@ -1,56 +1,34 @@
 // @flow
 import React, {Component} from 'react';
 import {Input} from 'reactstrap';
-import {DOMEvent, FieldProps,
+import {DOMEvent, FormFieldProps,
   FormFieldOption} from '../../../types';
 
-export default class Select extends Component {
-  props: FieldProps
-
-  state: {
-    value: string
-  }
-  handleChange: (e: DOMEvent) => {}
-
-  /**
-   * Constructor
-   * @param {Object} props .
-   */
-  constructor(props: FieldProps) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {value: ''};
-  }
-
-  /**
-   * Handle change
-   * @param {Event} e .
-   */
-  handleChange(e: DOMEvent) {
-    const {onChange, name} = this.props;
-    this.state.value = e.value;
-    onChange(name, e.value);
-  }
-
-  /**
-   * Render
-   * @return {Node} Dom
-   */
-  render(): React$Element<any> {
-    const {field, value, onBlur, name} = this.props,
-      opts = field.options.map((option: FormFieldOption, k: number) =>
+export default ({field, value, onBlur, onChange, name}: FormFieldProps) => {
+  const {options} = field;
+  let opts;
+  if (Array.isArray(options)) {
+    opts = options.map((option: FormFieldOption, k: number) =>
         <option key={'select-option-' + k} value={option.value}>
           {option.label}
         </option>
-      );
+      )
+  } else {
+    // Tmp whilst we fix stuff
+    opts = Object.keys(options).map((key) =>
+      <option key={'select-option-' + key} value={key}>
+          {options[key]}
+        </option>
+    )
+  }
 
     return (<Input
       type="select"
       value={value}
       onBlur={() => onBlur(name)}
-      onChange={e => this.handleChange(e)}>
+      onChange={e => onChange(name, e.value)}>
       {opts}
      </Input>);
-  }
+
 }
 
