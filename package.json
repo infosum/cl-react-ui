@@ -120,5 +120,5 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "test": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'"
   },
-  "version": "1.0.4"
+  "version": "1.0.5"
 }
