@@ -10,6 +10,7 @@ import Text from './fields/Text';
 import Textarea from './fields/Textarea';
 import {default as ButtonGroup} from './fields/ButtonGroup';
 import * as layouts from './layouts';
+import * as listLayouts from './listLayouts';
 
 import {Button, ControlLabel, Form, FormControl, HelpBlock} from 'react-bootstrap';
 
@@ -36,5 +37,6 @@ export {
   FormControl,
   FormGroup,
   HelpBlock,
-  layouts
+  layouts,
+  listLayouts
 };

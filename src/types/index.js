@@ -35,7 +35,7 @@ export type CrudConfig = {
   view: string
 };
 
-export type FormFieldOption: Object;
+export type FormFieldOption = Object;
 
 export type FormFieldProps = {
   value: string,

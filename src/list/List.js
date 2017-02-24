@@ -1,13 +1,15 @@
 // @flow
 import React, {Component, Element} from 'react';
 import ListRow from './ListRow';
+import * as libs from '../libs';
 import {Table, FormControl, Alert, Well,
   Checkbox, Modal, Row, Col} from 'react-bootstrap';
 import UiForm from '../form/Form';
-import ListActions from './ListActions';
 import {CrudConfig, DOMEvent, ListActions as ListActionsType,
   ListRow as ListRowType,
   User} from '../types';
+
+let layouts, lib;
 
 type Props = {
   access: {
@@ -26,6 +28,7 @@ type State = {
   search: string,
   rowUpdating: boolean,
   allToggled: boolean,
+  selected: ListRowType[],
   showModal: boolean
 };
 
@@ -51,8 +54,12 @@ class UiList extends Component {
     this.messages = config.messages;
     this.close = this.close.bind(this);
     this.filterRows = this.filterRows.bind(this);
+    let libType = config.lib || 'reactBootstrap';
+    lib = libs[libType];
+    layouts = lib.listLayouts;
     this.state = {
       search: '',
+      selected: [],
       showModal: false,
       rowUpdating: false,
       allToggled: false
@@ -64,14 +71,33 @@ class UiList extends Component {
    * @param {Event} e .
    */
   toggleAll(e: Event) {
-    const {actions} = this.props;
+    const {actions, data} = this.props;
+    let {selected} = this.state;
     if (e.target.checked) {
       this.setState({allToggled: true});
-      actions.selectAllRows();
+      selected = [...data];
+      if (actions.selectAllRows) {
+        actions.selectAllRows();
+      }
     } else {
+      selected = [];
       this.setState({allToggled: false});
-      actions.deselectAllRows();
+      if (actions.deselectAllRows()) {
+        actions.deselectAllRows();
+      }
     }
+    console.log('selected', selected);
+    this.setState({selected});
+  }
+
+    /**
+   * Get the form's layout
+   * @return {Dom} Dom node
+   */
+  listLayout() {
+    const {layout} = this.props,
+      layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
+    return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
   }
 
   /**
@@ -81,6 +107,7 @@ class UiList extends Component {
    * @param {Object} row Clicked list row's data
    */
   rowClick(e: DOMEvent, checkType: boolean = true, row: Object | null = null) {
+    debugger;
     // Ignore the event if clicking on button etc in row
     const {actions, config} = this.props,
       buttonTypes = ['checkbox', 'button', 'a'],
@@ -109,40 +136,32 @@ class UiList extends Component {
     actions.setModalState(config.view, false);
   }
 
-  /**
-   * Build the list's headings
-   * @return {Array} Hedings
-   */
-  headings(): Element<any>[] {
-    const columnNames = Object.keys(this.columns),
-      headings = columnNames.map((heading: string, key: number): Element<any> => {
-        let th = this.columns[heading];
-        return (<th key={th.id} className={th.class}>
-          {th.label}
-        </th>);
-      });
-    headings.unshift(<th key="select-all">
-        <Checkbox data-action="check-all" onClick={e => this.toggleAll(e)} />
-      </th>);
-    return headings;
+  selectRow(row: ListRowType) {
+    const {actions} = this.props;
+    let {selected} = this.state;
+    selected.push(row);
+    this.setState({selected});
+    if (actions.selectRow) {
+      actions.selectRow(row);
+    }
   }
 
-  /**
-   * Build the list's rows
-   * @return {Array.Dom} Rows
-   */
-  rows(): Element<any>[] {
-    const {data, selected, actions, config} = this.props;
-    let rows = data.filter(this.filterRows)
-    .map((row: ListRowType, key: number) => {
-      let res = selected.find(sel => sel.id === row.id),
-        isSelected = res === undefined ? false : true;
-      return <ListRow key={key} row={row}
-              onClick={e => this.rowClick(e, true, row)}
-              selected={isSelected} columns={this.columns}
-              view={config.view} actions={actions} />;
-    });
-    return rows;
+  deselectRow(row: ListRowType) {
+    const {actions} = this.props;
+    let {selected} = this.state;
+
+    let i = selected.findIndex((r, index) => r.id === row.id);
+    if (i !== -1) {
+      selected = [
+        ...selected.slice(0, i),
+        ...selected.slice(i + 1)
+      ];
+    }
+
+    this.setState({selected});
+    if (actions.deselectRow) {
+      actions.deselectRow(row);
+    }
   }
 
   /**
@@ -168,6 +187,7 @@ class UiList extends Component {
     }
     return false;
   }
+
 /**
  * Update or add a row
  * @param {Event} e .
@@ -202,7 +222,8 @@ class UiList extends Component {
   search(): Element<any> | null {
     const {config} = this.props;
     if (config.list.searchall) {
-      return (<FormControl type="search" onChange={e => this.handleChange(e)}
+      return (<FormControl type="search"
+        onChange={e => this.handleChange(e)}
         placeholder={config.list.searchall.label} />);
     }
     return null;
@@ -214,8 +235,10 @@ class UiList extends Component {
    */
   render(): Element<any> {
     let list,
-      {user, selected, data, errors, config, actions, form} = this.props,
+      {user, data, errors, config, actions, form} = this.props,
+      {selected} = this.state,
       ui = actions.ui,
+      ListLayout = this.listLayout(),
       showModal;
 
     if (ui && ui.modals && ui.modals[config.view]) {
@@ -224,65 +247,48 @@ class UiList extends Component {
       showModal = false;
     }
 
-    const headings = this.headings(),
-      rows = this.rows(),
-      search = this.search(),
+    const rows = data.filter(this.filterRows),
       modal = (
-            <Modal show={showModal} onHide={e => this.close(e)}
-              container={this}
-              aria-labelledby="add-modal-title">
-              <UiForm layout="modal"
-                onSubmit={(e, state) => this.handleUpdate(e, state)}
-                errors={errors}
-                data={form}
-                formUpdate={actions.formUpdate}
-                actions={{close: {
-                  action: this.close,
-                  label: 'Close',
-                  type: 'button'
-                }}}
-                config={config} />
+        <Modal show={showModal} onHide={e => this.close(e)}
+          container={this}
+          aria-labelledby="add-modal-title">
+          <UiForm layout="modal"
+            onSubmit={(e, state) => this.handleUpdate(e, state)}
+            errors={errors}
+            data={form}
+            formUpdate={actions.formUpdate}
+            actions={{close: {
+              action: this.close,
+              label: 'Close',
+              type: 'button'
+            }}}
+            config={config} />
 
-            </Modal>
-          ),
-      header = (
-      <Row>
-          <Col md={8}>
-            <ListActions rowClick={this.rowClick.bind(this)}
-              user={user} selected={selected}
-              actions={actions} config={config} />
-          </Col>
-          <Col md={4}>{search}</Col>
-          </Row>
-      );
-    if (data.length > 0) {
-      list = (<div>
-              {header}
-              <Table responsive>
-              <thead>
-                <tr>
-                  {headings}
-                </tr>
-              </thead>
-              <tbody>
-                {rows}
-              </tbody>
-              </Table>
+        </Modal>
+    )
 
-              {modal}
-          </div>);
-    } else {
-      list = (<div>
-          {header}
-           <Well><Alert bsStyle="info">
-          {this.messages.emptyData}
-          </Alert>
-          </Well>
-          {modal}
-          </div>);
-    }
+    return <ListLayout
+            modal={modal}
+            data={data}
+            listRow={(props) => {
+              let {selected} = this.state,
+                isSelected = selected.findIndex((r, index) => r.id === props.row.id) !== -1;
 
-    return list;
+              return <ListRow
+                {...props}
+                selected={isSelected}
+                view={config.view}
+                columns={this.columns}
+                rowClick={this.rowClick.bind(this)}
+                selectRow={this.selectRow.bind(this)}
+                deselectRow={this.deselectRow.bind(this)} />
+            }}
+            toggleAll={this.toggleAll.bind(this)}
+            search={this.search()}
+            rows={rows}
+            msg={this.messages.emptyData}
+            {...this.props} />
+
   }
 }
 

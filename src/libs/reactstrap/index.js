@@ -8,7 +8,9 @@ import Radiolist from './fields/Radiolist';
 import Select from './fields/Select';
 import Text from './fields/Text';
 import Textarea from './fields/Textarea';
+import Upload from './fields/Upload';
 import * as layouts from './layouts';
+import * as listLayouts from './listLayouts';
 
 import {Button, Label as ControlLabel, FormControl,
   FormFeedback as Feedback, Form, FormText as HelpBlock} from 'reactstrap';
@@ -26,7 +28,8 @@ import {Button, Label as ControlLabel, FormControl,
     Radiolist,
     Select,
     Text,
-    Textarea
+    Textarea,
+    Upload
   };
 
 export {
@@ -39,5 +42,6 @@ export {
   FormControl,
   FormGroup,
   HelpBlock,
-  layouts
+  layouts,
+  listLayouts
 };

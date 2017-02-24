@@ -5,19 +5,20 @@ import Tip from '../components/Tip';
 import {Checkbox} from 'react-bootstrap';
 import {ListActions, ListColumns,
   ListRow as ListRowType} from '../types';
-
+console.log('list row');
 type Props = {
   actions: ListActions,
   columns: ListColumns,
+  deselectRow: Function,
   onClick: Function,
   row: ListRowType,
   selected: boolean,
+  selectRow: Function,
   view: string
 };
 
 type State = {
-  editing: boolean,
-  toggled: boolean
+  editing: boolean
 };
 
 /**
@@ -30,8 +31,7 @@ export default class ListRow extends Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      editing: false,
-      toggled: props.selected
+      editing: false
     };
   }
 
@@ -40,12 +40,11 @@ export default class ListRow extends Component {
    * @param {Event} e event
    */
   toggleRow(e: Event) {
-    const {actions, row, view} = this.props;
-    this.setState({toggled: !this.state.toggled});
+    const {actions, row, selectRow, deselectRow} = this.props;
     if (e.target.checked) {
-      actions.selectRow(view, row);
+      selectRow(row);
     } else {
-      actions.deselectRow(view, row);
+      deselectRow(row);
     }
   }
 

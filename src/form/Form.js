@@ -153,48 +153,6 @@ class UiForm extends Component {
   }
 
   /**
-   * Build form buttons
-   * @return {Array} Buttons
-   */
-  /*buttons(): React$Element<any>[] {
-    const {actions, className} = this.props;
-
-    // Merge property actions (if any) with the form config actions
-    if (actions) {
-      this.actions = {...actions, ...this.actions};
-    }
-
-    let buttons = Object.keys(this.actions)
-      .map((k: string, index: number) => {
-        let action = this.actions[k],
-          evnt = () => {},
-          handle;
-
-        if (action.action) {
-          evnt = action.action;
-        }
-        if (action.type === 'submit') {
-          handle = (e: DOMEvent) => {
-            this.onSubmit(e, this.state.data);
-          };
-        } else {
-          handle = e => evnt(e, this);
-        }
-
-        return (<Button key={action.id}
-          key={'form-button-' + index}
-          bsStyle={action.style}
-          className={className}
-          onClick={handle}
-          type={action.type ? action.type : 'button'}>
-            {action.label}
-        </Button>);
-      });
-
-    return buttons;
-  }*/
-
-  /**
    * Check field access, if no access property then return true
    * Otherwise it should be an object with functions keyed on edit or new
    * @param {Object} field To render
@@ -220,7 +178,6 @@ class UiForm extends Component {
    * @param {String|number} value Field value
    */
   handleChange(name: string, value: string | number) {
-    debugger;
     const {formUpdate, config} = this.props,
       field = this.fields[name];
     this.fields[name].pristine = false;

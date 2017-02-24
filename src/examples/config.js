@@ -1,3 +1,4 @@
+import React from 'react';
 
 
 export default {
@@ -135,6 +136,23 @@ export default {
         pristine: true,
         label: 'Sector',
         type: 'Text'
+      },
+      radiolist: {
+        id: 'radio-list',
+        pristine: true,
+        label: 'Radio list',
+        type: 'radiolist',
+        options: {
+          one: 'One',
+          two: 'Two'
+        }
+      },
+      upload: {
+        id: 'upload',
+        type: 'upload',
+        pristine: true,
+        label: 'Upload',
+        placeholder: 'Drag files here'
       },
       activation: {
         id: 'drone-activation',

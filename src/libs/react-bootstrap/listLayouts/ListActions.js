@@ -1,8 +1,8 @@
 // @flow
 import React, {Component} from 'react';
-import {ButtonGroup} from 'react-bootstrap';
+import {ButtonGroup} from 'reactstrap';
 import {CrudConfig, ListActions as ListActionsType,
-  ListRow, User} from '../types';
+  ListRow, User} from '../../../types';
 
 type Props = {
   actions: ListActionsType[],
@@ -12,12 +12,8 @@ type Props = {
   rowClick: Function
 };
 
-export default class ListActions extends Component {
+export default ({user, selected, actions, config, rowClick}: Props) => {
 
-  props: Props;
-
-  render(): React$Element<any> {
-    const {user, selected, actions, config, rowClick} = this.props;
     let listActionGroups = [];
 
     // For each button group
@@ -36,5 +32,4 @@ export default class ListActions extends Component {
       listActionGroups.push(<span key={'spacer' + index}> </span>);
     });
     return (<div>{listActionGroups}</div>);
-  }
 }
