@@ -198,8 +198,12 @@ class UiForm extends Component {
    * @return {Dom} Dom node
    */
   formLayout() {
-    const {layout} = this.props,
-      layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
+    debugger;
+    const {layout} = this.props;
+    if (typeof layout === 'function') {
+      return layout;
+    }
+    let layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
     return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
   }
 
