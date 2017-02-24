@@ -96,8 +96,8 @@ export default class Lookup extends Component {
    */
   handleChange(e: DOMEvent) {
     const {onChange, name} = this.props;
-    this.state.value = e.value;
-    onChange(name, e.value);
+    this.state.value = e.target.value;
+    onChange(name, e.target.value);
   }
 
   /**

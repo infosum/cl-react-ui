@@ -26,7 +26,10 @@ export default ({field, value, onBlur, onChange, name}: FormFieldProps) => {
       type="select"
       value={value}
       onBlur={() => onBlur(name)}
-      onChange={e => onChange(name, e.value)}>
+      onChange={e => {
+        console.log('cnage', e);
+        onChange(name, e.target.value)}
+      }>
       {opts}
      </Input>);
 

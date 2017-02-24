@@ -105,6 +105,16 @@ export default {
         type: 'hidden',
         value: ''
       },
+      select: {
+        id: 'select',
+        pristine: true,
+        label: 'select',
+        type: 'select',
+        options: [
+          {value: '1', label: 'one'},
+          {value: '2', label: 'two'}
+        ]
+      },
       label: {
         id: 'drone-name',
         pristine: true,

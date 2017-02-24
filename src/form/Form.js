@@ -187,7 +187,7 @@ class UiForm extends Component {
     let data = this.state.data;
     data[name] = value;
     this.setState({data});
-    console.log('state.data', data);
+
     if (field.onChange) {
       field.onChange(this);
     }
@@ -198,7 +198,6 @@ class UiForm extends Component {
    * @return {Dom} Dom node
    */
   formLayout() {
-    debugger;
     const {layout} = this.props;
     if (typeof layout === 'function') {
       return layout;
@@ -271,7 +270,12 @@ class UiForm extends Component {
       FormActions = lib.FormActions,
       buttons = <FormActions
                   actions={this.actions}
-                  onSubmit={e => this.onSubmit(e, this.state.data)}/>,
+                  onSubmit={e => {
+                    debugger;
+                    e.preventDefault();
+                    console.log('data', this.state.data);
+                    this.onSubmit(e, this.state.data)}
+                  }/>,
       FormLayout = this.formLayout();
 
     let fields = {};

@@ -40354,7 +40354,7 @@ var UiForm = function (_Component) {
       var data = this.state.data;
       data[name] = value;
       this.setState({ data: data });
-      console.log('state.data', data);
+
       if (field.onChange) {
         field.onChange(this);
       }
@@ -40368,7 +40368,6 @@ var UiForm = function (_Component) {
   }, {
     key: 'formLayout',
     value: function formLayout() {
-      debugger;
       var layout = this.props.layout;
 
       if (typeof layout === 'function') {
@@ -40463,7 +40462,10 @@ var UiForm = function (_Component) {
           buttons = _react2.default.createElement(FormActions, {
         actions: this.actions,
         onSubmit: function onSubmit(e) {
-          return _this4.onSubmit(e, _this4.state.data);
+          debugger;
+          e.preventDefault();
+          console.log('data', _this4.state.data);
+          _this4.onSubmit(e, _this4.state.data);
         } }),
           FormLayout = this.formLayout();
 
@@ -80213,6 +80215,13 @@ exports.default = {
         type: 'hidden',
         value: ''
       },
+      select: {
+        id: 'select',
+        pristine: true,
+        label: 'select',
+        type: 'select',
+        options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }]
+      },
       label: {
         id: 'drone-name',
         pristine: true,
@@ -80888,8 +80897,8 @@ var Lookup = function (_Component) {
           onChange = _props2.onChange,
           name = _props2.name;
 
-      this.state.value = e.value;
-      onChange(name, e.value);
+      this.state.value = e.target.value;
+      onChange(name, e.target.value);
     }
 
     /**
@@ -81027,7 +81036,7 @@ exports.default = function (_ref) {
       componentClass: 'select',
       value: value,
       onChange: function onChange(e) {
-        return _onChange(name, e);
+        return _onChange(name, e.target.value);
       } },
     opts
   );
@@ -81995,8 +82004,8 @@ var Lookup = function (_Component) {
           onChange = _props2.onChange,
           name = _props2.name;
 
-      this.state.value = e.value;
-      onChange(name, e.value);
+      this.state.value = e.target.value;
+      onChange(name, e.target.value);
     }
 
     /**
@@ -82159,7 +82168,8 @@ exports.default = function (_ref) {
         return _onBlur(name);
       },
       onChange: function onChange(e) {
-        return _onChange(name, e.value);
+        console.log('cnage', e);
+        _onChange(name, e.target.value);
       } },
     opts
   );

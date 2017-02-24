@@ -24,7 +24,7 @@ export default ({field, name, onChange, value}: FormFieldOption) => {
     return (<FormControl
               componentClass="select"
               value={value}
-              onChange={e => onChange(name, e)}>
+              onChange={e => onChange(name, e.target.value)}>
               {opts}
             </FormControl>);
 }
