@@ -123,7 +123,7 @@ class UiForm extends Component {
     );
 debugger;
     return new Promise((resolve: Function, reject: Function) => {
-      Promise.all(promises)
+      return Promise.all(promises)
         .then(resolve('success'))
         .catch(e => {
           debugger;
