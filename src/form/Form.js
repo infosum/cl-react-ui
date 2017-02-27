@@ -29,6 +29,7 @@ class UiForm extends Component {
   props: Props
 
   state: {
+    errors: Object,
     form: Object,
     data: Object,
     state: Object
@@ -47,6 +48,7 @@ class UiForm extends Component {
     super(props);
     const {config, onSubmit} = this.props;
     this.state = {
+      errors: props.errors,
       form: config.form,
       data: {},
       state: {}
@@ -76,6 +78,7 @@ class UiForm extends Component {
     const {config} = newProps;
     this.fields = config.form.fields;
     this.applyFieldFunctions();
+    this.setState({errors: newProps.errors});
     console.log('form props', this.state);
   }
 
@@ -129,7 +132,7 @@ debugger;
         .then(resolve('success'))
         .catch(e => {
           debugger;
-          reject('failed');
+          reject(field.validate.msg(value, data));
         });
     })
 
@@ -142,7 +145,7 @@ debugger;
    */
   getValidationState(name: string): Object {
     let field = this.fields[name],
-      {errors} = this.props,
+      {errors} = this.state,
       state = this.state.state,
       i = 0,
       value = this.state.data[name],
@@ -254,7 +257,7 @@ debugger;
    */
   makeField(name: string, field: FormField): React$Element<any> | null {
     // Ucase first the name
-    let {errors} = this.props,
+    let {errors} = this.state,
       error = errors[name] || [],
       FormGroup = lib.FormGroup,
       type = field.type && field.type[0].toUpperCase()
@@ -263,7 +266,7 @@ debugger;
     if (!fields[type]) {
       return null;
     }
-    ;
+
     return <FormGroup
       errors={error}
       FieldComponent={fields[type]}

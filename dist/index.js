@@ -18428,6 +18428,7 @@ var UiForm = function (_Component) {
         onSubmit = _this$props.onSubmit;
 
     _this.state = {
+      errors: props.errors,
       form: config.form,
       data: {},
       state: {}
@@ -18461,6 +18462,7 @@ var UiForm = function (_Component) {
 
       this.fields = config.form.fields;
       this.applyFieldFunctions();
+      this.setState({ errors: newProps.errors });
       console.log('form props', this.state);
     }
 
@@ -18521,7 +18523,7 @@ var UiForm = function (_Component) {
       return new Promise(function (resolve, reject) {
         return Promise.all(promises).then(resolve('success')).catch(function (e) {
           debugger;
-          reject('failed');
+          reject(field.validate.msg(value, data));
         });
       });
     }
@@ -18538,7 +18540,7 @@ var UiForm = function (_Component) {
       var _this2 = this;
 
       var field = this.fields[name],
-          errors = this.props.errors,
+          errors = this.state.errors,
           state = this.state.state,
           i = 0,
           value = this.state.data[name],
@@ -18669,7 +18671,7 @@ var UiForm = function (_Component) {
       var _this3 = this;
 
       // Ucase first the name
-      var errors = this.props.errors,
+      var errors = this.state.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
@@ -18678,7 +18680,7 @@ var UiForm = function (_Component) {
       if (!fields[type]) {
         return null;
       }
-      ;
+
       return _react2.default.createElement(FormGroup, {
         errors: error,
         FieldComponent: fields[type],
