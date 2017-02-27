@@ -18427,11 +18427,16 @@ var UiForm = function (_Component) {
         config = _this$props.config,
         onSubmit = _this$props.onSubmit;
 
+    var state = {};
+    debugger;
+    Object.keys(props.errors).forEach(function (key) {
+      return state[key] = 'error';
+    });
     _this.state = {
       errors: props.errors,
       form: config.form,
       data: {},
-      state: {}
+      state: state
     };
 
     var libType = config.lib || 'reactBootstrap';
@@ -18611,7 +18616,6 @@ var UiForm = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(name, value) {
-      console.log('handle chnge', name, value);
       var _props = this.props,
           formUpdate = _props.formUpdate,
           config = _props.config,
@@ -18676,7 +18680,7 @@ var UiForm = function (_Component) {
           FormGroup = lib.FormGroup,
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
 
-      console.log('make field', errors);
+      console.log('make field, error =', error);
       if (!fields[type]) {
         return null;
       }

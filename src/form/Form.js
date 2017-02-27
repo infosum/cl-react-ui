@@ -47,11 +47,14 @@ class UiForm extends Component {
   constructor(props: Props) {
     super(props);
     const {config, onSubmit} = this.props;
+    let state = {};
+    debugger;
+    Object.keys(props.errors).forEach(key => state[key] = 'error');
     this.state = {
       errors: props.errors,
       form: config.form,
       data: {},
-      state: {}
+      state
     };
 
     let libType = config.lib || 'reactBootstrap';
@@ -212,7 +215,6 @@ debugger;
    * @param {String|number} value Field value
    */
   handleChange(name: string, value: string | number) {
-    console.log('handle chnge', name, value);
     const {formUpdate, config} = this.props,
       field = this.fields[name];
     this.fields[name].pristine = false;
@@ -262,7 +264,7 @@ debugger;
       FormGroup = lib.FormGroup,
       type = field.type && field.type[0].toUpperCase()
         + field.type.slice(1);
-console.log('make field', errors);
+console.log('make field, error =', error);
     if (!fields[type]) {
       return null;
     }
