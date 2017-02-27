@@ -78,10 +78,12 @@ class UiForm extends Component {
   }
 
   componentWillReceiveProps(newProps: Props) {
-    const {config} = newProps;
+    const {config, errors} = newProps;
     this.fields = config.form.fields;
     this.applyFieldFunctions();
-    this.setState({errors: newProps.errors});
+    let state = {};
+    Object.keys(errors).forEach(key => state[key] = 'error');
+    this.setState({state, errors});
     console.log('form props', this.state);
   }
 

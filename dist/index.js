@@ -18463,11 +18463,16 @@ var UiForm = function (_Component) {
   _createClass(UiForm, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
-      var config = newProps.config;
+      var config = newProps.config,
+          errors = newProps.errors;
 
       this.fields = config.form.fields;
       this.applyFieldFunctions();
-      this.setState({ errors: newProps.errors });
+      var state = {};
+      Object.keys(errors).forEach(function (key) {
+        return state[key] = 'error';
+      });
+      this.setState({ state: state, errors: errors });
       console.log('form props', this.state);
     }
 
