@@ -178,6 +178,7 @@ class UiForm extends Component {
    * @param {String|number} value Field value
    */
   handleChange(name: string, value: string | number) {
+    console.log('handle chnge', name, value);
     const {formUpdate, config} = this.props,
       field = this.fields[name];
     this.fields[name].pristine = false;

@@ -18581,6 +18581,7 @@ var UiForm = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(name, value) {
+      console.log('handle chnge', name, value);
       var _props = this.props,
           formUpdate = _props.formUpdate,
           config = _props.config,
@@ -29776,7 +29777,8 @@ exports.default = function (_ref) {
           return _onBlur(name);
         },
         onDrop: function onDrop(files) {
-          return onChange(name, files);
+          onChange(name, files);
+          _onBlur(name);
         } },
       _react2.default.createElement(
         'div',
