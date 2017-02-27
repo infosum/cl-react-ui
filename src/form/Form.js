@@ -116,9 +116,9 @@ class UiForm extends Component {
   /**
    * Get validation state
    * @param {string} name column name
-   * @return {string | voild}
+   * @return {Object} validation state
    */
-  getValidationState(name: string): string | void {
+  getValidationState(name: string): Object {
     let field = this.fields[name],
       {errors} = this.props,
       state = this.state.state,
@@ -142,14 +142,14 @@ class UiForm extends Component {
       }
     } else {
        if (serverError) {
-      state[name] = 'error';
-    }
+        state[name] = 'error';
+      }
       if (serverSuccess) {
         state[name] = 'success';
       }
     }
     console.log('state', state);
-    this.setState(state);
+    return state;
   }
 
   /**
@@ -211,7 +211,8 @@ class UiForm extends Component {
    */
   handleBlur(name: string) {
     this.fields[name].pristine = false;
-    this.getValidationState(name);
+    let state = this.getValidationState(name);
+    this.setState(state);
   }
 
   /**
@@ -225,13 +226,14 @@ class UiForm extends Component {
     let {errors} = this.props,
       error = errors[name] || [],
       FormGroup = lib.FormGroup,
+      validationState = this.getValidationState(name)[name],
       type = field.type && field.type[0].toUpperCase()
         + field.type.slice(1);
 
     if (!fields[type]) {
       return null;
     }
-    this.getValidationState(name);
+    ;
     return <FormGroup
       errors={error}
       FieldComponent={fields[type]}
