@@ -8,6 +8,7 @@ export default ({value, name, onChange, onBlur, field}: FormFieldProps) => {
   const {placeholder, multiple} = field;
   return <div>
           <Dropzone
+            className="drop"
             multiple={multiple}
             onBlur={() => onBlur(name)}
             onDrop={files => onChange(name, files)}>

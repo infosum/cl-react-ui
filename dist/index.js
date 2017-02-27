@@ -29771,6 +29771,7 @@ exports.default = function (_ref) {
     _react2.default.createElement(
       _reactDropzone2.default,
       {
+        className: 'drop',
         multiple: multiple,
         onBlur: function onBlur() {
           return _onBlur(name);
