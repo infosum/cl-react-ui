@@ -262,7 +262,7 @@ debugger;
       FormGroup = lib.FormGroup,
       type = field.type && field.type[0].toUpperCase()
         + field.type.slice(1);
-
+console.log('make field', errors);
     if (!fields[type]) {
       return null;
     }

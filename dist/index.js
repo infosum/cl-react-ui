@@ -18676,7 +18676,7 @@ var UiForm = function (_Component) {
           FormGroup = lib.FormGroup,
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
 
-
+      console.log('make field', errors);
       if (!fields[type]) {
         return null;
       }
@@ -29292,8 +29292,8 @@ exports.default = function (props) {
   ),
       color = validationState;
 
-  console.log('type =- ', type, controlLabel, check);
 
+  console.log(field.name, errors);
   if (color === 'error') {
     color = 'danger';
   }
