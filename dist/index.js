@@ -18504,6 +18504,25 @@ var UiForm = function (_Component) {
         }
       }
     }
+  }, {
+    key: 'validateOne',
+    value: function validateOne(field, value) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+      if (field.validate === undefined) {
+        return Promise.resolve();
+      }
+      var promises = field.validate.promises.map(function (p) {
+        return p.rule(value, data, field.validate.msg);
+      });
+      debugger;
+      return new Promise(function (resolve, reject) {
+        Promise.all(promises).then(resolve('success')).catch(function (e) {
+          debugger;
+          reject('failed');
+        });
+      });
+    }
 
     /**
      * Get validation state
@@ -18524,19 +18543,21 @@ var UiForm = function (_Component) {
           serverSuccess = errors[name] && errors[name].length === 0;
 
 
-      if (field.validate !== undefined) {
-        res = field.validate.map(function (v) {
-          return v(value);
-        });
-      }
       if (!field.pristine) {
-        if (res.indexOf('error') !== -1 || serverError) {
-          state[name] = 'error';
-        } else if (res.indexOf('warning') !== -1) {
-          state[name] = 'warning';
-        } else {
-          state[name] = 'success';
-        }
+        // if (res.indexOf('error') !== -1 || serverError) {
+        //    state[name] = 'error';
+        // }
+        // else if (res.indexOf('warning') !== -1) {
+        //   state[name] = 'warning';
+        // } else {
+        //   state[name] = 'success';
+        // }
+
+        this.validateOne(field, value, this.state.data).then(function (ok) {
+          debugger;
+        }).catch(function (err) {
+          debugger;
+        });
       } else {
         if (serverError) {
           state[name] = 'error';
@@ -18626,7 +18647,6 @@ var UiForm = function (_Component) {
     value: function handleBlur(name) {
       this.fields[name].pristine = false;
       var state = this.getValidationState(name);
-      this.setState(state);
     }
 
     /**
@@ -18645,7 +18665,6 @@ var UiForm = function (_Component) {
       var errors = this.props.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
-          validationState = this.getValidationState(name)[name],
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
 
 

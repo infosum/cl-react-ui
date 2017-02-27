@@ -113,6 +113,26 @@ class UiForm extends Component {
     }
   }
 
+  validateOne(field, value, data = {}): Promise<string> {
+    if (field.validate === undefined) {
+      return Promise.resolve();
+    }
+    let promises = field.validate.promises
+      .map((p) =>
+        p.rule(value, data, field.validate.msg)
+    );
+debugger;
+    return new Promise((resolve: Function, reject: Function) => {
+      Promise.all(promises)
+        .then(resolve('success'))
+        .catch(e => {
+          debugger;
+          reject('failed');
+        });
+    })
+
+  }
+
   /**
    * Get validation state
    * @param {string} name column name
@@ -128,18 +148,24 @@ class UiForm extends Component {
       serverError = (errors[name] && errors[name].length > 0),
       serverSuccess = (errors[name] && errors[name].length === 0);
 
-    if (field.validate !== undefined) {
-      res = field.validate.map(v => v(value))
-    }
+
     if (!field.pristine) {
-      if (res.indexOf('error') !== -1 || serverError) {
-         state[name] = 'error';
-      }
-      else if (res.indexOf('warning') !== -1) {
-        state[name] = 'warning';
-      } else {
-        state[name] = 'success';
-      }
+      // if (res.indexOf('error') !== -1 || serverError) {
+      //    state[name] = 'error';
+      // }
+      // else if (res.indexOf('warning') !== -1) {
+      //   state[name] = 'warning';
+      // } else {
+      //   state[name] = 'success';
+      // }
+
+    this.validateOne(field, value, this.state.data)
+    .then(ok => {
+      debugger;
+    })
+    .catch(err => {
+      debugger;
+    })
     } else {
        if (serverError) {
         state[name] = 'error';
@@ -213,7 +239,6 @@ class UiForm extends Component {
   handleBlur(name: string) {
     this.fields[name].pristine = false;
     let state = this.getValidationState(name);
-    this.setState(state);
   }
 
   /**
@@ -227,7 +252,6 @@ class UiForm extends Component {
     let {errors} = this.props,
       error = errors[name] || [],
       FormGroup = lib.FormGroup,
-      validationState = this.getValidationState(name)[name],
       type = field.type && field.type[0].toUpperCase()
         + field.type.slice(1);
 

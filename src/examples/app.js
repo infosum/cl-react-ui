@@ -4,7 +4,6 @@ import {Form, List} from '../index';
 import config from './config';
 import CustomLayout from './CustomLayout';
 
-console.log('customlayout = ', CustomLayout);
 let data = [
   {drone_id: '1', label: 'label 1'}
 ]
