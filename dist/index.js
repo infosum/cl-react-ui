@@ -18649,7 +18649,7 @@ var UiForm = function (_Component) {
       if (!fields[type]) {
         return null;
       }
-
+      this.getValidationState(name);
       return _react2.default.createElement(FormGroup, {
         errors: error,
         FieldComponent: fields[type],
@@ -49417,7 +49417,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _attrAccept2 = _interopRequireDefault(_attrAccept);
 	
-	var _getDataTransferItems = __webpack_require__(3);
+	var _reactIsDeprecated = __webpack_require__(3);
+	
+	var _getDataTransferItems = __webpack_require__(4);
 	
 	var _getDataTransferItems2 = _interopRequireDefault(_getDataTransferItems);
 	
@@ -49778,13 +49780,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onDragOver: _react2.default.PropTypes.func,
 	  onDragLeave: _react2.default.PropTypes.func,
 	
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.node, _react2.default.PropTypes.func]), // Contents of the dropzone
-	  style: _react2.default.PropTypes.object, // CSS styles to apply
-	  activeStyle: _react2.default.PropTypes.object, // CSS styles to apply when drop will be accepted
-	  rejectStyle: _react2.default.PropTypes.object, // CSS styles to apply when drop will be rejected
-	  className: _react2.default.PropTypes.string, // Optional className
-	  activeClassName: _react2.default.PropTypes.string, // className for accepted state
-	  rejectClassName: _react2.default.PropTypes.string, // className for rejected state
+	  // Contents of the dropzone
+	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.node, _react2.default.PropTypes.func]),
+	
+	  // CSS styles to apply
+	  style: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop style is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // CSS styles to apply when drop will be accepted
+	  activeStyle: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop activeStyle is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // CSS styles to apply when drop will be rejected
+	  rejectStyle: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop rejectStyle is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // Optional className
+	  className: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop className is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // className for accepted state
+	  activeClassName: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop activeClassName is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // className for rejected state
+	  rejectClassName: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop rejectClassName is deprecated. Use function as children to style dropzone and its contents.'),
 	
 	  disablePreview: _react2.default.PropTypes.bool, // Enable/disable preview generation
 	  disableClick: _react2.default.PropTypes.bool, // Disallow clicking on the dropzone container to open file dialog
@@ -49794,8 +49809,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  multiple: _react2.default.PropTypes.bool, // Allow dropping multiple files
 	  accept: _react2.default.PropTypes.string, // Allow specific types of files. See https://github.com/okonet/attr-accept for more information
 	  name: _react2.default.PropTypes.string, // name attribute for the input tag
-	  maxSize: _react2.default.PropTypes.number,
-	  minSize: _react2.default.PropTypes.number
+	  maxSize: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.number, 'Prop maxSize is deprecated and will be removed in the next major release'),
+	  minSize: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.number, 'Prop minSize is deprecated and will be removed in the next major release')
 	};
 	
 	exports.default = Dropzone;
@@ -49815,6 +49830,69 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.deprecate = deprecate;
+	exports.addIsDeprecated = addIsDeprecated;
+	
+	/**
+	 * Wraps a singular React.PropTypes.[type] with
+	 * a console.warn call that is only called if the
+	 * prop is not undefined/null and is only called
+	 * once.
+	 * @param  {Object} propType React.PropType type
+	 * @param  {String} message  Deprecation message
+	 * @return {Function}        ReactPropTypes checkType
+	 */
+	function deprecate(propType, message) {
+	  var warned = false;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var props = args[0];
+	    var propName = args[1];
+	
+	    var prop = props[propName];
+	    if (prop !== undefined && prop !== null && !warned) {
+	      warned = true;
+	      console.warn(message);
+	    }
+	    return propType.call.apply(propType, [this].concat(args));
+	  };
+	}
+	
+	/**
+	 * Returns a copy of `PropTypes` with an `isDeprecated`
+	 * method available on all top-level propType options.
+	 * @param {React.PropTypes}  PropTypes
+	 * @return {React.PropTypes} newPropTypes
+	 */
+	function addIsDeprecated(PropTypes) {
+	  var newPropTypes = _extends({}, PropTypes);
+	  for (var type in newPropTypes) {
+	    if (newPropTypes.hasOwnProperty(type)) {
+	      var propType = newPropTypes[type];
+	      propType = propType.bind(newPropTypes);
+	      propType.isDeprecated = deprecate.bind(newPropTypes, propType);
+	      newPropTypes[type] = propType;
+	    }
+	  }
+	  return newPropTypes;
+	}
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
