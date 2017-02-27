@@ -12,7 +12,6 @@ export default (props) => {
     </Label>,
     color = validationState;
 
-    console.log(field.name, errors);
     if (color === 'error') {
       color = 'danger';
     }

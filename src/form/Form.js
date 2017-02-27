@@ -74,9 +74,12 @@ class UiForm extends Component {
     this.onSubmit = onSubmit.bind(this);
     this.applyFieldFunctions();
     this.applyDataToForm(this.state.data);
-    console.log('form construct', this.state);
   }
 
+  /**
+   * Will receive new props
+   * @param {Object} newProps Props
+   */
   componentWillReceiveProps(newProps: Props) {
     const {config, errors} = newProps;
     this.fields = config.form.fields;
@@ -84,7 +87,6 @@ class UiForm extends Component {
     let state = {};
     Object.keys(errors).forEach(key => state[key] = 'error');
     this.setState({state, errors});
-    console.log('form props', this.state);
   }
 
   /**
@@ -266,7 +268,7 @@ debugger;
       FormGroup = lib.FormGroup,
       type = field.type && field.type[0].toUpperCase()
         + field.type.slice(1);
-console.log('make field, error =', error);
+
     if (!fields[type]) {
       return null;
     }
@@ -310,9 +312,7 @@ console.log('make field, error =', error);
       buttons = <FormActions
                   actions={this.actions}
                   onSubmit={e => {
-                    debugger;
                     e.preventDefault();
-                    console.log('data', this.state.data);
                     this.onSubmit(e, this.state.data)}
                   }/>,
       FormLayout = this.formLayout();

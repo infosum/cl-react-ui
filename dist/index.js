@@ -18456,9 +18456,14 @@ var UiForm = function (_Component) {
     _this.onSubmit = onSubmit.bind(_this);
     _this.applyFieldFunctions();
     _this.applyDataToForm(_this.state.data);
-    console.log('form construct', _this.state);
     return _this;
   }
+
+  /**
+   * Will receive new props
+   * @param {Object} newProps Props
+   */
+
 
   _createClass(UiForm, [{
     key: 'componentWillReceiveProps',
@@ -18473,7 +18478,6 @@ var UiForm = function (_Component) {
         return state[key] = 'error';
       });
       this.setState({ state: state, errors: errors });
-      console.log('form props', this.state);
     }
 
     /**
@@ -18685,7 +18689,7 @@ var UiForm = function (_Component) {
           FormGroup = lib.FormGroup,
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
 
-      console.log('make field, error =', error);
+
       if (!fields[type]) {
         return null;
       }
@@ -18741,9 +18745,7 @@ var UiForm = function (_Component) {
           buttons = _react2.default.createElement(FormActions, {
         actions: this.actions,
         onSubmit: function onSubmit(e) {
-          debugger;
           e.preventDefault();
-          console.log('data', _this5.state.data);
           _this5.onSubmit(e, _this5.state.data);
         } }),
           FormLayout = this.formLayout();
@@ -29302,7 +29304,6 @@ exports.default = function (props) {
       color = validationState;
 
 
-  console.log(field.name, errors);
   if (color === 'error') {
     color = 'danger';
   }
@@ -29679,7 +29680,6 @@ exports.default = function (_ref) {
         return _onBlur(name);
       },
       onChange: function onChange(e) {
-        console.log('cnage', e);
         _onChange(name, e.target.value);
       } },
     opts
@@ -30451,7 +30451,6 @@ var UiList = function (_Component) {
           actions.deselectAllRows();
         }
       }
-      console.log('selected', selected);
       this.setState({ selected: selected });
     }
 

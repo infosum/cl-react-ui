@@ -86,7 +86,6 @@ class UiList extends Component {
         actions.deselectAllRows();
       }
     }
-    console.log('selected', selected);
     this.setState({selected});
   }
 
