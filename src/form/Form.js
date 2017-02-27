@@ -159,13 +159,15 @@ debugger;
       //   state[name] = 'success';
       // }
 
-    this.validateOne(field, value, this.state.data)
-    .then(ok => {
-      debugger;
-    })
-    .catch(err => {
-      debugger;
-    })
+      this.validateOne(field, value, this.state.data)
+      .then(ok => {
+        state[name] = 'success';
+        this.setState(state);
+      })
+      .catch(err => {
+        state[name] = 'error';
+        this.setState(state);
+      })
     } else {
        if (serverError) {
         state[name] = 'error';
@@ -174,7 +176,8 @@ debugger;
         state[name] = 'success';
       }
     }
-    console.log('state', state);
+
+    this.setState(state);
     return state;
   }
 

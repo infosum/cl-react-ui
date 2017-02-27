@@ -18517,7 +18517,7 @@ var UiForm = function (_Component) {
       });
       debugger;
       return new Promise(function (resolve, reject) {
-        Promise.all(promises).then(resolve('success')).catch(function (e) {
+        return Promise.all(promises).then(resolve('success')).catch(function (e) {
           debugger;
           reject('failed');
         });
@@ -18533,6 +18533,8 @@ var UiForm = function (_Component) {
   }, {
     key: 'getValidationState',
     value: function getValidationState(name) {
+      var _this2 = this;
+
       var field = this.fields[name],
           errors = this.props.errors,
           state = this.state.state,
@@ -18554,9 +18556,11 @@ var UiForm = function (_Component) {
         // }
 
         this.validateOne(field, value, this.state.data).then(function (ok) {
-          debugger;
+          state[name] = 'success';
+          _this2.setState(state);
         }).catch(function (err) {
-          debugger;
+          state[name] = 'error';
+          _this2.setState(state);
         });
       } else {
         if (serverError) {
@@ -18566,7 +18570,8 @@ var UiForm = function (_Component) {
           state[name] = 'success';
         }
       }
-      console.log('state', state);
+
+      this.setState(state);
       return state;
     }
 
@@ -18659,7 +18664,7 @@ var UiForm = function (_Component) {
   }, {
     key: 'makeField',
     value: function makeField(name, field) {
-      var _this2 = this;
+      var _this3 = this;
 
       // Ucase first the name
       var errors = this.props.errors,
@@ -18680,7 +18685,7 @@ var UiForm = function (_Component) {
         row: this.state.data,
         onBlur: this.handleBlur,
         onChange: function onChange(name, value) {
-          return _this2.handleChange(name, value);
+          return _this3.handleChange(name, value);
         },
         value: this.state.data[name],
         validationState: this.state.state[name] });
@@ -18695,15 +18700,15 @@ var UiForm = function (_Component) {
   }, {
     key: 'applyFieldFunctions',
     value: function applyFieldFunctions() {
-      var _this3 = this;
+      var _this4 = this;
 
       Object.keys(this.fields).forEach(function (name) {
         var type = void 0,
-            field = _this3.fields[name];
+            field = _this4.fields[name];
         if (typeof field.type === 'function') {
           // React component....
           type = _nodeUuid2.default.v4();
-          _this3.fields[type] = field.type;
+          _this4.fields[type] = field.type;
         }
       });
     }
@@ -18716,7 +18721,7 @@ var UiForm = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var errors = this.props.errors,
           FormActions = lib.FormActions,
@@ -18725,8 +18730,8 @@ var UiForm = function (_Component) {
         onSubmit: function onSubmit(e) {
           debugger;
           e.preventDefault();
-          console.log('data', _this4.state.data);
-          _this4.onSubmit(e, _this4.state.data);
+          console.log('data', _this5.state.data);
+          _this5.onSubmit(e, _this5.state.data);
         } }),
           FormLayout = this.formLayout();
 
@@ -18734,10 +18739,10 @@ var UiForm = function (_Component) {
       var fields = {};
 
       Object.keys(this.fields).filter(function (name) {
-        return _this4.access(_this4.fields[name]);
+        return _this5.access(_this5.fields[name]);
       }).forEach(function (name) {
-        var field = _this4.fields[name];
-        fields[name] = _this4.makeField(name, field);
+        var field = _this5.fields[name];
+        fields[name] = _this5.makeField(name, field);
       });
 
       return _react2.default.createElement(FormLayout, {
