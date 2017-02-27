@@ -231,7 +231,7 @@ class UiForm extends Component {
     if (!fields[type]) {
       return null;
     }
-
+    this.getValidationState(name);
     return <FormGroup
       errors={error}
       FieldComponent={fields[type]}
