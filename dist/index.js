@@ -18508,7 +18508,7 @@ var UiForm = function (_Component) {
     /**
      * Get validation state
      * @param {string} name column name
-     * @return {string | voild}
+     * @return {Object} validation state
      */
 
   }, {
@@ -18546,7 +18546,7 @@ var UiForm = function (_Component) {
         }
       }
       console.log('state', state);
-      this.setState(state);
+      return state;
     }
 
     /**
@@ -18624,7 +18624,8 @@ var UiForm = function (_Component) {
     key: 'handleBlur',
     value: function handleBlur(name) {
       this.fields[name].pristine = false;
-      this.getValidationState(name);
+      var state = this.getValidationState(name);
+      this.setState(state);
     }
 
     /**
@@ -18643,13 +18644,14 @@ var UiForm = function (_Component) {
       var errors = this.props.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
+          validationState = this.getValidationState(name)[name],
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
 
 
       if (!fields[type]) {
         return null;
       }
-      this.getValidationState(name);
+      ;
       return _react2.default.createElement(FormGroup, {
         errors: error,
         FieldComponent: fields[type],
