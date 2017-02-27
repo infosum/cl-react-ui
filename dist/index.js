@@ -18450,6 +18450,7 @@ var UiForm = function (_Component) {
     _this.onSubmit = onSubmit.bind(_this);
     _this.applyFieldFunctions();
     _this.applyDataToForm(_this.state.data);
+    console.log('form construct', _this.state);
     return _this;
   }
 
@@ -18460,6 +18461,7 @@ var UiForm = function (_Component) {
 
       this.fields = config.form.fields;
       this.applyFieldFunctions();
+      console.log('form props', this.state);
     }
 
     /**

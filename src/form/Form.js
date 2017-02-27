@@ -69,12 +69,14 @@ class UiForm extends Component {
     this.onSubmit = onSubmit.bind(this);
     this.applyFieldFunctions();
     this.applyDataToForm(this.state.data);
+    console.log('form construct', this.state);
   }
 
   componentWillReceiveProps(newProps: Props) {
     const {config} = newProps;
     this.fields = config.form.fields;
     this.applyFieldFunctions();
+    console.log('form props', this.state);
   }
 
   /**
