@@ -24,13 +24,12 @@ export default (props) => {
             <FieldComponent
               state={color}
               {...props} />
-            <FormFeedback />
             <FormText>{help}</FormText>
             {
               errors.map((error, i) =>
-              <FormText key={'help-' + name + '-' + i}>
+              <FormFeedback key={'help-' + name + '-' + i}>
                 {error}
-              </FormText>)
+              </FormFeedback>)
             }
         </FormGroup>
 }

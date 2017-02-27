@@ -29278,7 +29278,6 @@ exports.default = function (props) {
     _react2.default.createElement(FieldComponent, _extends({
       state: color
     }, props)),
-    _react2.default.createElement(_reactstrap.FormFeedback, null),
     _react2.default.createElement(
       _reactstrap.FormText,
       null,
@@ -29286,7 +29285,7 @@ exports.default = function (props) {
     ),
     errors.map(function (error, i) {
       return _react2.default.createElement(
-        _reactstrap.FormText,
+        _reactstrap.FormFeedback,
         { key: 'help-' + name + '-' + i },
         error
       );
