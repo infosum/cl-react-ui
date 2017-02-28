@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import * as libs from '../libs';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
 

@@ -63,7 +63,6 @@
     "url": "https://github.com/cognitivelogic/cl-react-ui/issues"
   },
   "dependencies": {
-    "node-uuid": "^1.4.7",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
@@ -71,6 +70,7 @@
     "react-dom": "^15.4.2",
     "react-dropzone": "^3.11.0",
     "reactstrap": "^4.2.0",
+    "uuid": "^3.0.1",
     "validate-promise": "^2.0.6"
   },
   "description": "Cognitive Logic React UI",

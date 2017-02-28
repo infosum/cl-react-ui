@@ -1,5 +1,5 @@
 // @flow
-import React, {Component} from 'react';
+import React, {Element, Component} from 'react';
 import {Button} from 'react-bootstrap';
 
 type PropType = {
@@ -32,7 +32,7 @@ export default class Add extends Component {
    * Render
    * @return {Dom} node
    */
-  render(): React$Element<any> | null {
+  render(): Element<Button> | null {
     const {isVisible} = this.props;
     if (!isVisible) {
       return null;
