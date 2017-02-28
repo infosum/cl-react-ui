@@ -152,6 +152,7 @@ export default {
         pristine: true,
         label: 'Radio list',
         type: 'radiolist',
+        default: 'two',
         options: {
           one: 'One',
           two: 'Two'

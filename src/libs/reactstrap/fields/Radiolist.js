@@ -14,12 +14,13 @@ export default ({field, value, onChange, onBlur, name}: FormFieldProps) => {
     const opts = options.map((option: FormFieldOption, k: number) => {
         let active = option.value === value;
         return (
-          <Label check>
+          <Label check
+            key={`radiolist-${field.name}-${k}`}>
             <Input
               type="radio"
               key={k}
               name={name}
-              active={active}
+              defaultChecked={active}
               value={option.value}
               onBlur={() => onBlur(name)}
               onClick={e => onChange(name, e.target.value)} />

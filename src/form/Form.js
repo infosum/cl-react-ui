@@ -99,10 +99,10 @@ class UiForm extends Component {
     for (name in this.fields) {
       if (data && data[name]) {
         this.state.data[name] = data[name];
-      } else if (this.fields[name].value === undefined) {
+      } else if (this.fields[name].default === undefined) {
         this.state.data[name] = '';
       } else {
-        this.state.data[name] = this.fields[name].value;
+        this.state.data[name] = this.fields[name].default;
       }
     }
   }
@@ -133,12 +133,11 @@ class UiForm extends Component {
       .map((p) =>
         p.rule(value, data, field.validate.msg)
     );
-debugger;
+
     return new Promise((resolve: Function, reject: Function) => {
       return Promise.all(promises)
         .then(resolve('success'))
         .catch(e => {
-          debugger;
           reject(field.validate.msg(value, data));
         });
     })
@@ -264,6 +263,7 @@ debugger;
     }
 
     return <FormGroup
+      key={`field-formgroup-${name}`}
       errors={error}
       FieldComponent={fields[type]}
       field={field}

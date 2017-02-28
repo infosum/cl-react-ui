@@ -40188,10 +40188,16 @@ var UiForm = function (_Component) {
         config = _this$props.config,
         onSubmit = _this$props.onSubmit;
 
+    var state = {};
+    debugger;
+    Object.keys(props.errors).forEach(function (key) {
+      return state[key] = 'error';
+    });
     _this.state = {
+      errors: props.errors,
       form: config.form,
-      data: {},
-      state: {}
+      data: props.data || {},
+      state: state
     };
 
     var libType = config.lib || 'reactBootstrap';
@@ -40214,13 +40220,25 @@ var UiForm = function (_Component) {
     return _this;
   }
 
+  /**
+   * Will receive new props
+   * @param {Object} newProps Props
+   */
+
+
   _createClass(UiForm, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
-      var config = newProps.config;
+      var config = newProps.config,
+          errors = newProps.errors;
 
       this.fields = config.form.fields;
       this.applyFieldFunctions();
+      var state = {};
+      Object.keys(errors).forEach(function (key) {
+        return state[key] = 'error';
+      });
+      this.setState({ state: state, errors: errors });
     }
 
     /**
@@ -40237,10 +40255,10 @@ var UiForm = function (_Component) {
       for (name in this.fields) {
         if (data && data[name]) {
           this.state.data[name] = data[name];
-        } else if (this.fields[name].value === undefined) {
+        } else if (this.fields[name].default === undefined) {
           this.state.data[name] = '';
         } else {
-          this.state.data[name] = this.fields[name].value;
+          this.state.data[name] = this.fields[name].default;
         }
       }
     }
@@ -40265,18 +40283,38 @@ var UiForm = function (_Component) {
         }
       }
     }
+  }, {
+    key: 'validateOne',
+    value: function validateOne(field, value) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+      if (field.validate === undefined) {
+        return Promise.resolve();
+      }
+      var promises = field.validate.promises.map(function (p) {
+        return p.rule(value, data, field.validate.msg);
+      });
+
+      return new Promise(function (resolve, reject) {
+        return Promise.all(promises).then(resolve('success')).catch(function (e) {
+          reject(field.validate.msg(value, data));
+        });
+      });
+    }
 
     /**
      * Get validation state
      * @param {string} name column name
-     * @return {string | voild}
+     * @return {Object} validation state
      */
 
   }, {
     key: 'getValidationState',
     value: function getValidationState(name) {
+      var _this2 = this;
+
       var field = this.fields[name],
-          errors = this.props.errors,
+          errors = this.state.errors,
           state = this.state.state,
           i = 0,
           value = this.state.data[name],
@@ -40285,19 +40323,14 @@ var UiForm = function (_Component) {
           serverSuccess = errors[name] && errors[name].length === 0;
 
 
-      if (field.validate !== undefined) {
-        res = field.validate.map(function (v) {
-          return v(value);
-        });
-      }
       if (!field.pristine) {
-        if (res.indexOf('error') !== -1 || serverError) {
-          state[name] = 'error';
-        } else if (res.indexOf('warning') !== -1) {
-          state[name] = 'warning';
-        } else {
+        this.validateOne(field, value, this.state.data).then(function (ok) {
           state[name] = 'success';
-        }
+          _this2.setState(state);
+        }).catch(function (err) {
+          state[name] = 'error';
+          _this2.setState(state);
+        });
       } else {
         if (serverError) {
           state[name] = 'error';
@@ -40306,8 +40339,9 @@ var UiForm = function (_Component) {
           state[name] = 'success';
         }
       }
-      console.log('state', state);
+
       this.setState(state);
+      return state;
     }
 
     /**
@@ -40385,7 +40419,7 @@ var UiForm = function (_Component) {
     key: 'handleBlur',
     value: function handleBlur(name) {
       this.fields[name].pristine = false;
-      this.getValidationState(name);
+      var state = this.getValidationState(name);
     }
 
     /**
@@ -40398,10 +40432,10 @@ var UiForm = function (_Component) {
   }, {
     key: 'makeField',
     value: function makeField(name, field) {
-      var _this2 = this;
+      var _this3 = this;
 
       // Ucase first the name
-      var errors = this.props.errors,
+      var errors = this.state.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
           type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
@@ -40412,6 +40446,7 @@ var UiForm = function (_Component) {
       }
 
       return _react2.default.createElement(FormGroup, {
+        key: 'field-formgroup-' + name,
         errors: error,
         FieldComponent: fields[type],
         field: field,
@@ -40419,7 +40454,7 @@ var UiForm = function (_Component) {
         row: this.state.data,
         onBlur: this.handleBlur,
         onChange: function onChange(name, value) {
-          return _this2.handleChange(name, value);
+          return _this3.handleChange(name, value);
         },
         value: this.state.data[name],
         validationState: this.state.state[name] });
@@ -40434,15 +40469,15 @@ var UiForm = function (_Component) {
   }, {
     key: 'applyFieldFunctions',
     value: function applyFieldFunctions() {
-      var _this3 = this;
+      var _this4 = this;
 
       Object.keys(this.fields).forEach(function (name) {
         var type = void 0,
-            field = _this3.fields[name];
+            field = _this4.fields[name];
         if (typeof field.type === 'function') {
           // React component....
           type = _nodeUuid2.default.v4();
-          _this3.fields[type] = field.type;
+          _this4.fields[type] = field.type;
         }
       });
     }
@@ -40455,17 +40490,15 @@ var UiForm = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var errors = this.props.errors,
           FormActions = lib.FormActions,
           buttons = _react2.default.createElement(FormActions, {
         actions: this.actions,
         onSubmit: function onSubmit(e) {
-          debugger;
           e.preventDefault();
-          console.log('data', _this4.state.data);
-          _this4.onSubmit(e, _this4.state.data);
+          _this5.onSubmit(e, _this5.state.data);
         } }),
           FormLayout = this.formLayout();
 
@@ -40473,10 +40506,10 @@ var UiForm = function (_Component) {
       var fields = {};
 
       Object.keys(this.fields).filter(function (name) {
-        return _this4.access(_this4.fields[name]);
+        return _this5.access(_this5.fields[name]);
       }).forEach(function (name) {
-        var field = _this4.fields[name];
-        fields[name] = _this4.makeField(name, field);
+        var field = _this5.fields[name];
+        fields[name] = _this5.makeField(name, field);
       });
 
       return _react2.default.createElement(FormLayout, {
@@ -48440,8 +48473,11 @@ var _CustomLayout2 = _interopRequireDefault(_CustomLayout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log('customlayout = ', _CustomLayout2.default);
-var data = [{ drone_id: '1', label: 'label 1' }];
+var data = [{ drone_id: '1', label: 'label 1' }],
+    row = {
+  label: 'hi'
+};
+
 _reactDom2.default.render(_react2.default.createElement(
   'div',
   null,
@@ -48452,6 +48488,7 @@ _reactDom2.default.render(_react2.default.createElement(
   ),
   _react2.default.createElement(_index.Form, { config: _config2.default,
     layout: _CustomLayout2.default,
+    data: row,
     errors: {},
     onSubmit: function onSubmit(e) {
       return console.log(e);
@@ -67639,7 +67676,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _attrAccept2 = _interopRequireDefault(_attrAccept);
 	
-	var _getDataTransferItems = __webpack_require__(3);
+	var _reactIsDeprecated = __webpack_require__(3);
+	
+	var _getDataTransferItems = __webpack_require__(4);
 	
 	var _getDataTransferItems2 = _interopRequireDefault(_getDataTransferItems);
 	
@@ -68000,13 +68039,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onDragOver: _react2.default.PropTypes.func,
 	  onDragLeave: _react2.default.PropTypes.func,
 	
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.node, _react2.default.PropTypes.func]), // Contents of the dropzone
-	  style: _react2.default.PropTypes.object, // CSS styles to apply
-	  activeStyle: _react2.default.PropTypes.object, // CSS styles to apply when drop will be accepted
-	  rejectStyle: _react2.default.PropTypes.object, // CSS styles to apply when drop will be rejected
-	  className: _react2.default.PropTypes.string, // Optional className
-	  activeClassName: _react2.default.PropTypes.string, // className for accepted state
-	  rejectClassName: _react2.default.PropTypes.string, // className for rejected state
+	  // Contents of the dropzone
+	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.node, _react2.default.PropTypes.func]),
+	
+	  // CSS styles to apply
+	  style: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop style is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // CSS styles to apply when drop will be accepted
+	  activeStyle: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop activeStyle is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // CSS styles to apply when drop will be rejected
+	  rejectStyle: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.object, 'Prop rejectStyle is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // Optional className
+	  className: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop className is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // className for accepted state
+	  activeClassName: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop activeClassName is deprecated. Use function as children to style dropzone and its contents.'),
+	
+	  // className for rejected state
+	  rejectClassName: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.string, 'Prop rejectClassName is deprecated. Use function as children to style dropzone and its contents.'),
 	
 	  disablePreview: _react2.default.PropTypes.bool, // Enable/disable preview generation
 	  disableClick: _react2.default.PropTypes.bool, // Disallow clicking on the dropzone container to open file dialog
@@ -68016,8 +68068,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  multiple: _react2.default.PropTypes.bool, // Allow dropping multiple files
 	  accept: _react2.default.PropTypes.string, // Allow specific types of files. See https://github.com/okonet/attr-accept for more information
 	  name: _react2.default.PropTypes.string, // name attribute for the input tag
-	  maxSize: _react2.default.PropTypes.number,
-	  minSize: _react2.default.PropTypes.number
+	  maxSize: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.number, 'Prop maxSize is deprecated and will be removed in the next major release'),
+	  minSize: (0, _reactIsDeprecated.deprecate)(_react2.default.PropTypes.number, 'Prop minSize is deprecated and will be removed in the next major release')
 	};
 	
 	exports.default = Dropzone;
@@ -68037,6 +68089,69 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.deprecate = deprecate;
+	exports.addIsDeprecated = addIsDeprecated;
+	
+	/**
+	 * Wraps a singular React.PropTypes.[type] with
+	 * a console.warn call that is only called if the
+	 * prop is not undefined/null and is only called
+	 * once.
+	 * @param  {Object} propType React.PropType type
+	 * @param  {String} message  Deprecation message
+	 * @return {Function}        ReactPropTypes checkType
+	 */
+	function deprecate(propType, message) {
+	  var warned = false;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var props = args[0];
+	    var propName = args[1];
+	
+	    var prop = props[propName];
+	    if (prop !== undefined && prop !== null && !warned) {
+	      warned = true;
+	      console.warn(message);
+	    }
+	    return propType.call.apply(propType, [this].concat(args));
+	  };
+	}
+	
+	/**
+	 * Returns a copy of `PropTypes` with an `isDeprecated`
+	 * method available on all top-level propType options.
+	 * @param {React.PropTypes}  PropTypes
+	 * @return {React.PropTypes} newPropTypes
+	 */
+	function addIsDeprecated(PropTypes) {
+	  var newPropTypes = _extends({}, PropTypes);
+	  for (var type in newPropTypes) {
+	    if (newPropTypes.hasOwnProperty(type)) {
+	      var propType = newPropTypes[type];
+	      propType = propType.bind(newPropTypes);
+	      propType.isDeprecated = deprecate.bind(newPropTypes, propType);
+	      newPropTypes[type] = propType;
+	    }
+	  }
+	  return newPropTypes;
+	}
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -80259,6 +80374,7 @@ exports.default = {
         pristine: true,
         label: 'Radio list',
         type: 'radiolist',
+        default: 'two',
         options: {
           one: 'One',
           two: 'Two'
@@ -81789,7 +81905,6 @@ exports.default = function (props) {
   ),
       color = validationState;
 
-  console.log('type =- ', type, controlLabel, check);
 
   if (color === 'error') {
     color = 'danger';
@@ -81804,7 +81919,6 @@ exports.default = function (props) {
     _react2.default.createElement(FieldComponent, _extends({
       state: color
     }, props)),
-    _react2.default.createElement(_reactstrap.FormFeedback, null),
     _react2.default.createElement(
       _reactstrap.FormText,
       null,
@@ -81812,7 +81926,7 @@ exports.default = function (props) {
     ),
     errors.map(function (error, i) {
       return _react2.default.createElement(
-        _reactstrap.FormText,
+        _reactstrap.FormFeedback,
         { key: 'help-' + name + '-' + i },
         error
       );
@@ -82085,12 +82199,13 @@ exports.default = function (_ref) {
     var active = option.value === value;
     return _react2.default.createElement(
       _reactstrap.Label,
-      { check: true },
+      { check: true,
+        key: 'radiolist-' + field.name + '-' + k },
       _react2.default.createElement(_reactstrap.Input, {
         type: 'radio',
         key: k,
         name: name,
-        active: active,
+        defaultChecked: active,
         value: option.value,
         onBlur: function onBlur() {
           return _onBlur(name);
@@ -82168,7 +82283,6 @@ exports.default = function (_ref) {
         return _onBlur(name);
       },
       onChange: function onChange(e) {
-        console.log('cnage', e);
         _onChange(name, e.target.value);
       } },
     opts
@@ -82297,12 +82411,14 @@ exports.default = function (_ref) {
     _react2.default.createElement(
       _reactDropzone2.default,
       {
+        className: 'drop',
         multiple: multiple,
         onBlur: function onBlur() {
           return _onBlur(name);
         },
         onDrop: function onDrop(files) {
-          return onChange(name, files);
+          onChange(name, files);
+          _onBlur(name);
         } },
       _react2.default.createElement(
         'div',
@@ -82938,7 +83054,6 @@ var UiList = function (_Component) {
           actions.deselectAllRows();
         }
       }
-      console.log('selected', selected);
       this.setState({ selected: selected });
     }
 
@@ -83276,8 +83391,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-console.log('list row');
 
 /**
  * Render a row in a list

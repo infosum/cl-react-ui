@@ -18494,10 +18494,10 @@ var UiForm = function (_Component) {
       for (name in this.fields) {
         if (data && data[name]) {
           this.state.data[name] = data[name];
-        } else if (this.fields[name].value === undefined) {
+        } else if (this.fields[name].default === undefined) {
           this.state.data[name] = '';
         } else {
-          this.state.data[name] = this.fields[name].value;
+          this.state.data[name] = this.fields[name].default;
         }
       }
     }
@@ -18533,10 +18533,9 @@ var UiForm = function (_Component) {
       var promises = field.validate.promises.map(function (p) {
         return p.rule(value, data, field.validate.msg);
       });
-      debugger;
+
       return new Promise(function (resolve, reject) {
         return Promise.all(promises).then(resolve('success')).catch(function (e) {
-          debugger;
           reject(field.validate.msg(value, data));
         });
       });
@@ -18686,6 +18685,7 @@ var UiForm = function (_Component) {
       }
 
       return _react2.default.createElement(FormGroup, {
+        key: 'field-formgroup-' + name,
         errors: error,
         FieldComponent: fields[type],
         field: field,
@@ -29588,12 +29588,13 @@ exports.default = function (_ref) {
     var active = option.value === value;
     return _react2.default.createElement(
       _reactstrap.Label,
-      { check: true },
+      { check: true,
+        key: 'radiolist-' + field.name + '-' + k },
       _react2.default.createElement(_reactstrap.Input, {
         type: 'radio',
         key: k,
         name: name,
-        active: active,
+        defaultChecked: active,
         value: option.value,
         onBlur: function onBlur() {
           return _onBlur(name);
