@@ -53,7 +53,7 @@ class UiForm extends Component {
     this.state = {
       errors: props.errors,
       form: config.form,
-      data: {},
+      data: props.data || {},
       state
     };
 
@@ -160,17 +160,7 @@ debugger;
       serverError = (errors[name] && errors[name].length > 0),
       serverSuccess = (errors[name] && errors[name].length === 0);
 
-
     if (!field.pristine) {
-      // if (res.indexOf('error') !== -1 || serverError) {
-      //    state[name] = 'error';
-      // }
-      // else if (res.indexOf('warning') !== -1) {
-      //   state[name] = 'warning';
-      // } else {
-      //   state[name] = 'success';
-      // }
-
       this.validateOne(field, value, this.state.data)
       .then(ok => {
         state[name] = 'success';

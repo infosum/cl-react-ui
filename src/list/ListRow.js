@@ -5,7 +5,7 @@ import Tip from '../components/Tip';
 import {Checkbox} from 'react-bootstrap';
 import {ListActions, ListColumns,
   ListRow as ListRowType} from '../types';
-console.log('list row');
+
 type Props = {
   actions: ListActions,
   columns: ListColumns,
