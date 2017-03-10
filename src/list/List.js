@@ -106,7 +106,6 @@ class UiList extends Component {
    * @param {Object} row Clicked list row's data
    */
   rowClick(e: DOMEvent, checkType: boolean = true, row: Object | null = null) {
-    debugger;
     // Ignore the event if clicking on button etc in row
     const {actions, config} = this.props,
       buttonTypes = ['checkbox', 'button', 'a'],

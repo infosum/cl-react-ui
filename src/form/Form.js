@@ -48,7 +48,6 @@ class UiForm extends Component {
     super(props);
     const {config, onSubmit} = this.props;
     let state = {};
-    debugger;
     Object.keys(props.errors).forEach(key => state[key] = 'error');
     this.state = {
       errors: props.errors,
