@@ -4,6 +4,7 @@ import FormActions from './FormActions';
 import FormGroup from './fields/FormGroup';
 import Hidden from './fields/Hidden';
 import Lookup from './fields/Lookup';
+import Password from './fields/Password';
 import Radiolist from './fields/Radiolist';
 import Select from './fields/Select';
 import Text from './fields/Text';
@@ -20,6 +21,7 @@ let fields = {
     Date,
     Hidden,
     Lookup,
+    Password,
     Radiolist,
     Select,
     Text,
