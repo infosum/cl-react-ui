@@ -9453,7 +9453,6 @@ var UiForm = function (_Component) {
         onSubmit = _this$props.onSubmit;
 
     var state = {};
-    debugger;
     Object.keys(props.errors).forEach(function (key) {
       return state[key] = 'error';
     });
@@ -18237,7 +18236,6 @@ var UiList = function (_Component) {
       var checkType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var row = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-      debugger;
       // Ignore the event if clicking on button etc in row
       var _props2 = this.props,
           actions = _props2.actions,
