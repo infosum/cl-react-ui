@@ -124,6 +124,13 @@ class UiForm extends Component {
     }
   }
 
+  /**
+   * Validate a single field
+   * @param {Object} field Field
+   * @param {String} value Field value
+   * @param {Object} data Form data
+   * @return {Promise}
+   */
   validateOne(field, value, data = {}): Promise<string> {
     if (field.validate === undefined) {
       return Promise.resolve();
@@ -135,7 +142,7 @@ class UiForm extends Component {
 
     return new Promise((resolve: Function, reject: Function) => {
       return Promise.all(promises)
-        .then(resolve('success'))
+        .then(() => resolve('success'))
         .catch(e => {
           reject(field.validate.msg(value, data));
         });
