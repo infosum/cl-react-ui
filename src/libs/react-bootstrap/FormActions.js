@@ -19,7 +19,7 @@ export default ({actions, onSubmit}) => {
 
       return (<Button key={id}
         key={'form-button-' + index}
-        bsStype={style}
+        bsStyle={style}
         onClick={handle}
         type={type ? type : 'button'}>
           {label}
