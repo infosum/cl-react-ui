@@ -300,7 +300,7 @@ class UiForm extends Component {
       row={this.state.data}
       onBlur={this.handleBlur}
       onChange={(name, value) => this.handleChange(name, value)}
-      value={this.state.data[name]}
+      value={this.state.data[name] || field.value || ''}
       validationState={this.state.state[name]} />
   }
 

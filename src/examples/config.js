@@ -130,6 +130,7 @@ export default {
 
         label: 'Customer',
         type: 'lookup',
+        valuye: 2,
         options: {
           store: (row) => [
             {id: 1, name: 'customer 1'},
@@ -143,7 +144,7 @@ export default {
       },
       sector: {
         id: 'drone-sector',
-
+        value: 'default text',
         label: 'Sector',
         type: 'Text'
       },

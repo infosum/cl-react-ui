@@ -9758,7 +9758,7 @@ var UiForm = function (_Component) {
         onChange: function onChange(name, value) {
           return _this3.handleChange(name, value);
         },
-        value: this.state.data[name],
+        value: this.state.data[name] || field.value || '',
         validationState: this.state.state[name] });
     }
 
