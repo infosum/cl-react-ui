@@ -9483,7 +9483,6 @@ var UiForm = function (_Component) {
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleBlur = _this.handleBlur.bind(_this);
     _this.onSubmit = onSubmit.bind(_this);
-    _this.applyFieldFunctions();
     _this.applyDataToForm(_this.state.data);
     return _this;
   }
@@ -9501,7 +9500,6 @@ var UiForm = function (_Component) {
           errors = newProps.errors;
 
       this.fields = config.form.fields;
-      this.applyFieldFunctions();
       var state = {};
       Object.keys(errors).forEach(function (key) {
         return state[key] = 'error';
@@ -9743,7 +9741,6 @@ var UiForm = function (_Component) {
     value: function makeField(name, field) {
       var _this3 = this;
 
-      console.log(field);
       var errors = this.state.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
@@ -9766,28 +9763,6 @@ var UiForm = function (_Component) {
     }
 
     /**
-     * If a field type is a function then its a react element
-     * Create a uuid for it and assign it to the list of field
-     * renderers
-     */
-
-  }, {
-    key: 'applyFieldFunctions',
-    value: function applyFieldFunctions() {
-      var _this4 = this;
-
-      Object.keys(this.fields).forEach(function (name) {
-        var type = void 0,
-            field = _this4.fields[name];
-        if (typeof field.type === 'function') {
-          // React component....
-          type = _uuid2.default.v4();
-          _this4.fields[type] = field.type;
-        }
-      });
-    }
-
-    /**
      * Render
      * @return {Node} Dom node
      */
@@ -9795,7 +9770,7 @@ var UiForm = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
       var errors = this.props.errors,
           FormActions = lib.FormActions,
@@ -9803,7 +9778,7 @@ var UiForm = function (_Component) {
         actions: this.actions,
         onSubmit: function onSubmit(e) {
           e.preventDefault();
-          _this5.onSubmit(e, _this5.state.data);
+          _this4.onSubmit(e, _this4.state.data);
         } }),
           FormLayout = this.formLayout();
 
@@ -9811,10 +9786,10 @@ var UiForm = function (_Component) {
       var fields = {};
 
       Object.keys(this.fields).filter(function (name) {
-        return _this5.access(_this5.fields[name]);
+        return _this4.access(_this4.fields[name]);
       }).forEach(function (name) {
-        var field = _this5.fields[name];
-        fields[name] = _this5.makeField(name, field);
+        var field = _this4.fields[name];
+        fields[name] = _this4.makeField(name, field);
       });
 
       return _react2.default.createElement(FormLayout, {
@@ -18325,7 +18300,8 @@ var UiList = function (_Component) {
     key: 'toggleAll',
     value: function toggleAll(e) {
       var _props = this.props,
-          actions = _props.actions,
+          _props$actions = _props.actions,
+          actions = _props$actions === undefined ? {} : _props$actions,
           data = _props.data;
       var selected = this.state.selected;
 
@@ -18338,7 +18314,7 @@ var UiList = function (_Component) {
       } else {
         selected = [];
         this.setState({ allToggled: false });
-        if (actions.deselectAllRows()) {
+        if (actions.deselectAllRows) {
           actions.deselectAllRows();
         }
       }
@@ -18374,7 +18350,8 @@ var UiList = function (_Component) {
 
       // Ignore the event if clicking on button etc in row
       var _props2 = this.props,
-          actions = _props2.actions,
+          _props2$actions = _props2.actions,
+          actions = _props2$actions === undefined ? {} : _props2$actions,
           config = _props2.config,
           buttonTypes = ['checkbox', 'button', 'a'],
           isButtonIsh = buttonTypes.indexOf(e.target.type) !== -1;
@@ -18384,9 +18361,13 @@ var UiList = function (_Component) {
       }
 
       e.preventDefault();
-      actions.setForm(config.view, row);
+      if (actions.setForm) {
+        actions.setForm(config.view, row);
+      }
       this.setState({ showModal: true });
-      actions.setModalState(config.view, true);
+      if (actions.setModalState) {
+        actions.setModalState(config.view, true);
+      }
     }
 
     /**
@@ -18406,7 +18387,9 @@ var UiList = function (_Component) {
           actions = _props3.actions,
           config = _props3.config;
 
-      actions.setModalState(config.view, false);
+      if (actions.setModalState) {
+        actions.setModalState(config.view, false);
+      }
     }
 
     /**
@@ -18552,12 +18535,14 @@ var UiList = function (_Component) {
 
       var list = void 0,
           _props5 = this.props,
-          user = _props5.user,
-          data = _props5.data,
+          _props5$data = _props5.data,
+          data = _props5$data === undefined ? [] : _props5$data,
           errors = _props5.errors,
           config = _props5.config,
-          actions = _props5.actions,
-          form = _props5.form,
+          _props5$actions = _props5.actions,
+          actions = _props5$actions === undefined ? {} : _props5$actions,
+          _props5$form = _props5.form,
+          form = _props5$form === undefined ? {} : _props5$form,
           selected = this.state.selected,
           ui = actions.ui,
           ListLayout = this.listLayout(),

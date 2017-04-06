@@ -37613,6 +37613,8 @@ _reactDom2.default.render(_react2.default.createElement(
     null,
     'test form'
   ),
+  _react2.default.createElement(_index.List, { config: _config2.default,
+    data: data }),
   _react2.default.createElement(_index.Form, { config: _config2.default,
     layout: _CustomLayout2.default,
     data: row,
@@ -71403,7 +71405,8 @@ var UiList = function (_Component) {
     key: 'toggleAll',
     value: function toggleAll(e) {
       var _props = this.props,
-          actions = _props.actions,
+          _props$actions = _props.actions,
+          actions = _props$actions === undefined ? {} : _props$actions,
           data = _props.data;
       var selected = this.state.selected;
 
@@ -71416,7 +71419,7 @@ var UiList = function (_Component) {
       } else {
         selected = [];
         this.setState({ allToggled: false });
-        if (actions.deselectAllRows()) {
+        if (actions.deselectAllRows) {
           actions.deselectAllRows();
         }
       }
@@ -71452,7 +71455,8 @@ var UiList = function (_Component) {
 
       // Ignore the event if clicking on button etc in row
       var _props2 = this.props,
-          actions = _props2.actions,
+          _props2$actions = _props2.actions,
+          actions = _props2$actions === undefined ? {} : _props2$actions,
           config = _props2.config,
           buttonTypes = ['checkbox', 'button', 'a'],
           isButtonIsh = buttonTypes.indexOf(e.target.type) !== -1;
@@ -71462,9 +71466,13 @@ var UiList = function (_Component) {
       }
 
       e.preventDefault();
-      actions.setForm(config.view, row);
+      if (actions.setForm) {
+        actions.setForm(config.view, row);
+      }
       this.setState({ showModal: true });
-      actions.setModalState(config.view, true);
+      if (actions.setModalState) {
+        actions.setModalState(config.view, true);
+      }
     }
 
     /**
@@ -71484,7 +71492,9 @@ var UiList = function (_Component) {
           actions = _props3.actions,
           config = _props3.config;
 
-      actions.setModalState(config.view, false);
+      if (actions.setModalState) {
+        actions.setModalState(config.view, false);
+      }
     }
 
     /**
@@ -71630,12 +71640,14 @@ var UiList = function (_Component) {
 
       var list = void 0,
           _props5 = this.props,
-          user = _props5.user,
-          data = _props5.data,
+          _props5$data = _props5.data,
+          data = _props5$data === undefined ? [] : _props5$data,
           errors = _props5.errors,
           config = _props5.config,
-          actions = _props5.actions,
-          form = _props5.form,
+          _props5$actions = _props5.actions,
+          actions = _props5$actions === undefined ? {} : _props5$actions,
+          _props5$form = _props5.form,
+          form = _props5$form === undefined ? {} : _props5$form,
           selected = this.state.selected,
           ui = actions.ui,
           ListLayout = this.listLayout(),

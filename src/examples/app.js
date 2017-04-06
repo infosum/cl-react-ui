@@ -15,11 +15,15 @@ ReactDOM.render(
   <div>
     <h1>test form</h1>
 
+    <List config={config}
+      data={data}/>
+
     <Form config={config}
       layout={CustomLayout}
       data={row}
       errors={{}}
       onSubmit={e => console.log(e)} />
+
   </div>,
   document.getElementById('root')
 );
