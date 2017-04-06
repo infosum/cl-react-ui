@@ -4,8 +4,8 @@ import {expect} from 'chai';
 import ListRow from './ListRow';
 import ListCell from './ListCell';
 import {Checkbox} from 'react-bootstrap';
-import Tip from '../decorators/Tip';
-import claim from '../../../drone/components/Claim';
+import Tip from '../components/Tip';
+
 
 let component,
   evnt = {preventDefault() {}, target: {checked: true}},
@@ -30,7 +30,7 @@ let component,
       class: 'text-center',
       id: 'drone-heading-claimed',
       label: 'Claimed',
-      render: claim
+      render: () => <div>hello</div>
     }
   },
   actions = {

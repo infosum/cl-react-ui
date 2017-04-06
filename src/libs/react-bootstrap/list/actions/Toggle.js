@@ -1,7 +1,6 @@
 // @flow
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
-import {getToken} from '../../../../app/utils/auth';
 import {User} from '../../../../types';
 
 type PropType = {
@@ -35,12 +34,11 @@ export default class Toggle extends Component {
    */
   handleClick(e: Event) {
     e.preventDefault();
-    const token = getToken();
     let {update, selected, config, user, filter} = this.props;
     selected = filter(user, selected);
 
     this.setState(config.update);
-    update(selected, token, config.update);
+    update(selected, config.update);
   }
 
   /**

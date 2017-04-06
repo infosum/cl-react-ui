@@ -11,16 +11,23 @@ import {CrudConfig, DOMEvent, ListActions as ListActionsType,
 
 let layouts, lib;
 
+type FormData = {};
+
 type Props = {
   access: {
-    add: boolean,
-    edit: boolean,
-    view: boolean
+    add?: (view: string, state: Object) => boolean,
+    edit?: (view: string, state: Object) => boolean,
+    view?: (view: string, state: Object) => boolean
   },
-  actions: ListActionsType,
-  form: Object,
-  user: User,
-  selected: Object[],
+  actions: {
+    add ? : (view: string, state: Object) => {},
+    edit ? : (view: string, state: Object) => {},
+    selectAllRows? : () => {},
+    deselectAllRows? : () => {},
+    setForm? : (view: string, row: ListRowType) => {};
+    setModalState? :(view: string, show: boolean) => {};
+  },
+  form?: FormData,
   config: CrudConfig
 };
 
@@ -71,7 +78,7 @@ class UiList extends Component {
    * @param {Event} e .
    */
   toggleAll(e: Event) {
-    const {actions, data} = this.props;
+    const {actions = {}, data} = this.props;
     let {selected} = this.state;
     if (e.target.checked) {
       this.setState({allToggled: true});
@@ -82,7 +89,7 @@ class UiList extends Component {
     } else {
       selected = [];
       this.setState({allToggled: false});
-      if (actions.deselectAllRows()) {
+      if (actions.deselectAllRows) {
         actions.deselectAllRows();
       }
     }
@@ -107,7 +114,7 @@ class UiList extends Component {
    */
   rowClick(e: DOMEvent, checkType: boolean = true, row: Object | null = null) {
     // Ignore the event if clicking on button etc in row
-    const {actions, config} = this.props,
+    const {actions = {}, config} = this.props,
       buttonTypes = ['checkbox', 'button', 'a'],
       isButtonIsh = buttonTypes.indexOf(e.target.type) !== -1;
     if (checkType && isButtonIsh) {
@@ -115,9 +122,13 @@ class UiList extends Component {
     }
 
     e.preventDefault();
-    actions.setForm(config.view, row);
+    if (actions.setForm) {
+      actions.setForm(config.view, row);
+    }
     this.setState({showModal: true});
-    actions.setModalState(config.view, true);
+    if (actions.setModalState) {
+      actions.setModalState(config.view, true);
+    }
   }
 
   /**
@@ -131,9 +142,15 @@ class UiList extends Component {
     }
     this.setState({showModal: false});
     const {actions, config} = this.props;
-    actions.setModalState(config.view, false);
+    if (actions.setModalState) {
+      actions.setModalState(config.view, false);
+    }
   }
 
+  /**
+   * Select a row
+   * @param {Object} row List row to deselect
+   */
   selectRow(row: ListRowType) {
     const {actions} = this.props;
     let {selected} = this.state;
@@ -144,6 +161,10 @@ class UiList extends Component {
     }
   }
 
+  /**
+   * Deselect a row
+   * @param {Object} row List row to deselect
+   */
   deselectRow(row: ListRowType) {
     const {actions} = this.props;
     let {selected} = this.state;
@@ -233,7 +254,7 @@ class UiList extends Component {
    */
   render(): Element<any> {
     let list,
-      {user, data, errors, config, actions, form} = this.props,
+      {data = [], errors, config, actions = {}, form = {}} = this.props,
       {selected} = this.state,
       ui = actions.ui,
       ListLayout = this.listLayout(),

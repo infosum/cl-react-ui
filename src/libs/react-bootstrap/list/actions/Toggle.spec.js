@@ -3,7 +3,6 @@ import React from 'react';
 import {expect} from 'chai';
 import Toggle from './Toggle';
 import {Button} from 'react-bootstrap';
-import * as filters from '../../../utils/filters';
 
 let component,
   evnt = {preventDefault() {}},
@@ -28,7 +27,6 @@ describe('list.actions.Toggle', () => {
         selected={[]}
         config={config}
         user={user}
-        filter={filters.notOwnerOrSelf}
         isVisible={true}></Toggle>);
     });
 

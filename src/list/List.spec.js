@@ -2,10 +2,10 @@ import {shallow} from 'enzyme';
 import React from 'react';
 import {expect} from 'chai';
 import List from './List';
-import add from './actions/Add';
-import * as filters from '../../utils/filters';
+import add from '../libs/react-bootstrap/list/actions/Add';
+// import * as filters from '../../utils/filters';
 import ListRow from './ListRow';
-import ListActions from './ListActions';
+import ListActions from '../libs/react-bootstrap/listLayouts/ListActions';
 import UiForm from '../form/Form';
 import {Table, Alert, Modal} from 'react-bootstrap';
 

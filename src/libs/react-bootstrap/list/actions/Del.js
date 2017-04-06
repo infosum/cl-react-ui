@@ -1,8 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {Button, Modal} from 'react-bootstrap';
-import CloseButton from '../../bits/CloseButton';
-import {getToken} from '../../../../app/utils/auth';
+import {Button, Modal, closeButton} from 'react-bootstrap';
 
 type PropType = {
   del: (type: string, selected: Array<any>,
@@ -54,9 +52,8 @@ export default class Del extends Component {
    */
   handleSubmit(e: Event) {
     e.preventDefault();
-    const token = getToken();
     let {del, user, selected} = this.props;
-    del('user', selected, user, token);
+    del('user', selected, user);
     this.close(e);
   }
 
