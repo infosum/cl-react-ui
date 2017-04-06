@@ -1,10 +1,11 @@
 // @flow
 import React, {Component, Element} from 'react';
-import {Table, Button, Input} from 'reactstrap';
+import {Table, Button, FormControl} from 'react-bootstrap';
 
 
 type Props = {
   value: string,
+  name: string,
   onChange: (name: string, data: [number, number][]) => {}
 };
 
@@ -12,7 +13,7 @@ type Props = {
  * Explicit bins:
  * Define each bin's min and max values
  */
-class RangeArray extends Component {
+class Rangegrid extends Component {
 
   props: Props
   state: {
@@ -58,7 +59,7 @@ class RangeArray extends Component {
 
     ranges.push(nextRange);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**
@@ -70,7 +71,7 @@ class RangeArray extends Component {
     let ranges = [...this.state.ranges]
       .filter((v, i) => i !== index);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**
@@ -84,7 +85,7 @@ class RangeArray extends Component {
     let ranges = [...this.state.ranges];
     ranges[i][key] = parseFloat(value);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**
@@ -96,7 +97,7 @@ class RangeArray extends Component {
 
     return ranges.map((range: [number, number], i: number) => <tr>
       <td>
-        <Input
+        <FormControl
           type="number"
           value={range[0]}
           placeholder="Min"
@@ -107,7 +108,7 @@ class RangeArray extends Component {
         />
       </td>
       <td>
-        <Input
+        <FormControl
           type="number"
           value={range[1]}
           placeholder="Max"
@@ -118,7 +119,7 @@ class RangeArray extends Component {
         />
       </td>
       <td>
-        <Button color="link" onClick={e => this.remove(i)}>
+        <Button bsStyle="link" onClick={e => this.remove(i)}>
           <i className="fa fa-times text-danger"></i>
         </Button>
       </td>
@@ -136,7 +137,7 @@ class RangeArray extends Component {
           <th>Min</th>
           <th>Max</th>
           <th>
-            <Button color="link" onClick={e => {
+            <Button bsStyle="link" onClick={e => {
                 e.preventDefault();
                 this.add();
               }}>
@@ -152,4 +153,4 @@ class RangeArray extends Component {
   }
 }
 
-export default RangeArray;
+export default Rangegrid;

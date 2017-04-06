@@ -6,6 +6,7 @@ import Hidden from './fields/Hidden';
 import Lookup from './fields/Lookup';
 import Password from './fields/Password';
 import Radiolist from './fields/Radiolist';
+import Rangegrid from './fields/Rangegrid';
 import Select from './fields/Select';
 import Text from './fields/Text';
 import Textarea from './fields/Textarea';
@@ -27,6 +28,7 @@ import {Button, Label as ControlLabel, FormControl,
     Hidden,
     Lookup,
     Password,
+    Rangegrid,
     Radiolist,
     Select,
     Text,
