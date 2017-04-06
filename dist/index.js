@@ -9403,6 +9403,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
@@ -9471,6 +9473,9 @@ var UiForm = function (_Component) {
     Button = lib.Button;
 
     _this.fields = config.form.fields;
+    Object.keys(_this.fields).forEach(function (k) {
+      _this.fields[k].pristine = true;
+    });
     _this.actions = config.form.actions;
 
     _this.makeState();
@@ -9546,6 +9551,15 @@ var UiForm = function (_Component) {
         }
       }
     }
+
+    /**
+     * Validate a single field
+     * @param {Object} field Field
+     * @param {String} value Field value
+     * @param {Object} data Form data
+     * @return {Promise}
+     */
+
   }, {
     key: 'validateOne',
     value: function validateOne(field, value) {
@@ -9559,7 +9573,9 @@ var UiForm = function (_Component) {
       });
 
       return new Promise(function (resolve, reject) {
-        return Promise.all(promises).then(resolve('success')).catch(function (e) {
+        return Promise.all(promises).then(function () {
+          return resolve('success');
+        }).catch(function (e) {
           reject(field.validate.msg(value, data));
         });
       });
@@ -9686,6 +9702,36 @@ var UiForm = function (_Component) {
     }
 
     /**
+     * Buid the react class for the field
+     * @param {Object} field Field
+     * @return {Element}
+     */
+
+  }, {
+    key: 'getReactField',
+    value: function getReactField(field) {
+      var FieldComponent = null,
+          type = void 0;
+      if (typeof field === 'function') {
+        FieldComponent = field;
+      } else {
+        switch (_typeof(field.type)) {
+          case 'string':
+            // Ucase first the name
+            type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
+            if (fields[type]) {
+              FieldComponent = fields[type];
+            }
+            break;
+          case 'function':
+            FieldComponent = field.type;
+            break;
+        }
+      }
+
+      return FieldComponent;
+    }
+    /**
      * Build a field
      * @param {String} name Field name
      * @param {Object} field Field
@@ -9697,21 +9743,17 @@ var UiForm = function (_Component) {
     value: function makeField(name, field) {
       var _this3 = this;
 
-      // Ucase first the name
+      console.log(field);
       var errors = this.state.errors,
           error = errors[name] || [],
           FormGroup = lib.FormGroup,
-          type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
+          FieldComponent = this.getReactField(field);
 
-
-      if (!fields[type]) {
-        return null;
-      }
 
       return _react2.default.createElement(FormGroup, {
         key: 'field-formgroup-' + name,
         errors: error,
-        FieldComponent: fields[type],
+        FieldComponent: FieldComponent,
         field: field,
         name: name,
         row: this.state.data,
@@ -15702,7 +15744,7 @@ exports.default = function (_ref) {
     return _react2.default.createElement(
       _reactBootstrap.Button,
       (_React$createElement = { key: id
-      }, _defineProperty(_React$createElement, 'key', 'form-button-' + index), _defineProperty(_React$createElement, 'bsStype', style), _defineProperty(_React$createElement, 'onClick', handle), _defineProperty(_React$createElement, 'type', type ? type : 'button'), _React$createElement),
+      }, _defineProperty(_React$createElement, 'key', 'form-button-' + index), _defineProperty(_React$createElement, 'bsStyle', style), _defineProperty(_React$createElement, 'onClick', handle), _defineProperty(_React$createElement, 'type', type ? type : 'button'), _React$createElement),
       label
     );
   });
@@ -18366,6 +18408,12 @@ var UiList = function (_Component) {
 
       actions.setModalState(config.view, false);
     }
+
+    /**
+     * Select a row
+     * @param {Object} row List row to deselect
+     */
+
   }, {
     key: 'selectRow',
     value: function selectRow(row) {
@@ -18378,6 +18426,12 @@ var UiList = function (_Component) {
         actions.selectRow(row);
       }
     }
+
+    /**
+     * Deselect a row
+     * @param {Object} row List row to deselect
+     */
+
   }, {
     key: 'deselectRow',
     value: function deselectRow(row) {

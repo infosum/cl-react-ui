@@ -1,5 +1,5 @@
 // @flow
-import React, {Component} from 'react';
+import React, {Component, Element} from 'react';
 import * as libs from '../libs';
 import uuid from 'uuid';
 import type {DOMEvent, FormActions, FormConfig,
@@ -64,6 +64,9 @@ class UiForm extends Component {
     Button = lib.Button;
 
     this.fields = config.form.fields;
+    Object.keys(this.fields).forEach(k => {
+      this.fields[k].pristine = true;
+    })
     this.actions = config.form.actions;
 
     this.makeState();
@@ -71,7 +74,6 @@ class UiForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.onSubmit = onSubmit.bind(this);
-    this.applyFieldFunctions();
     this.applyDataToForm(this.state.data);
   }
 
@@ -82,7 +84,6 @@ class UiForm extends Component {
   componentWillReceiveProps(newProps: Props) {
     const {config, errors} = newProps;
     this.fields = config.form.fields;
-    this.applyFieldFunctions();
     let state = {};
     Object.keys(errors).forEach(key => state[key] = 'error');
     this.setState({state, errors});
@@ -251,27 +252,49 @@ class UiForm extends Component {
   }
 
   /**
+   * Buid the react class for the field
+   * @param {Object} field Field
+   * @return {Element}
+   */
+  getReactField(field: FormField): Element<*> | null {
+    let FieldComponent = null,
+      type;
+    if (typeof field === 'function') {
+      FieldComponent = field;
+    } else {
+      switch (typeof field.type) {
+      case 'string':
+        // Ucase first the name
+        type = field.type && field.type[0].toUpperCase()
+          + field.type.slice(1);
+        if (fields[type]) {
+           FieldComponent = fields[type];
+        }
+        break;
+      case 'function':
+        FieldComponent = field.type;
+        break;
+      }
+    }
+
+    return FieldComponent;
+  }
+  /**
    * Build a field
    * @param {String} name Field name
    * @param {Object} field Field
    * @return {Node} FormGroup - field, help and label
    */
-  makeField(name: string, field: FormField): React$Element<any> | null {
-    // Ucase first the name
+  makeField(name: string, field: FormField): Element<any> | null {
     let {errors} = this.state,
       error = errors[name] || [],
       FormGroup = lib.FormGroup,
-      type = field.type && field.type[0].toUpperCase()
-        + field.type.slice(1);
-
-    if (!fields[type]) {
-      return null;
-    }
+      FieldComponent = this.getReactField(field);
 
     return <FormGroup
       key={`field-formgroup-${name}`}
       errors={error}
-      FieldComponent={fields[type]}
+      FieldComponent={FieldComponent}
       field={field}
       name={name}
       row={this.state.data}
@@ -279,23 +302,6 @@ class UiForm extends Component {
       onChange={(name, value) => this.handleChange(name, value)}
       value={this.state.data[name]}
       validationState={this.state.state[name]} />
-  }
-
-  /**
-   * If a field type is a function then its a react element
-   * Create a uuid for it and assign it to the list of field
-   * renderers
-   */
-  applyFieldFunctions() {
-    Object.keys(this.fields).forEach(name => {
-        let type,
-          field = this.fields[name];
-        if (typeof field.type === 'function') {
-          // React component....
-          type = uuid.v4();
-          this.fields[type] = field.type;
-        }
-    });
   }
 
   /**

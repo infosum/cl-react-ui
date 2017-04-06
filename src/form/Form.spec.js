@@ -1,9 +1,9 @@
 import {shallow, render} from 'enzyme';
 import React from 'react';
 import {expect} from 'chai';
+import * as libs from '../libs';
 import {FormControl, FormGroup} from 'react-bootstrap';
 import UiForm from './Form';
-import * as layouts from './layouts';
 
 let component,
   html,
@@ -19,6 +19,7 @@ let component,
     customValidationSuccess: []
   },
   config = {
+    lib: 'reactBootstrap',
     view: 'drone',
     form: {
       _title: row => 'title',
@@ -99,7 +100,7 @@ describe('UiForm', () => {
     });
 
     it('renders a form with default layout', () => {
-      expect(component.find(layouts.Default)).to.have.length(1);
+      expect(component.find(libs.reactBootstrap.layouts.Default)).to.have.length(1);
     });
 
     it('populates state with values from data props', () => {

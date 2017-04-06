@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Rangearraycustom from './fields/Rangearraycustom';
 
 export default {
   view: 'drone',
@@ -100,14 +100,14 @@ export default {
     fields: {
       id: {
         id: 'drone-activation-id',
-        pristine: true,
+
         label: 'ID',
         type: 'hidden',
         value: ''
       },
       select: {
         id: 'select',
-        pristine: true,
+
         label: 'select',
         type: 'select',
         options: [
@@ -117,7 +117,7 @@ export default {
       },
       label: {
         id: 'drone-name',
-        pristine: true,
+
         label: 'Name',
         type: 'text',
         help: 'A descriptive name for the drone',
@@ -127,7 +127,7 @@ export default {
       },
       customer: {
         id: 'drone-customer',
-        pristine: true,
+
         label: 'Customer',
         type: 'lookup',
         options: {
@@ -143,13 +143,13 @@ export default {
       },
       sector: {
         id: 'drone-sector',
-        pristine: true,
+
         label: 'Sector',
         type: 'Text'
       },
       radiolist: {
         id: 'radio-list',
-        pristine: true,
+
         label: 'Radio list',
         type: 'radiolist',
         default: 'two',
@@ -161,13 +161,13 @@ export default {
       upload: {
         id: 'upload',
         type: 'upload',
-        pristine: true,
+
         label: 'Upload',
         placeholder: 'Drag files here'
       },
       activation: {
         id: 'drone-activation',
-        pristine: true,
+
         label: 'Claim',
         type: 'text',
         value: '',
@@ -179,7 +179,7 @@ export default {
 
       claimed: {
         id: 'drone-claimed',
-        pristine: true,
+
         label: 'Claimed',
         type: 'checkbox',
         value: false,
@@ -191,7 +191,7 @@ export default {
       },
       claimedDate: {
         id: 'drone-claimedDate',
-        pristine: true,
+
         label: 'Claimed date',
         type: 'date',
         vaidationState: '',
@@ -202,7 +202,7 @@ export default {
       },
       registered: {
         id: 'drone-registered',
-        pristine: true,
+
         label: 'Registered',
         type: 'checkbox',
         value: false,
@@ -214,7 +214,7 @@ export default {
       },
       registeredDate: {
         id: 'drone-registeredDate',
-        pristine: true,
+
         label: 'Registered date',
         type: 'date',
         vaidationState: '',
@@ -226,13 +226,18 @@ export default {
 
       description: {
         id: 'drone-description',
-        pristine: true,
+
         label: 'Description',
         type: 'textarea',
         access: {
           new: () => true,
           edit: () => true
         }
+      },
+      rangearray: {
+        id: 'range-array',
+        label: 'Range Array',
+        type: Rangearraycustom
       }
     }
   }
