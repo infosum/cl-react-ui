@@ -1,10 +1,10 @@
 // @flow
 import React, {Component} from 'react';
-import {Alert, Modal, closeButton} from 'react-bootstrap';
+import {Alert, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {FormLayout} from '../../../types';
 
 /**
- * Layout for rendering form in a Bootstrap modal
+ * Layout for rendering form in a reactstrap modal
  */
 class UiFormLayoutModal extends Component {
 
@@ -29,18 +29,18 @@ class UiFormLayoutModal extends Component {
       allFields = Object.keys(fields).map(n => fields[n])
 
     return (<div>
-              <Modal.Header closeButton>
-                <Modal.Title id="add-modal-title">{form.title}</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
+              <ModalHeader>
+                {form.title}
+              </ModalHeader>
+              <ModalBody>
                 {this.errors()}
                 <form>
-                    {allFields}
+                  {allFields}
                 </form>
-              </Modal.Body>
-              <Modal.Footer>
-                  {actions}
-              </Modal.Footer>
+              </ModalBody>
+              <ModalFooter>
+                {actions}
+              </ModalFooter>
             </div>);
   }
 }
