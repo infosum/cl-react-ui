@@ -63,6 +63,7 @@
     "url": "https://github.com/cognitivelogic/cl-react-ui/issues"
   },
   "dependencies": {
+    "deep-equal": "^1.0.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",

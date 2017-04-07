@@ -1,5 +1,7 @@
 import React from 'react';
-import Rangearraycustom from './fields/Rangearraycustom';
+//import Rangearraycustom from './fields/Rangearraycustom';
+import {fields} from '../index';
+console.log('fields', fields);
 
 export default {
   view: 'drone',
@@ -100,7 +102,6 @@ export default {
     fields: {
       id: {
         id: 'drone-activation-id',
-
         label: 'ID',
         type: 'hidden',
         value: ''
@@ -144,7 +145,7 @@ export default {
       },
       sector: {
         id: 'drone-sector',
-        value: 'default text',
+        value: Date.now(),
         label: 'Sector',
         type: 'Text'
       },
@@ -238,7 +239,8 @@ export default {
       rangearray: {
         id: 'range-array',
         label: 'Range Array',
-        type: Rangearraycustom
+        type: 'grid',
+        columns: [{label: 'Min', type: fields.reactstrap.Text}]
       }
     }
   }

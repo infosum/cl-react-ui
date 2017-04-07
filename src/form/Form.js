@@ -4,6 +4,7 @@ import * as libs from '../libs';
 import uuid from 'uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
+import deepEqual from 'deep-equal'
 
 let lib, fields, FormControl, layouts, Button;
 
@@ -55,7 +56,6 @@ class UiForm extends Component {
       data: props.data || {},
       state
     };
-
     let libType = config.lib || 'reactBootstrap';
     lib = libs[libType];
     fields = lib.fields;
@@ -69,7 +69,7 @@ class UiForm extends Component {
     })
     this.actions = config.form.actions;
 
-    this.makeState();
+    this.state.data = this.makeState();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -86,25 +86,33 @@ class UiForm extends Component {
     this.fields = config.form.fields;
     let state = {};
     Object.keys(errors).forEach(key => state[key] = 'error');
+
+    if (!deepEqual(this.props.data, newProps.data)) {
+      // this.applyDataToForm(this.state.data);
+      this.setState({data: this.makeState()})
+    }
+
     this.setState({state, errors});
   }
 
   /**
    * Build the form state, using this.props.data, then field value
    * for data.
+   * @return {Object} list row
    */
-  makeState() {
+  makeState(): ListRow {
     const {data} = this.props;
-    let name;
+    let name, state = {};
     for (name in this.fields) {
       if (data && data[name]) {
-        this.state.data[name] = data[name];
+        state[name] = data[name];
       } else if (this.fields[name].default === undefined) {
-        this.state.data[name] = '';
+        state[name] = '';
       } else {
-        this.state.data[name] = this.fields[name].default;
+        state[name] = this.fields[name].default;
       }
     }
+    return state;
   }
 
   /**
