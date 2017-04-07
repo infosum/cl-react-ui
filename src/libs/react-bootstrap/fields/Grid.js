@@ -86,7 +86,7 @@ class Grid extends Component {
         field.columns.map((col, columnIndex) => {
           let Field = col.type;
           return <td key={columnIndex}>
-            <Field value={row[columnIndex]}
+            <Field value={typeof row === 'string' ? row : row[columnIndex]}
               name=""
               field={{placeholder: col.label}}
               onBlur={() => {}}
