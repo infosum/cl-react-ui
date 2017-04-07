@@ -40,7 +40,7 @@ export type FormFieldOption = Object;
 export type FormFieldProps = {
   value: string,
   name: string,
-  onChange: Function,
+  onChange: (name: string, data: any[]) => {},
   onBlur: Function,
   field: {
     help?: string,
