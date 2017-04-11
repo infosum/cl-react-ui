@@ -9613,6 +9613,7 @@ var UiForm = function (_Component) {
 
       if (!(0, _deepEqual2.default)(this.props.data, newProps.data)) {
         newState.data = this.makeState(newProps.data);
+        this.applyDataToForm(newState.data);
       }
 
       this.setState(_extends({}, newState, { state: state, errors: errors }));

@@ -90,6 +90,7 @@ class UiForm extends Component {
 
     if (!deepEqual(this.props.data, newProps.data)) {
       newState.data = this.makeState(newProps.data);
+      this.applyDataToForm(newState.data);
     }
 
     this.setState({...newState, state, errors});
