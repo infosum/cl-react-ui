@@ -27,7 +27,7 @@ class Grid extends Component {
     if (!props.value || props.value === '') {
       rows = [];
     } else {
-      rows = JSON.parse(props.value);
+      rows = Array.isArray(props.value) ? props.value : JSON.parse(props.value);
     }
     super(props);
     this.state = {
