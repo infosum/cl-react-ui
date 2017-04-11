@@ -85,15 +85,14 @@ class UiForm extends Component {
     const {config, errors} = newProps;
     this.fields = config.form.fields;
     let state = {},
-      data;
+      newState = {};
     Object.keys(errors).forEach(key => state[key] = 'error');
 
     if (!deepEqual(this.props.data, newProps.data)) {
-      // this.applyDataToForm(this.state.data);
-      data = this.makeState(newProps.data);
+      newState.data = this.makeState(newProps.data);
     }
 
-    this.setState({data, state, errors});
+    this.setState({...newState, state, errors});
   }
 
   /**
