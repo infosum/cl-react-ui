@@ -69,7 +69,7 @@ class UiForm extends Component {
     })
     this.actions = config.form.actions;
 
-    this.state.data = this.makeState();
+    this.state.data = this.makeState(props);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -89,7 +89,7 @@ class UiForm extends Component {
 
     if (!deepEqual(this.props.data, newProps.data)) {
       // this.applyDataToForm(this.state.data);
-      this.setState({data: this.makeState()})
+      this.setState({data: this.makeState(newProps.data)})
     }
 
     this.setState({state, errors});
@@ -98,10 +98,10 @@ class UiForm extends Component {
   /**
    * Build the form state, using this.props.data, then field value
    * for data.
+   * @param {Object} data Props
    * @return {Object} list row
    */
-  makeState(): ListRow {
-    const {data} = this.props;
+  makeState(data: Props): ListRow {
     let name, state = {};
     for (name in this.fields) {
       if (data && data[name]) {
