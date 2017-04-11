@@ -2,6 +2,7 @@
 import React, {Component, Element} from 'react';
 import {Table, Button, Input} from 'reactstrap';
 import {FormFieldProps} from '../../../types';
+import deepEqual from 'deep-equal';
 
 type Props = {
   columns: {label: string, type: string}[],
@@ -22,17 +23,37 @@ class Grid extends Component {
    * @param {Object} props .
    */
   constructor(props: FormFieldProps & Props) {
-    let rows;
-
-    if (!props.value || props.value === '') {
-      rows = [];
-    } else {
-      rows = Array.isArray(props.value) ? props.value : JSON.parse(props.value);
-    }
     super(props);
     this.state = {
-      rows
+      rows: this.makeRowsFromValue(props.value)
     };
+  }
+
+  /**
+   * Make row state from value
+   * @param {string|Array} value new value
+   * @return {Array} rows
+   */
+  makeRowsFromValue(value: string | any[]) {
+    let rows;
+    if (!value || value === '') {
+      rows = [];
+    } else {
+      rows = Array.isArray(value) ? value : JSON.parse(value);
+    }
+    return rows;
+  }
+
+  /**
+   * Will receive new props
+   * @param {Object} newProps Props
+   */
+  componentWillReceiveProps(newProps: Props) {
+    if (!deepEqual(this.props.value, newProps.value)) {
+      this.setState({
+        rows: this.makeRowsFromValue(newProps.value)
+      })
+    }
   }
 
   /**

@@ -4,7 +4,7 @@ import * as libs from '../libs';
 import uuid from 'uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
-import deepEqual from 'deep-equal'
+import deepEqual from 'deep-equal';
 
 let lib, fields, FormControl, layouts, Button;
 
@@ -84,15 +84,16 @@ class UiForm extends Component {
   componentWillReceiveProps(newProps: Props) {
     const {config, errors} = newProps;
     this.fields = config.form.fields;
-    let state = {};
+    let state = {},
+      data;
     Object.keys(errors).forEach(key => state[key] = 'error');
 
     if (!deepEqual(this.props.data, newProps.data)) {
       // this.applyDataToForm(this.state.data);
-      this.setState({data: this.makeState(newProps.data)})
+      data = this.makeState(newProps.data);
     }
 
-    this.setState({state, errors});
+    this.setState({data, state, errors});
   }
 
   /**
