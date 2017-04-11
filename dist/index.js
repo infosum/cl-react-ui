@@ -9505,6 +9505,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
@@ -9604,17 +9606,16 @@ var UiForm = function (_Component) {
 
       this.fields = config.form.fields;
       var state = {},
-          data = void 0;
+          newState = {};
       Object.keys(errors).forEach(function (key) {
         return state[key] = 'error';
       });
 
       if (!(0, _deepEqual2.default)(this.props.data, newProps.data)) {
-        // this.applyDataToForm(this.state.data);
-        data = this.makeState(newProps.data);
+        newState.data = this.makeState(newProps.data);
       }
 
-      this.setState({ data: data, state: state, errors: errors });
+      this.setState(_extends({}, newState, { state: state, errors: errors }));
     }
 
     /**
