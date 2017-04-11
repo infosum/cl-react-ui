@@ -9481,7 +9481,7 @@ var UiForm = function (_Component) {
     });
     _this.actions = config.form.actions;
 
-    _this.state.data = _this.makeState(props);
+    _this.state.data = _this.makeState(props.data);
 
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleBlur = _this.handleBlur.bind(_this);

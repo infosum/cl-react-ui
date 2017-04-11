@@ -69,7 +69,7 @@ class UiForm extends Component {
     })
     this.actions = config.form.actions;
 
-    this.state.data = this.makeState(props);
+    this.state.data = this.makeState(props.data);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
