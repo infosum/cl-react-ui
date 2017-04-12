@@ -9678,7 +9678,7 @@ var UiForm = function (_Component) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
       if (field.validate === undefined) {
-        return Promise.resolve();
+        return Promise.resolve('');
       }
       var promises = field.validate.promises.map(function (p) {
         return p.rule(value, data, field.validate.msg);
@@ -16649,7 +16649,11 @@ exports.default = function (_ref) {
 
   var className = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, 'fa fa-' + icon, true), _defineProperty(_classNames, 'pull-' + pull, pull !== ''), _defineProperty(_classNames, 'text-' + color, color !== ''), _defineProperty(_classNames, 'fa-' + size + 'x', size !== 0), _defineProperty(_classNames, 'fa-stack-' + stack + 'x', stack !== 0), _defineProperty(_classNames, 'fa-inverse', inverse), _defineProperty(_classNames, 'fa-spin', spin), _classNames));
   if (!label) {
-    return _react2.default.createElement('i', { className: className });
+    return _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement('i', { className: className })
+    );
   }
   return _react2.default.createElement(
     'span',
@@ -17264,7 +17268,6 @@ var Grid = function (_Component) {
 Grid.defaultProps = {
   columns: [{ label: 'Min', type: 'text' }, { label: 'Max', type: 'text' }]
 };
-
 exports.default = Grid;
 
 /***/ }),
