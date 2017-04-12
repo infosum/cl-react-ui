@@ -141,9 +141,9 @@ class UiForm extends Component {
    * @param {Object} data Form data
    * @return {Promise}
    */
-  validateOne(field, value, data = {}): Promise<string> {
+  validateOne(field: FormField, value: string, data: ListRow = {}): Promise<string> {
     if (field.validate === undefined) {
-      return Promise.resolve();
+      return Promise.resolve('');
     }
     let promises = field.validate.promises
       .map((p) =>

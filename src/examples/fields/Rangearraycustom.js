@@ -5,6 +5,7 @@ import {Table, Button, Input} from 'reactstrap';
 
 type Props = {
   value: string,
+  name: string,
   onChange: (name: string, data: [number, number][]) => {}
 };
 
@@ -58,7 +59,7 @@ class RangeArray extends Component {
 
     ranges.push(nextRange);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**
@@ -70,7 +71,7 @@ class RangeArray extends Component {
     let ranges = [...this.state.ranges]
       .filter((v, i) => i !== index);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**
@@ -84,7 +85,7 @@ class RangeArray extends Component {
     let ranges = [...this.state.ranges];
     ranges[i][key] = parseFloat(value);
     this.setState({ranges});
-    onChange(name, this.state);
+    onChange(name, ranges);
   }
 
   /**

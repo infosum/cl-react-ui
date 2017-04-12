@@ -16625,7 +16625,8 @@ exports.default = function (_ref) {
       pull = _ref.pull,
       size = _ref.size,
       stack = _ref.stack,
-      inverse = _ref.inverse;
+      inverse = _ref.inverse,
+      spin = _ref.spin;
 
   if (!pull) {
     pull = '';
@@ -16642,7 +16643,11 @@ exports.default = function (_ref) {
     stack = 0;
   }
 
-  var className = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, 'fa fa-' + icon, true), _defineProperty(_classNames, 'pull-' + pull, pull !== ''), _defineProperty(_classNames, 'text-' + color, color !== ''), _defineProperty(_classNames, 'fa-' + size + 'x', size !== 0), _defineProperty(_classNames, 'fa-stack-' + stack + 'x', stack !== 0), _defineProperty(_classNames, 'fa-inverse', inverse), _classNames));
+  if (!spin) {
+    spin = false;
+  }
+
+  var className = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, 'fa fa-' + icon, true), _defineProperty(_classNames, 'pull-' + pull, pull !== ''), _defineProperty(_classNames, 'text-' + color, color !== ''), _defineProperty(_classNames, 'fa-' + size + 'x', size !== 0), _defineProperty(_classNames, 'fa-stack-' + stack + 'x', stack !== 0), _defineProperty(_classNames, 'fa-inverse', inverse), _defineProperty(_classNames, 'fa-spin', spin), _classNames));
   if (!label) {
     return _react2.default.createElement('i', { className: className });
   }
@@ -18626,7 +18631,6 @@ var Grid = function (_Component) {
 Grid.defaultProps = {
   columns: [{ label: 'Min', type: 'text' }, { label: 'Max', type: 'text' }]
 };
-
 exports.default = Grid;
 
 /***/ }),

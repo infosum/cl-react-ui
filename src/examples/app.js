@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Form, List} from '../index';
+import {Icon, Form, List} from '../index';
 import config from './config';
 import CustomLayout from './CustomLayout';
 console.log('Form', Form, List);
@@ -14,6 +14,12 @@ row = {
 ReactDOM.render(
   <div>
     <h1>test form</h1>
+    <Icon icon="leaf"
+      color="info"
+      label="leaf"
+      pull="right"
+      size={3}
+      spin={true} />
 
     <List config={config}
       data={data}/>

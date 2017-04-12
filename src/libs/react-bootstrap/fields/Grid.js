@@ -6,6 +6,7 @@ import deepEqual from 'deep-equal';
 
 type Props = {
   columns: {label: string, type: string}[],
+  value: string
 };
 
 /**
@@ -16,6 +17,13 @@ class Grid extends Component {
   props: FormFieldProps & Props
   state: {
     rows: any[]
+  }
+
+  static defaultProps = {
+    columns: [
+      {label: 'Min', type: 'text'},
+      {label: 'Max', type: 'text'}
+    ]
   }
 
   /**
@@ -154,12 +162,5 @@ class Grid extends Component {
     </Table>);
   }
 }
-
-Grid.defaultProps = {
-  columns: [
-    {label: 'Min', type: 'text'},
-    {label: 'Max', type: 'text'}
-  ]
-};
 
 export default Grid;
