@@ -19,6 +19,8 @@ export type ListColumns = {
   }
 };
 
+export type FormErrors = { [string]: string[] };
+
 export type ListConfig = {
   actions: ListActions,
   columns: ListColumns,

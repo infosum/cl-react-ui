@@ -53,6 +53,17 @@ const config = {
 
   lib: 'react-bootstrap' | 'reactstrap'
 
+# Errors
+
+Form errors should be an object, keyed on the field name, whose values are an array of error messages
+
+```javascript
+
+let errors = {
+  name: ['Please enter a name', 'Cheese is not a proper name']
+};
+
+```
 # Icon
 
 Renders a font-awesome icon
