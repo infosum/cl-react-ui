@@ -1,5 +1,6 @@
 import Date from './Date';
 import Checkbox from './Checkbox';
+import Email from './Email';
 import FormGroup from './FormGroup';
 import Hidden from './Hidden';
 import Lookup from './Lookup';
@@ -14,6 +15,7 @@ import Upload from './Upload';
 export {
   Checkbox,
   Date,
+  Email,
   Hidden,
   Lookup,
   Password,
