@@ -1,7 +1,7 @@
 import React from 'react';
 //import Rangearraycustom from './fields/Rangearraycustom';
 import {fields} from '../index';
-console.log('fields', fields);
+import {validations} from '../index';
 
 export default {
   view: 'drone',
@@ -122,9 +122,12 @@ export default {
         label: 'Name',
         type: 'text',
         help: 'A descriptive name for the drone',
-        validate: [
-          (v) => v !== '' ? 'success' : 'error'
-        ]
+        validate: {
+          promises: [{
+            rule: validations.required
+          }],
+          msg: (value, data) => 'Name required'
+        }
       },
       customer: {
         id: 'drone-customer',
@@ -241,7 +244,21 @@ export default {
         label: 'Range Array',
         type: 'grid',
         columns: [{label: 'Min', type: fields.reactstrap.Text}]
-      }
+      },
+      name: {
+        id: 'signup-name',
+        label: 'Name',
+        type: 'text',
+        ref: 'name',
+        value: '',
+        placeholder: 'Name',
+        validate: {
+          promises: [{
+            rule: validations.required
+          }],
+          msg: (value, data) => 'Name required'
+        }
+      },
     }
   }
 

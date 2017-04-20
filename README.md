@@ -5,6 +5,7 @@ Simple react form rendering
 
 ``` javascript
 import layout from './MyFormLayout';
+import {validations} from 'cl-react-ui';
 
 const config = {
     view: 'example',
@@ -20,10 +21,22 @@ const config = {
       },
       fields: {
         id: {
-          pristine: true
+          type: 'hidden'
+        },
+        name: {
+          label: 'Name',
+          type: 'text',
+          ref: 'name',
+          value: '',
+          placeholder: 'Name',
+          validate: {
+            promises: [{
+              rule: validations.required
+            }],
+            msg: (value, data) => 'Name required'
+          }
         },
         label: {
-          pristine: true,
           value: 'foo',
           access: {
             new: (field, data) => true,
@@ -35,7 +48,6 @@ const config = {
           accesss: {}
         },
         checkbox: {
-          pristine: true,
           type: 'checkbox'
         }
       }
@@ -53,7 +65,12 @@ const config = {
 
   lib: 'react-bootstrap' | 'reactstrap'
 
-# Errors
+## Validations
+
+Validations use the validate-promise library
+
+
+## Errors
 
 Form errors should be an object, keyed on the field name, whose values are an array of error messages
 
@@ -80,4 +97,14 @@ import {Icon} from 'cl-react-ui';
   stack: number,
   inverse: boolean,
   spin: boolean />
+```
+
+# Examples
+
+To build the example form and list :
+
+```
+cd src/examples
+npm run-script build
+google-chrome index.html
 ```

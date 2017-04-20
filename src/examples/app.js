@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Icon, Form, List} from '../index';
 import config from './config';
 import CustomLayout from './CustomLayout';
-console.log('Form', Form, List);
+
 let data = [
   {drone_id: '1', label: 'label 1'}
 ],

@@ -4,6 +4,7 @@ import {FormFeedback, FormGroup, FormText, Label} from 'reactstrap';
 export default (props) => {
   const {FieldComponent, errors, field, validationState} = props,
     noLabels = ['checkbox', 'hidden'];
+
   let {type, id, help, label} = field,
     check = type === 'checkbox',
     controlLabel = noLabels.indexOf(type) !== -1 || label === '' ?

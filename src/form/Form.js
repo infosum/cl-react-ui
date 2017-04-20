@@ -142,7 +142,7 @@ class UiForm extends Component {
    * @return {Promise}
    */
   validateOne(field: FormField, value: string, data: ListRow = {}): Promise<string> {
-    if (field.validate === undefined) {
+    if (field.validate === undefined || field.validate.promises === undefined) {
       return Promise.resolve('');
     }
     let promises = field.validate.promises
@@ -153,11 +153,10 @@ class UiForm extends Component {
     return new Promise((resolve: Function, reject: Function) => {
       return Promise.all(promises)
         .then(() => resolve('success'))
-        .catch(e => {
-          reject(field.validate.msg(value, data));
-        });
+        .catch(e =>
+          reject(field.validate.msg(value, data))
+        );
     })
-
   }
 
   /**
@@ -168,7 +167,7 @@ class UiForm extends Component {
   getValidationState(name: string): Object {
     let field = this.fields[name],
       {errors} = this.state,
-      state = this.state.state,
+      state = {...this.state.state},
       i = 0,
       value = this.state.data[name],
       res = [],
@@ -179,22 +178,26 @@ class UiForm extends Component {
       this.validateOne(field, value, this.state.data)
       .then(ok => {
         state[name] = 'success';
-        this.setState(state);
+        errors[name] = []
+        this.setState({state, errors});
       })
-      .catch(err => {
+      .catch((err: string) => {
+        errors[name] = [err];
         state[name] = 'error';
-        this.setState(state);
+        this.setState({state, errors});
       })
     } else {
        if (serverError) {
+         state[name] = [serverError];
         state[name] = 'error';
       }
       if (serverSuccess) {
+        state[name] = [];
         state[name] = 'success';
       }
     }
 
-    this.setState(state);
+    this.setState({state, errors});
     return state;
   }
 
