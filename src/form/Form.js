@@ -147,7 +147,7 @@ class UiForm extends Component {
     }
     let promises = field.validate.promises
       .map((p) =>
-        p.rule(value, data, field.validate.msg)
+        p.rule(value, data, field.validate.msg, p.arg)
     );
 
     return new Promise((resolve: Function, reject: Function) => {

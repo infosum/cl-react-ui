@@ -7099,7 +7099,7 @@ var UiForm = function (_Component) {
         return Promise.resolve('');
       }
       var promises = field.validate.promises.map(function (p) {
-        return p.rule(value, data, field.validate.msg);
+        return p.rule(value, data, field.validate.msg, p.arg);
       });
 
       return new Promise(function (resolve, reject) {
