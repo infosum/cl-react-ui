@@ -11,12 +11,12 @@ var webpack = require('webpack'),
     {test: /\.js$/, exclude: /(node_modules)/, loader: 'babel-loader'}
   ];
 
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    debug: true,
-    compress: {
-      warnings: false
-    }
-  }));
+  // plugins.push(new webpack.optimize.UglifyJsPlugin({
+  //   debug: true,
+  //   compress: {
+  //     warnings: false
+  //   }
+  // }));
 
 module.exports = {
   devtool: 'cheap-module-source-map',
