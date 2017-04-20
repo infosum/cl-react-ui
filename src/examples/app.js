@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Icon, Form, List} from '../index';
+import {Icon, Form, List, validations} from '../index';
 import config from './config';
 import CustomLayout from './CustomLayout';
+console.log('validations', validations);
 
 let data = [
   {drone_id: '1', label: 'label 1'}
