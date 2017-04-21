@@ -72,7 +72,7 @@
     "react-dropzone": "^3.13.0",
     "reactstrap": "^4.5.0",
     "uuid": "^3.0.1",
-    "validate-promise": "^2.0.8"
+    "validate-promise": "^2.0.9"
   },
   "description": "Cognitive Logic React UI",
   "devDependencies": {
@@ -126,5 +126,5 @@
     "testold": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'",
     "test": "nyc --exclude '**/*.spec.js' --reporter=lcov mocha --recursive  './src/**/*.spec.js' --compilers js:babel-core/register"
   },
-  "version": "1.0.12"
+  "version": "1.0.12.1"
 }
