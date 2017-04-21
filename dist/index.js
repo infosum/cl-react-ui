@@ -15502,10 +15502,8 @@ exports.default = function (_ref) {
       componentClass: 'select',
       value: value,
       onChange: function onChange(e) {
-        console.log('onCHnage', e);
-        _onChange(name, e.target.value);
-      }
-    },
+        return _onChange(name, e.target.value);
+      } },
     opts
   );
 };
@@ -17869,7 +17867,6 @@ var UiList = function (_Component) {
           config = _props4.config,
           access = _props4.access;
 
-      console.log('hadle update');
       this.setState({ rowUpdating: true });
       if (state.id === '') {
         if (access.add) {
@@ -17957,7 +17954,6 @@ var UiList = function (_Component) {
           'aria-labelledby': 'add-modal-title' },
         _react2.default.createElement(_Form2.default, { layout: 'modal',
           onSubmit: function onSubmit(e, state) {
-            console.log('modal handle update');
             return _this3.handleUpdate(e, state);
           },
           errors: errors,
