@@ -4,6 +4,7 @@ import Email from './Email';
 import FormGroup from './FormGroup';
 import Hidden from './Hidden';
 import Lookup from './Lookup';
+import Number from './Number';
 import Password from './Password';
 import Radiolist from './Radiolist';
 import Grid from './Grid';
@@ -18,6 +19,7 @@ export {
   Email,
   Hidden,
   Lookup,
+  Number,
   Password,
   Grid,
   Radiolist,

@@ -5,7 +5,16 @@ import {FormFieldProps, FormFieldOption} from '../../../types';
 
 
 export default ({value, name, onChange, field}: FormFieldProps) => {
-    const opts = field.options.map((option: FormFieldOption, k: number) => {
+
+    let {options} = field;
+
+    if (!Array.isArray(field.options)) {
+      options = Object.keys(options).map(key => (
+        {value: key, label: options[key]}
+      ))
+    }
+
+    const opts = options.map((option: FormFieldOption, k: number) => {
         let active = option.value === value;
         return (<Radio
                   key={k}

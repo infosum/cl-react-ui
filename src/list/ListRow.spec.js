@@ -53,17 +53,6 @@ describe('list.ListRow', () => {
     it('shows a cell', () => {
       expect(component.find(ListCell)).to.have.length(1);
     });
-
-    it('toggles checkbox - select row', () => {
-      component.find(Checkbox).simulate('click', evnt);
-      expect(component.state().toggled).to.equal(true);
-    });
-
-    it('toggles checkbox - deselect row', () => {
-      component.find(Checkbox).simulate('click', evnt);
-      component.find(Checkbox).simulate('click', deselectEvnt);
-      expect(component.state().toggled).to.equal(false);
-    });
   });
 
   describe('tip', () => {
@@ -97,5 +86,3 @@ describe('list.ListRow', () => {
     });
   });
 });
-
-

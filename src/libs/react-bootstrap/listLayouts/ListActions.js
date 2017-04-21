@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {ButtonGroup} from 'reactstrap';
+import {ButtonGroup} from 'react-bootstrap';
 import {CrudConfig, ListActions as ListActionsType,
   ListRow, User} from '../../../types';
 
@@ -12,9 +12,10 @@ type Props = {
   rowClick: Function
 };
 
-export default ({user, selected, actions, config, rowClick}: Props) => {
+export default (props: Props) => {
 
-    let listActionGroups = [];
+    let listActionGroups = [],
+      {user, selected, actions, config, rowClick} = props;
 
     // For each button group
     config.list.actions.forEach((btns: ListActionsType, index: number) => {
@@ -23,7 +24,7 @@ export default ({user, selected, actions, config, rowClick}: Props) => {
         listActions = listActionNames.map((listAction: string, key: number) => {
           let a = btns[listAction],
             isVisible = a.visible(user, selected);
-          return <a.render key={a.id} {...this.props} {...actions} id={a.id}
+          return <a.render key={a.id} {...props} {...actions} id={a.id}
              open={e => rowClick(e, false)} isVisible={isVisible} {...a} />;
         });
       listActionGroups.push(<ButtonGroup key={btnGroupKey}>

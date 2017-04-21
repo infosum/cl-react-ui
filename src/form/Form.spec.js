@@ -31,49 +31,42 @@ let component,
       },
       fields: {
         id: {
-          pristine: true
+          type: 'hidden'
         },
         label: {
-          pristine: true,
-          value: 'foo',
+          default: 'foo',
           access: {
             new: (field, data) => true,
             edit: (field, data) => true
           }
         },
         age: {
-          pristine: true,
+          type: 'number',
           accesss: {}
         },
         customValidationError: {
-          pristine: false,
           validate: [
             v => 'error'
           ]
         },
         customValidationWarning: {
-          pristine: false,
           validate: [
             v => 'warning'
           ]
         },
         customValidationSuccess: {
-          pristine: false,
           validate: [
             v => 'success'
           ]
         },
         checkbox: {
-          pristine: true,
           type: 'checkbox'
         },
         selectedCheckbox: {
-          pristine: true,
           type: 'checkbox',
-          value: '1'
+          default: '1'
         },
         protected: {
-          pristine: true,
           access: {
             new: (field, data) => false,
             edit: (field, data) => false

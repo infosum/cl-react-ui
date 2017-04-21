@@ -27,6 +27,7 @@ describe('list.actions.Toggle', () => {
         selected={[]}
         config={config}
         user={user}
+        filter={() => {}}
         isVisible={true}></Toggle>);
     });
 

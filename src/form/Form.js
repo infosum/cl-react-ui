@@ -19,7 +19,7 @@ type Props = {
   errors: FormErrors,
   formUpdate: Function,
   layout: string,
-  lib?: string,
+  library?: 'reactstrap' | 'reactBootstrap',
   onSubmit: Function
 };
 
@@ -47,7 +47,7 @@ class UiForm extends Component {
    */
   constructor(props: Props) {
     super(props);
-    const {config, onSubmit} = this.props;
+    const {config, library, onSubmit} = this.props;
     let state = {};
     Object.keys(props.errors).forEach(key => state[key] = 'error');
     this.state = {
@@ -56,12 +56,7 @@ class UiForm extends Component {
       data: props.data || {},
       state
     };
-    let libType = config.lib || 'reactBootstrap';
-    lib = libs[libType];
-    fields = lib.fields;
-    layouts = lib.layouts;
-    FormControl = lib.FormControl;
-    Button = lib.Button;
+    this.setLib();
 
     this.fields = config.form.fields;
     Object.keys(this.fields).forEach(k => {
@@ -92,8 +87,18 @@ class UiForm extends Component {
       newState.data = this.makeState(newProps.data);
       this.applyDataToForm(newState.data);
     }
-
+    this.setLib();
     this.setState({...newState, state, errors});
+  }
+
+  setLib() {
+    const {config, library} = this.props;
+    let libType = config.lib || library || 'reactBootstrap';
+    lib = libs[libType];
+    fields = lib.fields;
+    layouts = lib.layouts;
+    FormControl = lib.FormControl;
+    Button = lib.Button;
   }
 
   /**
@@ -145,16 +150,19 @@ class UiForm extends Component {
     if (field.validate === undefined || field.validate.promises === undefined) {
       return Promise.resolve('');
     }
+    const validate = (p) => {
+      const msg = p.msg || field.validate.msg;
+      return p.rule(value, data, msg, p.arg);
+    };
+
     let promises = field.validate.promises
-      .map((p) =>
-        p.rule(value, data, field.validate.msg, p.arg)
-    );
+      .map(validate);
 
     return new Promise((resolve: Function, reject: Function) => {
       return Promise.all(promises)
         .then(() => resolve('success'))
         .catch(e =>
-          reject(field.validate.msg(value, data))
+          reject(e)
         );
     })
   }
