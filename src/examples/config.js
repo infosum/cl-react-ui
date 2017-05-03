@@ -5,7 +5,7 @@ import {validations} from '../index';
 
 export default {
   view: 'drone',
-  //lib: 'reactstrap',
+  lib: 'reactstrap',
   list: {
     columns: {
       drone_id: {
@@ -16,40 +16,11 @@ export default {
         id: 'drone-heading-name',
         label: 'Name'
       },
-      // claimed: {
-      //   class: 'text-center',
-      //   id: 'drone-heading-claimed',
-      //   label: 'Claimed',
-      //   render: claim,
-      //   config: {},
-      //   tip: {
-      //     position: 'top',
-      //     content: ((row: Drone): UnsafeHTML => {
-      //       const claimDate = moment(row.claimedDate).format('L, LT'),
-      //         msg = row.claimed ?
-      //           '<strong>Claimed on: </strong>' + claimDate :
-      //           '<strong>Not claimed</strong>';
-      //       return {__html: xss('<span>' + msg + '</span>')};
-      //     })
-      //   }
-      // },
-      // registered: {
-      //   class: 'text-center',
-      //   id: 'drone-heading-registered',
-      //   label: 'Registered',
-      //   render: check,
-      //   config: {},
-      //   tip: {
-      //     position: 'top',
-      //     content: ((row: Drone): UnsafeHTML => {
-      //       const regDate = moment(row.registeredDate).format('L, LT'),
-      //         msg = row.registered ?
-      //           '<strong>Registered on: </strong>' + regDate :
-      //           '<strong>Not registered</strong>';
-      //       return {__html: xss('<span>' + msg + '</span>')};
-      //     })
-      //   }
-      // }
+      claimed: {
+        class: 'text-center',
+        id: 'drone-heading-claimed',
+        label: 'Claimed',
+      }
     },
     searchall: {
       label: 'Search',
@@ -79,11 +50,7 @@ export default {
   },
 
   prefilters: [
-    {
-      field: 'claimed',
-      operator: '=',
-      value: true
-    }
+
   ],
 
   messages: {

@@ -24,12 +24,14 @@ class Demo extends Component {
 
   render() {
     let data = [
-      {drone_id: '1', label: 'label 1'}
+      {drone_id: '1', label: 'label 1', claimed: false},
+      {drone_id: '2', label: 'label 2', claimed: true}
     ],
     row = {
       label: 'hi'
     };
 
+console.log('data = ', data);
     return <Container>
         <Button onClick={e => this.toggleLib()}>
           lib: {this.state.lib}

@@ -192,7 +192,7 @@ class UiList extends Component {
     let key,
       pattern = new RegExp(this.state.search, 'i'),
       fields;
-    if (!config.list.searchall || !config.list.searchall.like) {
+    if (!config.list.searchall || !config.list.searchall.like || this.state.search === '') {
       return true;
     }
     fields = config.list.searchall.like;
