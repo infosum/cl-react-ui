@@ -6,9 +6,26 @@ var webpack = require('webpack'),
   plugins = [
     new webpack.NoEmitOnErrorsPlugin()
   ],
-  rules = [
-    {test: /\.js$/, exclude: /(node_modules)/, loader: 'babel-loader'}
-  ];
+  rules = [{
+    test: /\.ts(x?)$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'babel-loader'
+      },
+      {
+        loader: 'ts-loader'
+      }
+    ]
+  }, {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'babel-loader'
+      }
+    ]
+  }];
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -19,6 +36,9 @@ module.exports = {
   },
   module: {
     rules: rules
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   plugins: plugins,
   watchOptions: {

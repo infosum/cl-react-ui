@@ -6,8 +6,7 @@ import {Table, FormControl, Alert, Well,
   Checkbox, Modal, Row, Col} from 'react-bootstrap';
 import UiForm from '../form/Form';
 import {CrudConfig, DOMEvent, ListActions as ListActionsType,
-  ListRow as ListRowType,
-  User} from '../types';
+  ListRow as ListRowType} from '../types';
 
 let layouts, lib;
 
