@@ -2,8 +2,10 @@ import {shallow} from 'enzyme';
 import React from 'react';
 import Lookup from './Lookup';
 import {expect} from 'chai';
+import sinon from 'sinon';
 
 let component;
+const onChange = sinon.spy();
 
 describe('form.fields.Lookup', () => {
   describe('no option group', () => {
@@ -53,8 +55,6 @@ describe('form.fields.Lookup', () => {
             label: 'label',
             optGroup: 'group'
           }
-        },
-        change = function(e, name) {
         };
 
       component = shallow(<Lookup
@@ -62,7 +62,7 @@ describe('form.fields.Lookup', () => {
         name="lookup"
         field={field}
         row={{}}
-        onChange={e => change(e, name)}></Lookup>);
+        onChange={onChange}></Lookup>);
     });
 
     it('should show two option groups', () => {
@@ -90,8 +90,6 @@ describe('form.fields.Lookup', () => {
               return row.value === '1';
             }
           }
-        },
-        change = function(e, name) {
         };
 
       component = shallow(<Lookup
@@ -99,7 +97,7 @@ describe('form.fields.Lookup', () => {
         name="lookup"
         field={field}
         row={{}}
-        onChange={(e, name) => change(e, name)}></Lookup>);
+        onChange={onChange}></Lookup>);
     });
 
     it('should filter options to one opt group and option', () => {
@@ -113,8 +111,8 @@ describe('form.fields.Lookup', () => {
     });
 
     it('should fire onChange', () => {
-      component.simulate('change', {value: '1'});
-      expect(component.state().value).to.equal('1');
+      component.simulate('change', {target: {value: '1'}});
+      expect(onChange.calledOnce).to.equal(true);
     });
   });
 });

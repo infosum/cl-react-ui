@@ -3,9 +3,10 @@ import RadioList from './Radiolist';
 import React from 'react';
 import {expect} from 'chai';
 import {Radio} from 'react-bootstrap';
+import sinon from 'sinon';
 
 let component;
-
+const onChange = sinon.spy();
 describe('form.field.RadioList', () => {
   beforeEach(function() {
     let field = {
@@ -22,7 +23,7 @@ describe('form.field.RadioList', () => {
       value="1"
       name="radiolist"
       field={field}
-      onChange={e => change(e)}></RadioList>);
+      onChange={onChange}></RadioList>);
   });
 
   it('should show two radios', () => {
@@ -36,7 +37,7 @@ describe('form.field.RadioList', () => {
   });
 
   it('uses change event', () => {
-    component.find(Radio).first().simulate('click');
-    expect(component.state().value).to.equal('0');
+    component.find(Radio).first().simulate('click', {target: {value: '1'}});
+    expect(onChange.calledOnce).to.equal(true);
   });
 });

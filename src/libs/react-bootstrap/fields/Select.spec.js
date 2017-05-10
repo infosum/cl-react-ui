@@ -2,8 +2,10 @@ import {shallow} from 'enzyme';
 import Select from './Select';
 import React from 'react';
 import {expect} from 'chai';
+import sinon from 'sinon';
 
 let component;
+const onChange = sinon.spy();
 
 describe('form.field.Select', () => {
   beforeEach(() => {
@@ -20,7 +22,7 @@ describe('form.field.Select', () => {
       value="1"
       name="select"
       field={field}
-      onChange={e => change(e)}></Select>);
+      onChange={onChange}></Select>);
   });
 
   it('should show two options', () => {
@@ -34,7 +36,7 @@ describe('form.field.Select', () => {
   });
 
   it('uses change event', () => {
-    component.simulate('change', {value: '1'});
-    expect(component.state().value).to.equal('1');
+    component.simulate('change', {target: {value: '1'}});
+    expect(onChange.calledOnce).to.equal(true);
   });
 });
