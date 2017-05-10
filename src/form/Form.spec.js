@@ -4,6 +4,7 @@ import {expect} from 'chai';
 import * as libs from '../libs';
 import {FormControl, FormGroup} from 'react-bootstrap';
 import UiForm from './Form';
+import UiFormLayoutDefault from '../libs/react-bootstrap/layouts/Default';
 
 let component,
   html,
@@ -34,6 +35,7 @@ let component,
           type: 'hidden'
         },
         label: {
+          type: 'text',
           default: 'foo',
           access: {
             new: (field, data) => true,
@@ -44,21 +46,7 @@ let component,
           type: 'number',
           accesss: {}
         },
-        customValidationError: {
-          validate: [
-            v => 'error'
-          ]
-        },
-        customValidationWarning: {
-          validate: [
-            v => 'warning'
-          ]
-        },
-        customValidationSuccess: {
-          validate: [
-            v => 'success'
-          ]
-        },
+      
         checkbox: {
           type: 'checkbox'
         },
@@ -67,6 +55,7 @@ let component,
           default: '1'
         },
         protected: {
+          type: 'text',
           access: {
             new: (field, data) => false,
             edit: (field, data) => false
@@ -93,7 +82,7 @@ describe('UiForm', () => {
     });
 
     it('renders a form with default layout', () => {
-      expect(component.find(libs.reactBootstrap.layouts.Default)).to.have.length(1);
+      expect(component.find(UiFormLayoutDefault)).to.have.length(1);
     });
 
     it('populates state with values from data props', () => {
@@ -139,7 +128,7 @@ describe('UiForm', () => {
 
 
     it('renders a form with default layout', () => {
-      expect(component.find(layouts.Default)).to.have.length(1);
+      expect(component.find(UiFormLayoutDefault)).to.have.length(1);
     });
 
     it('uses _title func to create title', () => {
