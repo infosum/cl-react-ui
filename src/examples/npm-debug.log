@@ -1,0 +1,125 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@4.1.2
+3 info using node@v6.3.1
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/rob/cl-react-ui/src/examples',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/rob/.npm/examples/1.0.0/package.tgz not in flight; packing
+9 verbose correctMkdir /home/rob/.npm correctMkdir not in flight; initializing
+10 info lifecycle examples@1.0.0~prepublish: examples@1.0.0
+11 silly lifecycle examples@1.0.0~prepublish: no script for prepublish, continuing
+12 info lifecycle examples@1.0.0~prepare: examples@1.0.0
+13 silly lifecycle examples@1.0.0~prepare: no script for prepare, continuing
+14 verbose tar pack [ '/home/rob/.npm/examples/1.0.0/package.tgz',
+14 verbose tar pack   '/home/rob/cl-react-ui/src/examples' ]
+15 verbose tarball /home/rob/.npm/examples/1.0.0/package.tgz
+16 verbose folder /home/rob/cl-react-ui/src/examples
+17 verbose addLocalTarball adding from inside cache /home/rob/.npm/examples/1.0.0/package.tgz
+18 verbose correctMkdir /home/rob/.npm correctMkdir not in flight; initializing
+19 silly cache afterAdd examples@1.0.0
+20 verbose afterAdd /home/rob/.npm/examples/1.0.0/package/package.json not in flight; writing
+21 verbose correctMkdir /home/rob/.npm correctMkdir not in flight; initializing
+22 verbose afterAdd /home/rob/.npm/examples/1.0.0/package/package.json written
+23 silly publish { name: 'examples',
+23 silly publish   version: '1.0.0',
+23 silly publish   description: '',
+23 silly publish   main: 'index.js',
+23 silly publish   scripts:
+23 silly publish    { build: 'webpack --config ./webpack.config.js',
+23 silly publish      test: 'echo "Error: no test specified" && exit 1' },
+23 silly publish   author: '',
+23 silly publish   license: 'ISC',
+23 silly publish   dependencies:
+23 silly publish    { react: '^15.5.4',
+23 silly publish      'react-addons-css-transition-group': '^15.5.2',
+23 silly publish      'react-addons-transition-group': '^15.5.2',
+23 silly publish      'react-bootstrap': '^0.31.0',
+23 silly publish      'react-dom': '^15.5.4',
+23 silly publish      reactstrap: '^4.5.0',
+23 silly publish      rect: '^1.2.1' },
+23 silly publish   devDependencies:
+23 silly publish    { 'babel-core': '^6.24.1',
+23 silly publish      'babel-eslint': '^7.2.3',
+23 silly publish      'babel-loader': '^7.0.0',
+23 silly publish      'babel-preset-es2015': '^6.24.1',
+23 silly publish      'babel-preset-react': '^6.24.1',
+23 silly publish      chai: '^3.5.0',
+23 silly publish      eslint: '^3.19.0',
+23 silly publish      'eslint-plugin-react': '^6.10.3',
+23 silly publish      'ts-loader': '^2.0.3',
+23 silly publish      webpack: '^2.4.1' },
+23 silly publish   babel: { presets: [ 'es2015', 'react' ] },
+23 silly publish   readme: 'ERROR: No README data found!',
+23 silly publish   _id: 'examples@1.0.0',
+23 silly publish   _shasum: '34bf51b7e5e2ba3413135068ce525c4e5209c3b3',
+23 silly publish   _from: '.' }
+24 info lifecycle examples@1.0.0~prepublishOnly: examples@1.0.0
+25 silly lifecycle examples@1.0.0~prepublishOnly: no script for prepublishOnly, continuing
+26 verbose getPublishConfig undefined
+27 silly mapToRegistry name examples
+28 silly mapToRegistry using default registry
+29 silly mapToRegistry registry https://registry.npmjs.org/
+30 silly mapToRegistry data Result {
+30 silly mapToRegistry   raw: 'examples',
+30 silly mapToRegistry   scope: null,
+30 silly mapToRegistry   escapedName: 'examples',
+30 silly mapToRegistry   name: 'examples',
+30 silly mapToRegistry   rawSpec: '',
+30 silly mapToRegistry   spec: 'latest',
+30 silly mapToRegistry   type: 'tag' }
+31 silly mapToRegistry uri https://registry.npmjs.org/examples
+32 verbose publish registryBase https://registry.npmjs.org/
+33 silly publish uploading /home/rob/.npm/examples/1.0.0/package.tgz
+34 verbose request uri https://registry.npmjs.org/examples
+35 verbose request sending authorization for write operation
+36 info attempt registry request try #1 at 4:15:03 PM
+37 verbose request using bearer token for auth
+38 verbose request id fc57673c7894e4cf
+39 http request PUT https://registry.npmjs.org/examples
+40 http 403 https://registry.npmjs.org/examples
+41 verbose headers { 'content-type': 'application/json',
+41 verbose headers   'cache-control': 'max-age=300',
+41 verbose headers   'content-length': '102',
+41 verbose headers   'accept-ranges': 'bytes',
+41 verbose headers   date: 'Wed, 03 May 2017 15:15:06 GMT',
+41 verbose headers   via: '1.1 varnish',
+41 verbose headers   connection: 'keep-alive',
+41 verbose headers   'x-served-by': 'cache-lcy1139-LCY',
+41 verbose headers   'x-cache': 'MISS',
+41 verbose headers   'x-cache-hits': '0',
+41 verbose headers   'x-timer': 'S1493824504.181930,VS0,VE1923',
+41 verbose headers   vary: 'Accept-Encoding' }
+42 verbose request invalidating /home/rob/.npm/registry.npmjs.org/examples on PUT
+43 error publish Failed PUT 403
+44 verbose stack Error: you do not have permission to publish "examples". Are you logged in as the correct user? : examples
+44 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:304:12)
+44 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:292:14)
+44 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:212:14)
+44 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:186:22)
+44 verbose stack     at emitTwo (events.js:106:13)
+44 verbose stack     at Request.emit (events.js:191:7)
+44 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1081:10)
+44 verbose stack     at emitOne (events.js:96:13)
+44 verbose stack     at Request.emit (events.js:188:7)
+44 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1001:12)
+45 verbose statusCode 403
+46 verbose pkgid examples
+47 verbose cwd /home/rob/cl-react-ui/src/examples
+48 error Linux 4.4.0-31-generic
+49 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+50 error node v6.3.1
+51 error npm  v4.1.2
+52 error code E403
+53 error you do not have permission to publish "examples". Are you logged in as the correct user? : examples
+54 error If you need help, you may report this error at:
+54 error     <https://github.com/npm/npm/issues>
+55 verbose exit [ 1, true ]

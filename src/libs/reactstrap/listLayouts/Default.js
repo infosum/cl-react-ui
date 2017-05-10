@@ -2,7 +2,7 @@ import React from 'react';
 import ListActions from './ListActions';
 import {Alert, Input, Col, Row, Table} from 'reactstrap';
 
-export default ({actions, data, config, listRow, modal, msg, rowClick, rows, search, selected, toggleAll, user}) => {
+export default ({actions, canSelect, data, config, listRow, modal, msg, rowClick, rows, search, selected, toggleAll, user}) => {
   let list;
   const columns = config.list.columns,
       headings = Object.keys(columns)
@@ -12,11 +12,14 @@ export default ({actions, data, config, listRow, modal, msg, rowClick, rows, sea
             {th.label}
           </th>);
         });
-    headings.unshift(<th key="select-all">
-        <Input type="checkbox"
-          style={{position: 'relative', margin: 0}}
-          onClick={e => toggleAll(e)} />
-      </th>);
+        if (canSelect()) {
+          headings.unshift(<th key="select-all">
+              <Input type="checkbox"
+                data-action="check-all"
+                style={{position: 'relative', margin: 0}}
+                onClick={e => toggleAll(e)} />
+            </th>);
+        }
 
   if (rows.length > 0) {
       list = (<div>

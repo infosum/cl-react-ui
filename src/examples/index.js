@@ -66718,6 +66718,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   view: 'drone',
   lib: 'reactstrap',
+  primary_key: 'drone_id',
   list: {
     columns: {
       drone_id: {
@@ -68443,6 +68444,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (_ref) {
   var actions = _ref.actions,
+      canSelect = _ref.canSelect,
       data = _ref.data,
       config = _ref.config,
       listRow = _ref.listRow,
@@ -68454,6 +68456,68 @@ exports.default = function (_ref) {
       selected = _ref.selected,
       toggleAll = _ref.toggleAll,
       user = _ref.user;
+
+  var list = void 0;
+  var columns = config.list.columns,
+      headings = Object.keys(columns).map(function (heading, key) {
+    var th = columns[heading];
+    return _react2.default.createElement(
+      'th',
+      { key: th.id, className: th.class },
+      th.label
+    );
+  });
+  if (canSelect()) {
+    headings.unshift(_react2.default.createElement(
+      'th',
+      { key: 'select-all' },
+      _react2.default.createElement('input', { type: 'checkbox',
+        'data-action': 'check-all',
+        style: { position: 'relative', margin: 0 },
+        onClick: function onClick(e) {
+          return toggleAll(e);
+        } })
+    ));
+  }
+
+  if (rows.length > 0) {
+    list = _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        _reactBootstrap.Table,
+        { responsive: true },
+        _react2.default.createElement(
+          'thead',
+          null,
+          _react2.default.createElement(
+            'tr',
+            null,
+            headings
+          )
+        ),
+        _react2.default.createElement(
+          'tbody',
+          null,
+          rows.map(function (row, key) {
+            return listRow({ key: key, row: row, selected: selected, columns: columns, actions: actions, canSelect: canSelect });
+          })
+        )
+      ),
+      modal
+    );
+  } else {
+    list = _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        _reactBootstrap.Alert,
+        { bsStyle: 'info' },
+        msg
+      ),
+      modal
+    );
+  }
 
   return _react2.default.createElement(
     'div',
@@ -68476,16 +68540,7 @@ exports.default = function (_ref) {
         search
       )
     ),
-    _react2.default.createElement(
-      _reactBootstrap.Well,
-      null,
-      _react2.default.createElement(
-        _reactBootstrap.Alert,
-        { bsStyle: 'info' },
-        msg
-      )
-    ),
-    modal
+    list
   );
 };
 
@@ -69880,6 +69935,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (_ref) {
   var actions = _ref.actions,
+      canSelect = _ref.canSelect,
       data = _ref.data,
       config = _ref.config,
       listRow = _ref.listRow,
@@ -69902,15 +69958,18 @@ exports.default = function (_ref) {
       th.label
     );
   });
-  headings.unshift(_react2.default.createElement(
-    'th',
-    { key: 'select-all' },
-    _react2.default.createElement(_reactstrap.Input, { type: 'checkbox',
-      style: { position: 'relative', margin: 0 },
-      onClick: function onClick(e) {
-        return toggleAll(e);
-      } })
-  ));
+  if (canSelect()) {
+    headings.unshift(_react2.default.createElement(
+      'th',
+      { key: 'select-all' },
+      _react2.default.createElement(_reactstrap.Input, { type: 'checkbox',
+        'data-action': 'check-all',
+        style: { position: 'relative', margin: 0 },
+        onClick: function onClick(e) {
+          return toggleAll(e);
+        } })
+    ));
+  }
 
   if (rows.length > 0) {
     list = _react2.default.createElement(
@@ -70263,6 +70322,49 @@ var UiList = function (_Component) {
     }
 
     /**
+     * Get primary key's name
+     * @return string
+     */
+
+  }, {
+    key: 'getPrimaryKey',
+    value: function getPrimaryKey() {
+      var config = this.props.config;
+
+      return config.primary_key || 'id';
+    }
+
+    /**
+     * Get the selected index for the given row
+     * returns -1 if row not selected
+     * @param {Object} row List row
+     * @return {Number} index
+     */
+
+  }, {
+    key: 'selectedIndex',
+    value: function selectedIndex(row) {
+      var selected = this.state.selected,
+          pk = this.getPrimaryKey();
+
+      return selected.findIndex(function (r, index) {
+        return r[pk] === row[pk];
+      });
+    }
+    /**
+     * Is the row selected
+     * @param {Object} row List row
+     * @return {boolean}
+     */
+
+  }, {
+    key: 'isSelected',
+    value: function isSelected(row) {
+      var pk = this.getPrimaryKey();
+      return this.selectedIndex(row) !== -1;
+    }
+
+    /**
      * Deselect a row
      * @param {Object} row List row to deselect
      */
@@ -70270,13 +70372,12 @@ var UiList = function (_Component) {
   }, {
     key: 'deselectRow',
     value: function deselectRow(row) {
-      var actions = this.props.actions;
+      var actions = this.props.actions,
+          pk = this.getPrimaryKey();
       var selected = this.state.selected;
 
 
-      var i = selected.findIndex(function (r, index) {
-        return r.id === row.id;
-      });
+      var i = this.selectedIndex(row);
       if (i !== -1) {
         selected = [].concat(_toConsumableArray(selected.slice(0, i)), _toConsumableArray(selected.slice(i + 1)));
       }
@@ -70296,10 +70397,10 @@ var UiList = function (_Component) {
   }, {
     key: 'filterRows',
     value: function filterRows(row) {
-      var config = this.props.config;
+      var config = this.props.config,
+          pattern = new RegExp(this.state.search, 'i');
 
       var key = void 0,
-          pattern = new RegExp(this.state.search, 'i'),
           fields = void 0;
       if (!config.list.searchall || !config.list.searchall.like || this.state.search === '') {
         return true;
@@ -70435,12 +70536,10 @@ var UiList = function (_Component) {
         data: data,
         listRow: function listRow(props) {
           var selected = _this3.state.selected,
-              isSelected = selected.findIndex(function (r, index) {
-            return r.id === props.row.id;
-          }) !== -1;
-
+              isSelected = _this3.isSelected(props.row);
 
           return _react2.default.createElement(_ListRow2.default, _extends({}, props, {
+            canSelect: _this3.props.canSelect,
             selected: isSelected,
             view: config.view,
             columns: _this3.columns,
@@ -70458,6 +70557,13 @@ var UiList = function (_Component) {
 
   return UiList;
 }(_react.Component);
+
+UiList.defaultProps = {
+  canSelect: function canSelect(row) {
+    return true;
+  },
+  actions: []
+};
 
 exports.default = UiList;
 
@@ -70567,6 +70673,17 @@ var ListRow = function (_Component) {
       }
     }
   }, {
+    key: 'canSelect',
+    value: function canSelect() {
+      return this.props.canSelect(this.props.row);
+    }
+
+    /**
+     * Render row cells
+     * @return {Array} Dom nodes
+     */
+
+  }, {
     key: 'cells',
     value: function cells() {
       var _this2 = this;
@@ -70607,14 +70724,15 @@ var ListRow = function (_Component) {
         );
       });
 
-      cells.unshift(_react2.default.createElement(
-        'td',
-        { key: 'list-td-check' },
-        _react2.default.createElement(_reactBootstrap.Checkbox, { checked: selected, onClick: function onClick(e) {
-            return _this2.toggleRow(e);
-          } })
-      ));
-
+      if (this.canSelect()) {
+        cells.unshift(_react2.default.createElement(
+          'td',
+          { key: 'list-td-check' },
+          _react2.default.createElement(_reactBootstrap.Checkbox, { checked: selected, onClick: function onClick(e) {
+              return _this2.toggleRow(e);
+            } })
+        ));
+      }
       return cells;
     }
 

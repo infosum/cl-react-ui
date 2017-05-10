@@ -8,6 +8,7 @@ import {ListActions, ListColumns,
 
 type Props = {
   actions: ListActions,
+  canSelect: Function,
   columns: ListColumns,
   deselectRow: Function,
   onClick: Function,
@@ -48,6 +49,14 @@ export default class ListRow extends Component {
     }
   }
 
+  canSelect() {
+    return this.props.canSelect(this.props.row);
+  }
+
+  /**
+   * Render row cells
+   * @return {Array} Dom nodes
+   */
   cells(): React$Element<any>[] {
     const {row, columns, actions, selected, onClick} = this.props;
     let columnNames = Object.keys(columns),
@@ -71,10 +80,11 @@ export default class ListRow extends Component {
           </td>);
       });
 
-    cells.unshift(<td key="list-td-check">
-      <Checkbox checked={selected} onClick={e => this.toggleRow(e)} />
-    </td>);
-
+    if (this.canSelect()) {
+      cells.unshift(<td key="list-td-check">
+        <Checkbox checked={selected} onClick={e => this.toggleRow(e)} />
+      </td>);
+    }
     return cells;
   }
 

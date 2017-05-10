@@ -161,14 +161,45 @@ class UiList extends Component {
   }
 
   /**
+   * Get primary key's name
+   * @return string
+   */
+  getPrimaryKey(): string {
+    const {config} = this.props;
+    return config.primary_key || 'id';
+  }
+
+  /**
+   * Get the selected index for the given row
+   * returns -1 if row not selected
+   * @param {Object} row List row
+   * @return {Number} index
+   */
+  selectedIndex(row: ListRowType): number {
+    const {selected} = this.state,
+    pk = this.getPrimaryKey();
+    return selected.findIndex((r, index) => r[pk] === row[pk]);
+  }
+  /**
+   * Is the row selected
+   * @param {Object} row List row
+   * @return {boolean}
+   */
+  isSelected(row: ListRowType): boolean {
+    const pk = this.getPrimaryKey();
+    return this.selectedIndex(row) !== -1;
+  }
+
+  /**
    * Deselect a row
    * @param {Object} row List row to deselect
    */
   deselectRow(row: ListRowType) {
-    const {actions} = this.props;
+    const {actions} = this.props,
+      pk = this.getPrimaryKey();
     let {selected} = this.state;
 
-    let i = selected.findIndex((r, index) => r.id === row.id);
+    let i = this.selectedIndex(row);
     if (i !== -1) {
       selected = [
         ...selected.slice(0, i),
@@ -188,9 +219,9 @@ class UiList extends Component {
    * @return {Bool} OK to show
    */
   filterRows(row: Object): boolean {
-    const {config} = this.props;
+    const {config} = this.props,
+      pattern = new RegExp(this.state.search, 'i');
     let key,
-      pattern = new RegExp(this.state.search, 'i'),
       fields;
     if (!config.list.searchall || !config.list.searchall.like || this.state.search === '') {
       return true;
@@ -290,10 +321,10 @@ class UiList extends Component {
             data={data}
             listRow={(props) => {
               let {selected} = this.state,
-                isSelected = selected.findIndex((r, index) => r.id === props.row.id) !== -1;
-
+                isSelected = this.isSelected(props.row);
               return <ListRow
                 {...props}
+                canSelect={this.props.canSelect}
                 selected={isSelected}
                 view={config.view}
                 columns={this.columns}
@@ -309,5 +340,11 @@ class UiList extends Component {
 
   }
 }
+
+UiList.defaultProps = {
+  canSelect: (row) => true,
+  actions: []
+};
+
 
 export default UiList;

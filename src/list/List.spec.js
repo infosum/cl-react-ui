@@ -1,13 +1,13 @@
-import {shallow} from 'enzyme';
+import {shallow, mount} from 'enzyme';
 import React from 'react';
 import {expect} from 'chai';
 import List from './List';
 import add from '../libs/react-bootstrap/list/actions/Add';
-// import * as filters from '../../utils/filters';
 import ListRow from './ListRow';
 import ListActions from '../libs/react-bootstrap/listLayouts/ListActions';
 import UiForm from '../form/Form';
 import {Table, Alert, Modal} from 'react-bootstrap';
+require('jsdom-global')();
 
 let component,
   actions = {
@@ -71,13 +71,43 @@ let component,
     },
     messages: {}
   },
+  configAltPk = {
+    view: 'no_id_pk_is_foo',
+    actions: {},
+    primary_key: 'foo',
+    fields: {
+      foo: {
+
+      }
+    },
+    list: {
+      searchall: {
+        like: [
+          'id', 'name'
+        ]
+      },
+      columns: {
+        foo: {
+          id: '1',
+          class: 'id',
+          label: 'foo'
+        }
+      },
+      actions: []
+    },
+    form: {
+      actions: {},
+      fields: {}
+    },
+    messages: {}
+  },
   nodata = [],
   data = [{id: 1, name: 'test'}];
 
 describe('List', () => {
   describe('empty data', () => {
     beforeEach(() => {
-      component = shallow(<List
+      component = mount(<List
         form={form}
         actions={actions}
         user={user}
@@ -98,12 +128,11 @@ describe('List', () => {
       let list = Object.assign({}, config.list);
       list.actions = [];
       delete list.searchall;
-
-      component = shallow(<List
+      component = mount(<List
         form={form}
         actions={actions}
         user={user}
-        config={Object.assign({}, config, {list})}
+        config={{...config, list}}
         data={data}
         errors={{}}
         selected={[]}
@@ -141,9 +170,27 @@ describe('List', () => {
     });
   });
 
-  describe('with data', () => {
+  describe('with data: one row selected in props, foo primary key', () => {
     beforeEach(() => {
       component = shallow(<List
+        form={form}
+        actions={actions}
+        user={user}
+        config={{...configAltPk, selected: {id: 1}}}
+        data={data}
+        errors={{}}
+        selected={[]}
+        ></List>);
+    });
+
+    it('has one row selected', () => {
+     // expect(component.find({id: 'drone-list-action-add'})).to.have.length(0);
+    });
+  });
+
+  describe('with data', () => {
+    beforeEach(() => {
+      component = mount(<List
         form={form}
         actions={actions}
         user={user}
@@ -154,8 +201,8 @@ describe('List', () => {
         ></List>);
     });
 
-    it('renders a Table', () => {
-      expect(component.find(Table)).to.have.length(1);
+    it('renders a List', () => {
+      expect(component.find(List)).to.have.length(1);
     });
 
     it('shows an action', () => {

@@ -6,6 +6,7 @@ import {validations} from '../index';
 export default {
   view: 'drone',
   lib: 'reactstrap',
+  primary_key: 'drone_id',
   list: {
     columns: {
       drone_id: {
