@@ -15598,15 +15598,14 @@ exports.default = function (props) {
         listActions = listActionNames.map(function (listAction, key) {
       var a = btns[listAction],
           isVisible = a.visible(user, selected);
-      return _react2.default.createElement(a.render, _extends({}, a, {
+      return isVisible ? _react2.default.createElement(a.render, _extends({}, a, {
         key: key
       }, props, actions, {
         id: a.id,
         open: function open(e) {
           return rowClick(e, false);
-        },
-        isVisible: isVisible
-      }));
+        }
+      })) : null;
     });
     listActionGroups.push(_react2.default.createElement(
       _reactBootstrap.ButtonGroup,
@@ -17094,15 +17093,14 @@ exports.default = function (props) {
         listActions = listActionNames.map(function (listAction, key) {
       var a = btns[listAction],
           isVisible = a.visible(user, selected);
-      return _react2.default.createElement(a.render, _extends({}, a, {
+      return isVisible ? _react2.default.createElement(a.render, _extends({}, a, {
         key: key
       }, props, actions, {
         id: a.id,
         open: function open(e) {
           return rowClick(e, false);
-        },
-        isVisible: isVisible
-      }));
+        }
+      })) : null;
     });
     listActionGroups.push(_react2.default.createElement(
       _reactstrap.ButtonGroup,
