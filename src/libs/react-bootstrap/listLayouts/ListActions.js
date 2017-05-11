@@ -23,15 +23,16 @@ export default (props: Props) => {
         listActions = listActionNames.map((listAction: string, key: number) => {
           let a = btns[listAction],
             isVisible = a.visible(user, selected);
-          return <a.render 
-            {...a}
-            key={key} 
-            {...props}
-            {...actions} 
-            id={a.id}
-            open={e => rowClick(e, false)} 
-            isVisible={isVisible}
-             />;
+          return isVisible 
+              ? <a.render 
+              {...a}
+              key={key} 
+              {...props}
+              {...actions} 
+              id={a.id}
+              open={e => rowClick(e, false)}
+              />
+              : null;
         });
       listActionGroups.push(<ButtonGroup key={index}>
           {listActions}
