@@ -334,6 +334,7 @@ class UiList extends Component {
             }}
             toggleAll={this.toggleAll.bind(this)}
             search={this.search()}
+            selected={selected}
             rows={rows}
             msg={this.messages.emptyData}
             {...this.props} />

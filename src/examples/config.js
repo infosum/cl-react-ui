@@ -1,7 +1,11 @@
 import React from 'react';
-//import Rangearraycustom from './fields/Rangearraycustom';
+import {Button} from 'reactstrap';
 import {fields} from '../index';
 import {validations} from '../index';
+
+const Claim = ({selected}) => {
+  return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
+};
 
 export default {
   view: 'drone',
@@ -34,17 +38,17 @@ export default {
         add: {
           id: 'drone-list-action-add',
           visible: () => true,
-          render: () => <button>Add</button>
+          render: (props) => <Button>Add</Button>
         },
         claim: {
           id: 'drone-list-action-claim',
           visible: () => true,
-          render: () => <button>Claim</button>
+          render: (props) => <Claim {...props}/>
         },
         describe: {
           id: 'drone-list-action-describe',
           visible: () => true,
-          render: () => <button>Describe</button>
+          render: (props) => <Button>Describe</Button>
         }
       }
     ]

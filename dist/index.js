@@ -15595,18 +15595,22 @@ exports.default = function (props) {
   // For each button group
   config.list.actions.forEach(function (btns, index) {
     var listActionNames = Object.keys(btns),
-        btnGroupKey = 'button-group-' + index,
         listActions = listActionNames.map(function (listAction, key) {
       var a = btns[listAction],
           isVisible = a.visible(user, selected);
-      return _react2.default.createElement(a.render, _extends({ key: a.id }, props, actions, { id: a.id,
+      return _react2.default.createElement(a.render, _extends({}, a, {
+        key: key
+      }, props, actions, {
+        id: a.id,
         open: function open(e) {
           return rowClick(e, false);
-        }, isVisible: isVisible }, a));
+        },
+        isVisible: isVisible
+      }));
     });
     listActionGroups.push(_react2.default.createElement(
       _reactBootstrap.ButtonGroup,
-      { key: btnGroupKey },
+      { key: index },
       listActions
     ));
     listActionGroups.push(_react2.default.createElement(
@@ -17087,18 +17091,22 @@ exports.default = function (props) {
   // For each button group
   config.list.actions.forEach(function (btns, index) {
     var listActionNames = Object.keys(btns),
-        btnGroupKey = 'button-group-' + index,
         listActions = listActionNames.map(function (listAction, key) {
       var a = btns[listAction],
           isVisible = a.visible(user, selected);
-      return _react2.default.createElement(a.render, _extends({ key: a.id }, props, actions, { id: a.id,
+      return _react2.default.createElement(a.render, _extends({}, a, {
+        key: key
+      }, props, actions, {
+        id: a.id,
         open: function open(e) {
           return rowClick(e, false);
-        }, isVisible: isVisible }, a));
+        },
+        isVisible: isVisible
+      }));
     });
     listActionGroups.push(_react2.default.createElement(
       _reactstrap.ButtonGroup,
-      { key: btnGroupKey },
+      { key: index },
       listActions
     ));
     listActionGroups.push(_react2.default.createElement(
@@ -17566,6 +17574,7 @@ var UiList = function (_Component) {
         },
         toggleAll: this.toggleAll.bind(this),
         search: this.search(),
+        selected: selected,
         rows: rows,
         msg: this.messages.emptyData
       }, this.props));
