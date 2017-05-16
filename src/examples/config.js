@@ -106,7 +106,11 @@ export default {
 
         label: 'Customer',
         type: 'lookup',
-        valuye: 2,
+        value: 2,
+        default: (row, field) => {
+          console.log(row, field);
+          return '3';
+        },
         options: {
           store: (row) => [
             {id: 1, name: 'customer 1'},

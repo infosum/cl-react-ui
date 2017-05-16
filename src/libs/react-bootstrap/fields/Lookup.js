@@ -1,11 +1,11 @@
 // @flow
 import React, {Component} from 'react';
 import {FormControl} from 'react-bootstrap';
-import {DOMEvent, FieldProps, FormFieldProps,
+import {DOMEvent, FormFieldProps,
   FormFieldOption} from '../../../types';
 
 export default class Lookup extends Component {
-  props: FieldProps
+  props: FormFieldProps
   state: {
     search?: string,
     storeData?: Object,
@@ -15,7 +15,7 @@ export default class Lookup extends Component {
   handleChange: (e: DOMEvent) => {}
   groupedData: Object;
 
-  constructor(props: FieldProps) {
+  constructor(props: FormFieldProps) {
     super(props);
     let storeData = this.getStoreData();
     // this.handleChange = this.handleChange.bind(this);

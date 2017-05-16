@@ -91,6 +91,9 @@ class UiForm extends Component {
     this.setState({...newState, state, errors});
   }
 
+  /**
+   * Set component names based on the supplied library name
+   */
   setLib() {
     const {config, library} = this.props;
     let libType = config.lib || library || 'reactBootstrap';
@@ -102,22 +105,28 @@ class UiForm extends Component {
   }
 
   /**
-   * Build the form state, using this.props.data, then field value
+   * Build the form state, using this.props.data, then field default value
    * for data.
    * @param {Object} data Props
    * @return {Object} list row
    */
   makeState(data: Props): ListRow {
     let name, state = {};
-    for (name in this.fields) {
+    
+    Object.keys(this.fields).forEach(name => {
+      const field = this.fields[name],
+        def = field.default;
       if (data && data[name]) {
         state[name] = data[name];
-      } else if (this.fields[name].default === undefined) {
+      } else if (def === undefined) {
         state[name] = '';
       } else {
-        state[name] = this.fields[name].default;
+        state[name] = typeof def === 'function'
+        ? def(data, field)
+        : def;
       }
-    }
+    });
+
     return state;
   }
 

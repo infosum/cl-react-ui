@@ -60,6 +60,20 @@ let component,
             new: (field, data) => false,
             edit: (field, data) => false
           }
+        },
+        lookup: {
+          label: 'Parent Category',
+          type: 'lookup',
+          options: {
+            store: (row) => [
+              {id: 1, name: 'test'},
+              {id: 2, name: 'test2'},
+            ],
+            key: 'id',
+            label: 'name',
+            optionFitler: (row) => row.parent_id === 0,
+            default: (row, field) => 1
+          }
         }
       }
     }

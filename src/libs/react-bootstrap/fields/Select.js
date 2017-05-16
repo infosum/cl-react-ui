@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import {FormControl} from 'react-bootstrap';
-import {FieldProps, FormFieldOption} from '../../../types';
+import {FormFieldProps, FormFieldOption} from '../../../types';
 
-export default ({field, name, onChange, value}: FormFieldOption) => {
+export default ({field, name, onChange, value}: FormFieldProps) => {
   const {options} = field;
   let opts;
   if (Array.isArray(options)) {

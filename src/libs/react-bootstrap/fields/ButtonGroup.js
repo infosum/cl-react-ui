@@ -1,18 +1,18 @@
 // @flow
 import React, {Component} from 'react';
 import {ButtonGroup, Button} from 'react-bootstrap';
-import {DOMEvent, FieldProps, FormField,
+import {DOMEvent, FormFieldProps, FormField,
   FormFieldOption} from '../../../types';
 
 export default class UiButtonGroup extends Component {
-  props: FieldProps
+  props: FormFieldProps
 
   state: {
     value: string
   }
   handleChange: (e: DOMEvent) => {}
 
-  constructor(props: FieldProps) {
+  constructor(props: FormFieldProps) {
     super(props);
     this.state = {value: ''};
   }
