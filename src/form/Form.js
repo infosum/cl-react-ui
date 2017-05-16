@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import type {DOMEvent, FormActions, FormConfig,
   FormErrors, FormField, FormFields, ListRow} from '../types';
 import deepEqual from 'deep-equal';
+import validate from 'validate-promise';
 
 let lib, fields, FormControl, layouts, Button;
 
@@ -334,6 +335,32 @@ class UiForm extends Component {
   }
 
   /**
+   * Convert fields to validate-promise contract
+   * @param {Object} fields Form fields
+   * @return {Array} validation contract
+   */
+  toContract(fields): any[] {
+    return Object.keys(this.fields)
+    .filter(name => this.fields[name].validate !== undefined)
+    .map(name => {
+      const field = this.fields[name].validate;
+      field.key = name;
+      return field;
+    })
+  }
+
+  /**
+   * Fail form submission due to validation errors
+   * Update state
+   * @param {Object} errors Valdiate-promise errors
+   */
+  failFormSubmission(errors): Object {
+    let state = {};
+    Object.keys(errors).forEach(name => state[name] = 'error');
+    this.setState({state, errors});
+  }
+
+  /**
    * Render
    * @return {Node} Dom node
    */
@@ -344,7 +371,10 @@ class UiForm extends Component {
                   actions={this.actions}
                   onSubmit={e => {
                     e.preventDefault();
-                    this.onSubmit(e, this.state.data)}
+                    validate(this.toContract(), this.state.data)
+                    .then(() => this.onSubmit(e, this.state.data))
+                    .catch(this.failFormSubmission.bind(this)); 
+                    }
                   }/>,
       FormLayout = this.formLayout();
 

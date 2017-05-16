@@ -153,9 +153,7 @@ export default {
         type: 'text',
         value: '',
         placeholder: 'Claim code',
-        help: 'This will be given to the client allowing them to claim their drones',
-        vaidationState: '',
-        validate: []
+        help: 'This will be given to the client allowing them to claim their drones'
       },
 
       claimed: {
@@ -175,8 +173,6 @@ export default {
 
         label: 'Claimed date',
         type: 'date',
-        vaidationState: '',
-        validate: [],
         access: {
           new: () => true
         }
@@ -195,11 +191,8 @@ export default {
       },
       registeredDate: {
         id: 'drone-registeredDate',
-
         label: 'Registered date',
         type: 'date',
-        vaidationState: '',
-        validate: [],
         access: {
           new: () => true
         }
@@ -221,7 +214,7 @@ export default {
         type: 'grid',
         columns: [{label: 'Min', type: fields.reactstrap.Text}]
       },
-      name: {
+      signupname: {
         id: 'signup-name',
         label: 'Name',
         type: 'text',
