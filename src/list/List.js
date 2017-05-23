@@ -3,12 +3,12 @@ import React, {Component, Element} from 'react';
 import ListRow from './ListRow';
 import * as libs from '../libs';
 import {Table, FormControl, Alert, Well,
-  Checkbox, Modal, Row, Col} from 'react-bootstrap';
+  Modal, Row, Col} from 'react-bootstrap';
 import UiForm from '../form/Form';
 import {CrudConfig, DOMEvent, ListActions as ListActionsType,
   ListRow as ListRowType} from '../types';
 
-let layouts, lib;
+let layouts, lib, Checkbox;
 
 type FormData = {};
 
@@ -60,9 +60,7 @@ class UiList extends Component {
     this.messages = config.messages;
     this.close = this.close.bind(this);
     this.filterRows = this.filterRows.bind(this);
-    let libType = config.lib || 'reactBootstrap';
-    lib = libs[libType];
-    layouts = lib.listLayouts;
+    this.setLib(props);
     this.state = {
       search: '',
       selected: [],
@@ -70,6 +68,22 @@ class UiList extends Component {
       rowUpdating: false,
       allToggled: false
     };
+  }
+
+  componentWillReceiveProps(props: Props) {
+    this.setLib(props);
+  }
+
+  /**
+   * Set component names based on the supplied library name
+   * @param {Object} newProps props
+   */
+  setLib(newProps) {
+    const {config, library} = newProps;
+    let libType = config.lib || library || 'reactBootstrap';
+    lib = libs[libType];
+    layouts = lib.listLayouts;
+    Checkbox = lib.Checkbox;
   }
 
   /**
@@ -295,7 +309,7 @@ class UiList extends Component {
     } else {
       showModal = false;
     }
-
+console.log('list render modal config', config, Checkbox);
     const rows = data.filter(this.filterRows),
       modal = (
         <Modal show={showModal} onHide={e => this.close(e)}
@@ -315,7 +329,6 @@ class UiList extends Component {
 
         </Modal>
     )
-
     return <ListLayout
             modal={modal}
             data={data}
@@ -324,6 +337,7 @@ class UiList extends Component {
                 isSelected = this.isSelected(props.row);
               return <ListRow
                 {...props}
+                Checkbox={Checkbox}
                 canSelect={this.props.canSelect}
                 selected={isSelected}
                 view={config.view}

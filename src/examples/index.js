@@ -1206,6 +1206,103 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 /* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1481,103 +1578,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
 
 
 /***/ }),
@@ -3865,7 +3865,7 @@ SafeAnchor.defaultProps = defaultProps;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var CallbackQueue = __webpack_require__(230);
 var PooledClass = __webpack_require__(55);
@@ -4467,7 +4467,7 @@ module.exports = ReactCurrentOwner;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var PooledClass = __webpack_require__(55);
 
@@ -5420,7 +5420,7 @@ module.exports = PooledClass;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var ReactCurrentOwner = __webpack_require__(43);
 
@@ -6897,7 +6897,7 @@ module.exports = ReactReconciler;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var ReactChildren = __webpack_require__(537);
 var ReactComponent = __webpack_require__(161);
@@ -10015,7 +10015,7 @@ module.exports = EventPluginRegistry;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var EventPluginRegistry = __webpack_require__(100);
 var ReactEventEmitterMixin = __webpack_require__(490);
@@ -14465,7 +14465,7 @@ module.exports = shouldUpdateReactComponent;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var emptyFunction = __webpack_require__(32);
 var warning = __webpack_require__(13);
@@ -21732,7 +21732,7 @@ module.exports = ReactDOMComponentFlags;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var LinkedValueUtils = __webpack_require__(148);
 var ReactDOMComponentTree = __webpack_require__(22);
@@ -23021,7 +23021,7 @@ module.exports = getTextContentAccessor;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var ReactCompositeComponent = __webpack_require__(470);
 var ReactEmptyComponent = __webpack_require__(234);
@@ -26231,7 +26231,7 @@ var UiForm = function (_Component) {
       data: props.data || {},
       state: state
     };
-    _this.setLib();
+    _this.setLib(props);
 
     _this.fields = config.form.fields;
     Object.keys(_this.fields).forEach(function (k) {
@@ -26271,20 +26271,20 @@ var UiForm = function (_Component) {
         newState.data = this.makeState(newProps.data);
         this.applyDataToForm(newState.data);
       }
-      this.setLib();
+      this.setLib(newProps);
       this.setState(_extends({}, newState, { state: state, errors: errors }));
     }
 
     /**
      * Set component names based on the supplied library name
+     * @param {Object} newProps props
      */
 
   }, {
     key: 'setLib',
-    value: function setLib() {
-      var _props = this.props,
-          config = _props.config,
-          library = _props.library;
+    value: function setLib(newProps) {
+      var config = newProps.config,
+          library = newProps.library;
 
       var libType = config.lib || library || 'reactBootstrap';
       lib = libs[libType];
@@ -26455,9 +26455,9 @@ var UiForm = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(name, value) {
-      var _props2 = this.props,
-          formUpdate = _props2.formUpdate,
-          config = _props2.config,
+      var _props = this.props,
+          formUpdate = _props.formUpdate,
+          config = _props.config,
           field = this.fields[name];
 
       this.fields[name].pristine = false;
@@ -26740,7 +26740,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32159,7 +32159,7 @@ var Demo = function (_Component) {
         label: 'hi'
       };
 
-      console.log('data = ', data);
+      console.log('data = ', data, _config2.default);
       return _react2.default.createElement(
         _reactstrap.Container,
         null,
@@ -43348,7 +43348,7 @@ module.exports = EnterLeaveEventPlugin;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var PooledClass = __webpack_require__(55);
 
@@ -43885,7 +43885,7 @@ module.exports = ReactComponentBrowserEnvironment;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var React = __webpack_require__(71);
 var ReactComponentEnvironment = __webpack_require__(149);
@@ -44912,7 +44912,7 @@ module.exports = ReactDOM;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var AutoFocusUtils = __webpack_require__(459);
 var CSSPropertyOperations = __webpack_require__(461);
@@ -45955,7 +45955,7 @@ module.exports = ReactDOMContainerInfo;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var DOMLazyTree = __webpack_require__(69);
 var ReactDOMComponentTree = __webpack_require__(22);
@@ -46084,7 +46084,7 @@ module.exports = ReactDOMIDOperations;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var DOMPropertyOperations = __webpack_require__(231);
 var LinkedValueUtils = __webpack_require__(148);
@@ -46522,7 +46522,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var React = __webpack_require__(71);
 var ReactDOMComponentTree = __webpack_require__(22);
@@ -46869,7 +46869,7 @@ module.exports = ReactDOMSelection;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var DOMChildrenOperations = __webpack_require__(144);
 var DOMLazyTree = __webpack_require__(69);
@@ -47039,7 +47039,7 @@ module.exports = ReactDOMTextComponent;
 
 
 var _prodInvariant = __webpack_require__(16),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var LinkedValueUtils = __webpack_require__(148);
 var ReactDOMComponentTree = __webpack_require__(22);
@@ -47829,7 +47829,7 @@ module.exports = ReactDebugTool;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var ReactUpdates = __webpack_require__(42);
 var Transaction = __webpack_require__(103);
@@ -48056,7 +48056,7 @@ module.exports = ReactEventEmitterMixin;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var EventListener = __webpack_require__(204);
 var ExecutionEnvironment = __webpack_require__(25);
@@ -48979,7 +48979,7 @@ module.exports = ReactPropTypeLocationNames;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var CallbackQueue = __webpack_require__(230);
 var PooledClass = __webpack_require__(55);
@@ -49257,7 +49257,7 @@ module.exports = ReactRef;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var PooledClass = __webpack_require__(55);
 var Transaction = __webpack_require__(103);
@@ -53373,7 +53373,7 @@ module.exports = ReactChildren;
 
 
 var _prodInvariant = __webpack_require__(57),
-    _assign = __webpack_require__(20);
+    _assign = __webpack_require__(19);
 
 var ReactComponent = __webpack_require__(161);
 var ReactElement = __webpack_require__(56);
@@ -54323,7 +54323,7 @@ module.exports = ReactPropTypesSecret;
 
 
 
-var _assign = __webpack_require__(20);
+var _assign = __webpack_require__(19);
 
 var ReactComponent = __webpack_require__(161);
 var ReactNoopUpdateQueue = __webpack_require__(162);
@@ -55287,7 +55287,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -55365,13 +55365,12 @@ var _reactstrap = __webpack_require__(182);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (_ref) {
-  var form = _ref.form,
-      fields = _ref.fields,
-      actions = _ref.actions,
-      errors = _ref.errors,
-      onSubmit = _ref.onSubmit;
-
+exports.default = function (props) {
+  var form = props.form,
+      fields = props.fields,
+      actions = props.actions,
+      errors = props.errors,
+      onSubmit = props.onSubmit;
 
   var alert = null,
       allFields = Object.keys(fields).map(function (n) {
@@ -55709,7 +55708,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55773,7 +55772,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -55902,7 +55901,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -55946,7 +55945,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -55984,7 +55983,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56028,7 +56027,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56281,7 +56280,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56321,7 +56320,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56501,7 +56500,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56543,7 +56542,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56585,7 +56584,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56642,7 +56641,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56702,7 +56701,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56744,7 +56743,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -56848,7 +56847,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Button = undefined;
+exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _FormActions = __webpack_require__(557);
 
@@ -56874,7 +56873,7 @@ var _fields = __webpack_require__(267);
 
 var fields = _interopRequireWildcard(_fields);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -56883,6 +56882,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Feedback = _reactBootstrap.FormControl.Feedback;
 
 exports.Button = _reactBootstrap.Button;
+exports.Checkbox = _reactBootstrap.Checkbox;
 exports.ControlLabel = _reactBootstrap.ControlLabel;
 exports.fields = fields;
 exports.Feedback = Feedback;
@@ -56911,7 +56911,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -57013,7 +57013,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -57153,7 +57153,7 @@ var _ListActions = __webpack_require__(577);
 
 var _ListActions2 = _interopRequireDefault(_ListActions);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57276,7 +57276,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _types = __webpack_require__(14);
 
@@ -58395,7 +58395,13 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Button = undefined;
+exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(1);
+
+var React = _interopRequireWildcard(_react);
 
 var _layouts = __webpack_require__(596);
 
@@ -58423,7 +58429,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+var Checkbox = function Checkbox(props) {
+  return React.createElement(
+    _reactstrap.FormGroup,
+    null,
+    React.createElement(_reactstrap.Label, null),
+    React.createElement(_reactstrap.Input, _extends({ type: 'checkbox' }, props, {
+      style: { position: 'relative', margin: 0 }
+    }))
+  );
+};
+
 exports.Button = _reactstrap.Button;
+exports.Checkbox = Checkbox;
 exports.ControlLabel = _reactstrap.Label;
 exports.fields = fields;
 exports.Feedback = _reactstrap.FormFeedback;
@@ -58865,7 +58883,7 @@ var _libs = __webpack_require__(265);
 
 var libs = _interopRequireWildcard(_libs);
 
-var _reactBootstrap = __webpack_require__(19);
+var _reactBootstrap = __webpack_require__(20);
 
 var _Form = __webpack_require__(263);
 
@@ -58886,7 +58904,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var layouts = void 0,
-    lib = void 0;
+    lib = void 0,
+    Checkbox = void 0;
 
 /**
  * Create a list component
@@ -58909,9 +58928,7 @@ var UiList = function (_Component) {
     _this.messages = config.messages;
     _this.close = _this.close.bind(_this);
     _this.filterRows = _this.filterRows.bind(_this);
-    var libType = config.lib || 'reactBootstrap';
-    lib = libs[libType];
-    layouts = lib.listLayouts;
+    _this.setLib(props);
     _this.state = {
       search: '',
       selected: [],
@@ -58922,13 +58939,35 @@ var UiList = function (_Component) {
     return _this;
   }
 
-  /**
-   * Toggle all select checkboxes
-   * @param {Event} e .
-   */
-
-
   _createClass(UiList, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setLib(props);
+    }
+
+    /**
+     * Set component names based on the supplied library name
+     * @param {Object} newProps props
+     */
+
+  }, {
+    key: 'setLib',
+    value: function setLib(newProps) {
+      var config = newProps.config,
+          library = newProps.library;
+
+      var libType = config.lib || library || 'reactBootstrap';
+      lib = libs[libType];
+      layouts = lib.listLayouts;
+      Checkbox = lib.Checkbox;
+    }
+
+    /**
+     * Toggle all select checkboxes
+     * @param {Event} e .
+     */
+
+  }, {
     key: 'toggleAll',
     value: function toggleAll(e) {
       var _props = this.props,
@@ -59228,7 +59267,7 @@ var UiList = function (_Component) {
       } else {
         showModal = false;
       }
-
+      console.log('list render modal config', config, Checkbox);
       var rows = data.filter(this.filterRows),
           modal = _react2.default.createElement(
         _reactBootstrap.Modal,
@@ -59251,7 +59290,6 @@ var UiList = function (_Component) {
             } },
           config: config })
       );
-
       return _react2.default.createElement(ListLayout, _extends({
         modal: modal,
         data: data,
@@ -59260,6 +59298,7 @@ var UiList = function (_Component) {
               isSelected = _this3.isSelected(props.row);
 
           return _react2.default.createElement(_ListRow2.default, _extends({}, props, {
+            Checkbox: Checkbox,
             canSelect: _this3.props.canSelect,
             selected: isSelected,
             view: config.view,
@@ -59342,8 +59381,6 @@ var _Tip = __webpack_require__(554);
 
 var _Tip2 = _interopRequireDefault(_Tip);
 
-var _reactBootstrap = __webpack_require__(19);
-
 var _types = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -59413,6 +59450,7 @@ var ListRow = function (_Component) {
       var _props2 = this.props,
           row = _props2.row,
           columns = _props2.columns,
+          Checkbox = _props2.Checkbox,
           actions = _props2.actions,
           selected = _props2.selected,
           onClick = _props2.onClick;
@@ -59450,7 +59488,7 @@ var ListRow = function (_Component) {
         cells.unshift(_react2.default.createElement(
           'td',
           { key: 'list-td-check' },
-          _react2.default.createElement(_reactBootstrap.Checkbox, { checked: selected, onClick: function onClick(e) {
+          _react2.default.createElement(Checkbox, { checked: selected, onClick: function onClick(e) {
               return _this2.toggleRow(e);
             } })
         ));

@@ -683,7 +683,7 @@ var UiForm = function (_Component) {
       data: props.data || {},
       state: state
     };
-    _this.setLib();
+    _this.setLib(props);
 
     _this.fields = config.form.fields;
     Object.keys(_this.fields).forEach(function (k) {
@@ -723,20 +723,20 @@ var UiForm = function (_Component) {
         newState.data = this.makeState(newProps.data);
         this.applyDataToForm(newState.data);
       }
-      this.setLib();
+      this.setLib(newProps);
       this.setState(_extends({}, newState, { state: state, errors: errors }));
     }
 
     /**
      * Set component names based on the supplied library name
+     * @param {Object} newProps props
      */
 
   }, {
     key: 'setLib',
-    value: function setLib() {
-      var _props = this.props,
-          config = _props.config,
-          library = _props.library;
+    value: function setLib(newProps) {
+      var config = newProps.config,
+          library = newProps.library;
 
       var libType = config.lib || library || 'reactBootstrap';
       lib = libs[libType];
@@ -907,9 +907,9 @@ var UiForm = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(name, value) {
-      var _props2 = this.props,
-          formUpdate = _props2.formUpdate,
-          config = _props2.config,
+      var _props = this.props,
+          formUpdate = _props.formUpdate,
+          config = _props.config,
           field = this.fields[name];
 
       this.fields[name].pristine = false;
@@ -4451,7 +4451,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Button = undefined;
+exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _FormActions = __webpack_require__(24);
 
@@ -4486,6 +4486,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Feedback = _reactBootstrap.FormControl.Feedback;
 
 exports.Button = _reactBootstrap.Button;
+exports.Checkbox = _reactBootstrap.Checkbox;
 exports.ControlLabel = _reactBootstrap.ControlLabel;
 exports.fields = fields;
 exports.Feedback = Feedback;
@@ -5998,7 +5999,9 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Button = undefined;
+exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _layouts = __webpack_require__(63);
 
@@ -6026,7 +6029,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+var Checkbox = function Checkbox(props) {
+  return React.createElement(_reactstrap.Input, _extends({ type: 'checkbox' }, props));
+};
+
 exports.Button = _reactstrap.Button;
+exports.Checkbox = Checkbox;
 exports.ControlLabel = _reactstrap.Label;
 exports.fields = fields;
 exports.Feedback = _reactstrap.FormFeedback;
@@ -6489,7 +6497,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var layouts = void 0,
-    lib = void 0;
+    lib = void 0,
+    Checkbox = void 0;
 
 /**
  * Create a list component
@@ -6512,9 +6521,7 @@ var UiList = function (_Component) {
     _this.messages = config.messages;
     _this.close = _this.close.bind(_this);
     _this.filterRows = _this.filterRows.bind(_this);
-    var libType = config.lib || 'reactBootstrap';
-    lib = libs[libType];
-    layouts = lib.listLayouts;
+    _this.setLib(props);
     _this.state = {
       search: '',
       selected: [],
@@ -6525,13 +6532,35 @@ var UiList = function (_Component) {
     return _this;
   }
 
-  /**
-   * Toggle all select checkboxes
-   * @param {Event} e .
-   */
-
-
   _createClass(UiList, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setLib(props);
+    }
+
+    /**
+     * Set component names based on the supplied library name
+     * @param {Object} newProps props
+     */
+
+  }, {
+    key: 'setLib',
+    value: function setLib(newProps) {
+      var config = newProps.config,
+          library = newProps.library;
+
+      var libType = config.lib || library || 'reactBootstrap';
+      lib = libs[libType];
+      layouts = lib.layouts;
+      Checkbox = lib.Checkbox;
+    }
+
+    /**
+     * Toggle all select checkboxes
+     * @param {Event} e .
+     */
+
+  }, {
     key: 'toggleAll',
     value: function toggleAll(e) {
       var _props = this.props,
@@ -6863,6 +6892,7 @@ var UiList = function (_Component) {
               isSelected = _this3.isSelected(props.row);
 
           return _react2.default.createElement(_ListRow2.default, _extends({}, props, {
+            Checkbox: Checkbox,
             canSelect: _this3.props.canSelect,
             selected: isSelected,
             view: config.view,
@@ -6945,8 +6975,6 @@ var _Tip = __webpack_require__(23);
 
 var _Tip2 = _interopRequireDefault(_Tip);
 
-var _reactBootstrap = __webpack_require__(2);
-
 var _types = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -7016,6 +7044,7 @@ var ListRow = function (_Component) {
       var _props2 = this.props,
           row = _props2.row,
           columns = _props2.columns,
+          Checkbox = _props2.Checkbox,
           actions = _props2.actions,
           selected = _props2.selected,
           onClick = _props2.onClick;
@@ -7053,7 +7082,7 @@ var ListRow = function (_Component) {
         cells.unshift(_react2.default.createElement(
           'td',
           { key: 'list-td-check' },
-          _react2.default.createElement(_reactBootstrap.Checkbox, { checked: selected, onClick: function onClick(e) {
+          _react2.default.createElement(Checkbox, { checked: selected, onClick: function onClick(e) {
               return _this2.toggleRow(e);
             } })
         ));

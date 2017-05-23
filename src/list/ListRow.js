@@ -1,14 +1,14 @@
 // @flow
-import React, {Component} from 'react';
+import React, {Component, Element} from 'react';
 import ListCell from './ListCell';
 import Tip from '../components/Tip';
-import {Checkbox} from 'react-bootstrap';
 import {ListActions, ListColumns,
   ListRow as ListRowType} from '../types';
 
 type Props = {
   actions: ListActions,
   canSelect: Function,
+  Checkbox: Element,
   columns: ListColumns,
   deselectRow: Function,
   onClick: Function,
@@ -58,7 +58,7 @@ export default class ListRow extends Component {
    * @return {Array} Dom nodes
    */
   cells(): React$Element<any>[] {
-    const {row, columns, actions, selected, onClick} = this.props;
+    const {row, columns, Checkbox, actions, selected, onClick} = this.props;
     let columnNames = Object.keys(columns),
       cells = columnNames.map((columnName: string, key: number) => {
         let th = columns[columnName],

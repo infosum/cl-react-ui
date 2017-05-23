@@ -57,7 +57,7 @@ class UiForm extends Component {
       data: props.data || {},
       state
     };
-    this.setLib();
+    this.setLib(props);
 
     this.fields = config.form.fields;
     Object.keys(this.fields).forEach(k => {
@@ -88,15 +88,16 @@ class UiForm extends Component {
       newState.data = this.makeState(newProps.data);
       this.applyDataToForm(newState.data);
     }
-    this.setLib();
+    this.setLib(newProps);
     this.setState({...newState, state, errors});
   }
 
   /**
    * Set component names based on the supplied library name
+   * @param {Object} newProps props
    */
-  setLib() {
-    const {config, library} = this.props;
+  setLib(newProps) {
+    const {config, library} = newProps;
     let libType = config.lib || library || 'reactBootstrap';
     lib = libs[libType];
     fields = lib.fields;
