@@ -337,10 +337,9 @@ class UiForm extends Component {
 
   /**
    * Convert fields to validate-promise contract
-   * @param {Object} fields Form fields
    * @return {Array} validation contract
    */
-  toContract(fields): any[] {
+  toContract(): any[] {
     return Object.keys(this.fields)
     .filter(name => this.fields[name].validate !== undefined)
     .map(name => {
