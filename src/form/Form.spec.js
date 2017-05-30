@@ -159,6 +159,23 @@ describe('UiForm', () => {
     });
   });
 
+  describe('prop test', () => {
+     beforeEach(() => {
+      component = shallow(<UiForm
+        config={config}
+        errors={errors}
+        data={data}
+        title={row => 'test this title'}
+        onSubmit={() => {}}
+        formUpdate={() => {}}
+        ></UiForm>);
+    });
+
+    it('uses title func to create title', () => {
+      expect(component.state().form.title).to.equal('test this title');
+    })
+  })
+
   describe('error handline', () => {
     beforeEach(() => {
       component = shallow(<UiForm

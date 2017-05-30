@@ -58,6 +58,7 @@ const config = {
   config={config}
   layout={layout}
   errors={errors}
+  title="override title (can be a function or string)"
   onSubmit={(e: Event, data: Object) => {
 
   }} />

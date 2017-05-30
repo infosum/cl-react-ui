@@ -21,7 +21,8 @@ type Props = {
   formUpdate: Function,
   layout: string,
   library?: 'reactstrap' | 'reactBootstrap',
-  onSubmit: Function
+  onSubmit: Function,
+  title?: (row: ListRow) => string | string
 };
 
 /**
@@ -140,9 +141,15 @@ class UiForm extends Component {
   applyDataToForm(row: ListRow) {
     let name,
       form = this.state.form;
-    if (typeof (form._title) === 'function') {
-      this.state.form.title = form._title(row);
+    const {title} = this.props;
+    if (title) {
+      this.state.form.title = typeof(title) === 'function' ? title(row) : title;
+    } else {
+      if (typeof (form._title) === 'function') {
+        this.state.form.title = form._title(row);
+      }
     }
+    
     for (name in form.actions) {
       if (typeof (form.actions[name]._label) === 'function') {
         this.state.form.actions[name].label = form.actions[name]._label(row);
