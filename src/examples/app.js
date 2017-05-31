@@ -60,7 +60,8 @@ console.log('data = ', data);
           data={{}}
           lib={this.state.lib}
           errors={{}}
-          onSubmit={e => console.log(e)} />
+          onSubmit={e => console.log(e)}
+          visibility={{toggle: false}} />
       </Container>
   }
 }

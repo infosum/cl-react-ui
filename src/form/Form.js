@@ -22,7 +22,8 @@ type Props = {
   layout: string,
   library?: 'reactstrap' | 'reactBootstrap',
   onSubmit: Function,
-  title?: (row: ListRow) => string | string
+  title?: (row: ListRow) => string | string,
+  visibility?: Object
 };
 
 type State = {
@@ -52,14 +53,16 @@ class UiForm extends Component {
    */
   constructor(props: Props) {
     super(props);
-    const {config, library, onSubmit} = this.props;
+    const {config, library, onSubmit, visibility = {}} = this.props;
     this.fields = config.form.fields;
     let state = {};
-    const visibility = {};
+  
     Object.keys(props.errors).forEach(key => state[key] = 'error');
     Object.keys(this.fields).forEach(key => {
       this.fields[key].pristine = true;
-      visibility[key] = true;
+      if (!visibility.hasOwnProperty(key)) {
+        visibility[key] = true;
+      }
     });
     console.log('vis', visibility);
     this.state = {

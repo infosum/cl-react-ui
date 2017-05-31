@@ -671,17 +671,21 @@ var UiForm = function (_Component) {
     var _this$props = _this.props,
         config = _this$props.config,
         library = _this$props.library,
-        onSubmit = _this$props.onSubmit;
+        onSubmit = _this$props.onSubmit,
+        _this$props$visibilit = _this$props.visibility,
+        visibility = _this$props$visibilit === undefined ? {} : _this$props$visibilit;
 
     _this.fields = config.form.fields;
     var state = {};
-    var visibility = {};
+
     Object.keys(props.errors).forEach(function (key) {
       return state[key] = 'error';
     });
     Object.keys(_this.fields).forEach(function (key) {
       _this.fields[key].pristine = true;
-      visibility[key] = true;
+      if (!visibility.hasOwnProperty(key)) {
+        visibility[key] = true;
+      }
     });
     console.log('vis', visibility);
     _this.state = {
