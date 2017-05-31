@@ -4023,11 +4023,11 @@ var Lookup = function (_Component) {
           return optionFilter(option);
         }).map(function (option, k) {
           var ref = 'lookup-option-' + k;
-          var label = typeof label === 'function' ? label(option) : option[label];
+          var thisLabel = typeof label === 'function' ? label(option) : option[label];
           return _react2.default.createElement(
             'option',
             { key: ref, value: option[key] },
-            'label'
+            thisLabel
           );
         });
 
@@ -5550,11 +5550,11 @@ var Lookup = function (_Component) {
           return optionFilter(option);
         }).map(function (option, k) {
           var ref = 'lookup-option-' + k;
-          var label = typeof label === 'function' ? label(option) : option[label];
+          var thisLabel = typeof label === 'function' ? label(option) : option[label];
           return _react2.default.createElement(
             'option',
             { key: ref, value: option[key] },
-            'label'
+            thisLabel
           );
         });
 

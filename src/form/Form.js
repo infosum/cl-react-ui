@@ -18,7 +18,7 @@ type Props = {
   },
   data: ListRow,
   errors: FormErrors,
-  formUpdate: Function,
+  formUpdate: (view: string, field: FormField, name: string, value: string) => void,
   layout: string,
   library?: 'reactstrap' | 'reactBootstrap',
   onSubmit: Function,

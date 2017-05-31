@@ -74,11 +74,11 @@ export default class Lookup extends Component {
       .filter((option) => optionFilter(option))
       .map((option: FormFieldOption, k: number) => {
         let ref = 'lookup-option-' + k;
-        const label = typeof label === 'function'
+        const thisLabel = typeof label === 'function'
           ? label(option)
           : option[label];
         return <option key={ref} value={option[key]}>
-          label
+          {thisLabel}
         </option>;
       });
 
