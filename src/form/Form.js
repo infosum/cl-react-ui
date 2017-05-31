@@ -25,18 +25,21 @@ type Props = {
   title?: (row: ListRow) => string | string
 };
 
+type State = {
+  data: Object,
+  errors: Object,
+  form: Object,
+  state: Object,
+  visibility: Object,
+}
 /**
  * Create a form
  */
 class UiForm extends Component {
   props: Props
 
-  state: {
-    errors: Object,
-    form: Object,
-    data: Object,
-    state: Object
-  }
+  state: State
+
   fields: FormFields
   actions: FormActions
   handleChange: (e: DOMEvent, name: string) => {}
@@ -50,20 +53,23 @@ class UiForm extends Component {
   constructor(props: Props) {
     super(props);
     const {config, library, onSubmit} = this.props;
+    this.fields = config.form.fields;
     let state = {};
+    const visibility = {};
     Object.keys(props.errors).forEach(key => state[key] = 'error');
+    Object.keys(this.fields).forEach(key => {
+      this.fields[key].pristine = true;
+      visibility[key] = true;
+    });
+    console.log('vis', visibility);
     this.state = {
       errors: props.errors,
       form: config.form,
       data: props.data || {},
-      state
+      state,
+      visibility
     };
     this.setLib(props);
-
-    this.fields = config.form.fields;
-    Object.keys(this.fields).forEach(k => {
-      this.fields[k].pristine = true;
-    })
     this.actions = config.form.actions;
 
     this.state.data = this.makeState(props.data);
@@ -230,10 +236,11 @@ class UiForm extends Component {
   /**
    * Check field access, if no access property then return true
    * Otherwise it should be an object with functions keyed on edit or new
-   * @param {Object} field To render
+   * @param {string} name Field name to render
    * @return {Bool} Can access field
    */
-  access(field: FormField): boolean {
+  access(name: string): boolean {
+    const field = this.fields[name];
     const mode = this.state.data.id === '' ? 'new' : 'edit';
 
     if (!field.access) {
@@ -367,6 +374,21 @@ class UiForm extends Component {
     this.setState({state, errors});
   }
 
+  isVisible(name) {
+    return this.state.visibility[name];
+  }
+
+  showField(name: string) {
+    let visibility = this.state.visibility;
+    visibility[name] = true;
+    this.setState({visibility});
+  }
+
+  hideField(name: string) {
+    let visibility = this.state.visibility;
+    visibility[name] = false;
+    this.setState({visibility});
+  }
   /**
    * Render
    * @return {Node} Dom node
@@ -388,7 +410,8 @@ class UiForm extends Component {
     let fields = {};
 
     Object.keys(this.fields)
-      .filter(name => this.access(this.fields[name]))
+      .filter(this.access.bind(this))
+      .filter(this.isVisible.bind(this))
       .forEach(name => {
         let field = this.fields[name];
         fields[name] = this.makeField(name, field);

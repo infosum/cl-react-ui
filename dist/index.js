@@ -673,22 +673,25 @@ var UiForm = function (_Component) {
         library = _this$props.library,
         onSubmit = _this$props.onSubmit;
 
+    _this.fields = config.form.fields;
     var state = {};
+    var visibility = {};
     Object.keys(props.errors).forEach(function (key) {
       return state[key] = 'error';
     });
+    Object.keys(_this.fields).forEach(function (key) {
+      _this.fields[key].pristine = true;
+      visibility[key] = true;
+    });
+    console.log('vis', visibility);
     _this.state = {
       errors: props.errors,
       form: config.form,
       data: props.data || {},
-      state: state
+      state: state,
+      visibility: visibility
     };
     _this.setLib(props);
-
-    _this.fields = config.form.fields;
-    Object.keys(_this.fields).forEach(function (k) {
-      _this.fields[k].pristine = true;
-    });
     _this.actions = config.form.actions;
 
     _this.state.data = _this.makeState(props.data);
@@ -885,13 +888,14 @@ var UiForm = function (_Component) {
     /**
      * Check field access, if no access property then return true
      * Otherwise it should be an object with functions keyed on edit or new
-     * @param {Object} field To render
+     * @param {string} name Field name to render
      * @return {Bool} Can access field
      */
 
   }, {
     key: 'access',
-    value: function access(field) {
+    value: function access(name) {
+      var field = this.fields[name];
       var mode = this.state.data.id === '' ? 'new' : 'edit';
 
       if (!field.access) {
@@ -1057,7 +1061,25 @@ var UiForm = function (_Component) {
       });
       this.setState({ state: state, errors: errors });
     }
-
+  }, {
+    key: 'isVisible',
+    value: function isVisible(name) {
+      return this.state.visibility[name];
+    }
+  }, {
+    key: 'showField',
+    value: function showField(name) {
+      var visibility = this.state.visibility;
+      visibility[name] = true;
+      this.setState({ visibility: visibility });
+    }
+  }, {
+    key: 'hideField',
+    value: function hideField(name) {
+      var visibility = this.state.visibility;
+      visibility[name] = false;
+      this.setState({ visibility: visibility });
+    }
     /**
      * Render
      * @return {Node} Dom node
@@ -1083,9 +1105,7 @@ var UiForm = function (_Component) {
 
       var fields = {};
 
-      Object.keys(this.fields).filter(function (name) {
-        return _this6.access(_this6.fields[name]);
-      }).forEach(function (name) {
+      Object.keys(this.fields).filter(this.access.bind(this)).filter(this.isVisible.bind(this)).forEach(function (name) {
         var field = _this6.fields[name];
         fields[name] = _this6.makeField(name, field);
       });

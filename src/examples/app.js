@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Icon, Form, List, validations} from '../index';
 import config from './config';
+import configToggleGroup from './config-toggle-group';
 import CustomLayout from './CustomLayout';
 import {Button, Container} from 'reactstrap';
 
@@ -51,6 +52,12 @@ console.log('data = ', data);
         <Form config={config}
           layout={CustomLayout}
           data={row}
+          lib={this.state.lib}
+          errors={{}}
+          onSubmit={e => console.log(e)} />
+
+          <Form config={configToggleGroup}
+          data={{}}
           lib={this.state.lib}
           errors={{}}
           onSubmit={e => console.log(e)} />

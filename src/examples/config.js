@@ -8,22 +8,22 @@ const Claim = ({selected}) => {
 };
 
 export default {
-  view: 'drone',
+  view: 'example',
   lib: 'reactstrap',
-  primary_key: 'drone_id',
+  primary_key: 'custom_id',
   list: {
     columns: {
-      drone_id: {
-        id: 'drone-heading-id',
+      custom_id: {
+        id: 'heading-id',
         label: 'ID'
       },
       label: {
-        id: 'drone-heading-name',
+        id: 'heading-name',
         label: 'Name'
       },
       claimed: {
         class: 'text-center',
-        id: 'drone-heading-claimed',
+        id: 'heading-claimed',
         label: 'Claimed',
       }
     },
@@ -36,17 +36,17 @@ export default {
     actions: [
       {
         add: {
-          id: 'drone-list-action-add',
+          id: 'list-action-add',
           visible: () => true,
           render: (props) => <Button>Add</Button>
         },
         claim: {
-          id: 'drone-list-action-claim',
+          id: 'list-action-claim',
           visible: () => true,
           render: (props) => <Claim {...props}/>
         },
         describe: {
-          id: 'drone-list-action-describe',
+          id: 'list-action-describe',
           visible: () => true,
           render: (props) => <Button>Describe</Button>
         }
@@ -59,21 +59,21 @@ export default {
   ],
 
   messages: {
-    emptyData: 'No drones found'
+    emptyData: 'No data found'
   },
   form: {
-    _title: (row) => row.id === '' ? 'Add a drone' : 'Edit Drone',
+    _title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
     actions: {
       submit: {
         id: 'signup-action-submit',
         type: 'submit',
-        _label: (row) => row.id === '' ? 'Create drone' : 'Save drone',
+        _label: (row) => row.id === '' ? 'Create record' : 'Save record',
         style: 'primary'
       }
     },
     fields: {
       id: {
-        id: 'drone-activation-id',
+        id: 'activation-id',
         label: 'ID',
         type: 'hidden',
         value: ''
@@ -89,7 +89,7 @@ export default {
         ]
       },
       label: {
-        id: 'drone-name',
+        id: 'name',
 
         label: 'Name',
         type: 'text',
@@ -102,7 +102,7 @@ export default {
         }
       },
       customer: {
-        id: 'drone-customer',
+        id: 'customer',
 
         label: 'Customer',
         type: 'lookup',
@@ -123,7 +123,7 @@ export default {
         }
       },
       sector: {
-        id: 'drone-sector',
+        id: 'sector',
         value: Date.now(),
         label: 'Sector',
         type: 'Text'
@@ -147,17 +147,17 @@ export default {
         placeholder: 'Drag files here'
       },
       activation: {
-        id: 'drone-activation',
+        id: 'activation',
 
         label: 'Claim',
         type: 'text',
         value: '',
         placeholder: 'Claim code',
-        help: 'This will be given to the client allowing them to claim their drones'
+        help: 'This will be given to the client allowing them to claim their records'
       },
 
       claimed: {
-        id: 'drone-claimed',
+        id: 'claimed',
 
         label: 'Claimed',
         type: 'checkbox',
@@ -169,7 +169,7 @@ export default {
         }
       },
       claimedDate: {
-        id: 'drone-claimedDate',
+        id: 'claimedDate',
 
         label: 'Claimed date',
         type: 'date',
@@ -178,7 +178,7 @@ export default {
         }
       },
       registered: {
-        id: 'drone-registered',
+        id: 'registered',
 
         label: 'Registered',
         type: 'checkbox',
@@ -190,7 +190,7 @@ export default {
         }
       },
       registeredDate: {
-        id: 'drone-registeredDate',
+        id: 'registeredDate',
         label: 'Registered date',
         type: 'date',
         access: {
@@ -199,8 +199,7 @@ export default {
       },
 
       description: {
-        id: 'drone-description',
-
+        id: 'description',
         label: 'Description',
         type: 'textarea',
         access: {
