@@ -26287,7 +26287,7 @@ var UiForm = function (_Component) {
         visibility[key] = true;
       }
     });
-    console.log('vis', visibility);
+
     _this.state = {
       errors: props.errors,
       form: config.form,
@@ -55607,9 +55607,13 @@ exports.default = {
           return true;
         },
         render: function render(props) {
+          console.log('props', props);
           return _react2.default.createElement(
             _reactstrap.Button,
-            null,
+            { onClick: function onClick() {
+                debugger;
+                props.showModal();
+              } },
             'Add'
           );
         }
@@ -56987,7 +56991,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+exports.Modal = exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _FormActions = __webpack_require__(558);
 
@@ -57021,6 +57025,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Feedback = _reactBootstrap.FormControl.Feedback;
 
+var Modal = function Modal(_ref) {
+  var showModal = _ref.showModal,
+      close = _ref.close,
+      children = _ref.children;
+  return React.createElement(
+    _reactBootstrap.Modal,
+    { show: showModal, onHide: function onHide(e) {
+        return close(e);
+      } },
+    children
+  );
+};
+
 exports.Button = _reactBootstrap.Button;
 exports.Checkbox = _reactBootstrap.Checkbox;
 exports.ControlLabel = _reactBootstrap.ControlLabel;
@@ -57033,6 +57050,7 @@ exports.FormGroup = _FormGroup2.default;
 exports.HelpBlock = _reactBootstrap.HelpBlock;
 exports.layouts = layouts;
 exports.listLayouts = listLayouts;
+exports.Modal = Modal;
 
 /***/ }),
 /* 574 */
@@ -58536,7 +58554,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+exports.Modal = exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -58576,6 +58594,18 @@ var Checkbox = function Checkbox(props) {
   }));
 };
 
+var Modal = function Modal(_ref) {
+  var showModal = _ref.showModal,
+      close = _ref.close,
+      children = _ref.children;
+  return React.createElement(
+    _reactstrap.Modal,
+    { isOpen: showModal, toggle: function toggle(e) {
+        return close(e);
+      } },
+    children
+  );
+};
 exports.Button = _reactstrap.Button;
 exports.Checkbox = Checkbox;
 exports.ControlLabel = _reactstrap.Label;
@@ -58588,6 +58618,7 @@ exports.FormGroup = _FormGroup2.default;
 exports.HelpBlock = _reactstrap.FormText;
 exports.layouts = layouts;
 exports.listLayouts = listLayouts;
+exports.Modal = Modal;
 
 /***/ }),
 /* 595 */
@@ -58817,6 +58848,7 @@ exports.default = function (_ref) {
       rows = _ref.rows,
       search = _ref.search,
       selected = _ref.selected,
+      showModal = _ref.showModal,
       toggleAll = _ref.toggleAll,
       user = _ref.user;
 
@@ -58895,7 +58927,8 @@ exports.default = function (_ref) {
           user: user,
           selected: selected,
           actions: actions,
-          config: config })
+          config: config,
+          showModal: showModal })
       ),
       _react2.default.createElement(
         _reactstrap.Col,
@@ -59041,7 +59074,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var layouts = void 0,
     lib = void 0,
-    Checkbox = void 0;
+    Checkbox = void 0,
+    Modal = void 0;
 
 /**
  * Create a list component
@@ -59096,6 +59130,7 @@ var UiList = function (_Component) {
       lib = libs[libType];
       layouts = lib.listLayouts;
       Checkbox = lib.Checkbox;
+      Modal = lib.Modal;
     }
 
     /**
@@ -59171,10 +59206,15 @@ var UiList = function (_Component) {
       if (actions.setForm) {
         actions.setForm(config.view, row);
       }
-      this.setState({ showModal: true });
+      this.showModal();
       if (actions.setModalState) {
         actions.setModalState(config.view, true);
       }
+    }
+  }, {
+    key: 'showModal',
+    value: function showModal() {
+      this.setState({ showModal: true });
     }
 
     /**
@@ -59386,7 +59426,8 @@ var UiList = function (_Component) {
           _props5 = this.props,
           _props5$data = _props5.data,
           data = _props5$data === undefined ? [] : _props5$data,
-          errors = _props5.errors,
+          _props5$errors = _props5.errors,
+          errors = _props5$errors === undefined ? {} : _props5$errors,
           config = _props5.config,
           _props5$actions = _props5.actions,
           actions = _props5$actions === undefined ? {} : _props5$actions,
@@ -59401,17 +59442,13 @@ var UiList = function (_Component) {
       if (ui && ui.modals && ui.modals[config.view]) {
         showModal = ui.modals[config.view];
       } else {
-        showModal = false;
+        showModal = this.state.showModal;
       }
       console.log('list render modal config', config, Checkbox);
       var rows = data.filter(this.filterRows),
           modal = _react2.default.createElement(
-        _reactBootstrap.Modal,
-        { show: showModal, onHide: function onHide(e) {
-            return _this3.close(e);
-          },
-          container: this,
-          'aria-labelledby': 'add-modal-title' },
+        Modal,
+        { showModal: showModal, close: this.close },
         _react2.default.createElement(_Form2.default, { layout: 'modal',
           onSubmit: function onSubmit(e, state) {
             return _this3.handleUpdate(e, state);
@@ -59444,6 +59481,7 @@ var UiList = function (_Component) {
             deselectRow: _this3.deselectRow.bind(_this3) }));
         },
         toggleAll: this.toggleAll.bind(this),
+        showModal: this.showModal.bind(this),
         search: this.search(),
         selected: selected,
         rows: rows,

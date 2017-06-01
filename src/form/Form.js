@@ -64,7 +64,7 @@ class UiForm extends Component {
         visibility[key] = true;
       }
     });
-    console.log('vis', visibility);
+
     this.state = {
       errors: props.errors,
       form: config.form,

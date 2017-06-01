@@ -2,13 +2,12 @@
 import React, {Component, Element} from 'react';
 import ListRow from './ListRow';
 import * as libs from '../libs';
-import {Table, FormControl, Alert, Well,
-  Modal, Row, Col} from 'react-bootstrap';
+import {FormControl} from 'react-bootstrap';
 import UiForm from '../form/Form';
 import {CrudConfig, DOMEvent, ListActions as ListActionsType,
   ListRow as ListRowType} from '../types';
 
-let layouts, lib, Checkbox;
+let layouts, lib, Checkbox, Modal;
 
 type FormData = {};
 
@@ -84,6 +83,7 @@ class UiList extends Component {
     lib = libs[libType];
     layouts = lib.listLayouts;
     Checkbox = lib.Checkbox;
+    Modal = lib.Modal;
   }
 
   /**
@@ -138,10 +138,14 @@ class UiList extends Component {
     if (actions.setForm) {
       actions.setForm(config.view, row);
     }
-    this.setState({showModal: true});
+    this.showModal();
     if (actions.setModalState) {
       actions.setModalState(config.view, true);
     }
+  }
+
+  showModal() {
+    this.setState({showModal: true});
   }
 
   /**
@@ -298,7 +302,7 @@ class UiList extends Component {
    */
   render(): Element<any> {
     let list,
-      {data = [], errors, config, actions = {}, form = {}} = this.props,
+      {data = [], errors = {}, config, actions = {}, form = {}} = this.props,
       {selected} = this.state,
       ui = actions.ui,
       ListLayout = this.listLayout(),
@@ -307,14 +311,12 @@ class UiList extends Component {
     if (ui && ui.modals && ui.modals[config.view]) {
       showModal = ui.modals[config.view];
     } else {
-      showModal = false;
+      showModal = this.state.showModal;
     }
-console.log('list render modal config', config, Checkbox);
+
     const rows = data.filter(this.filterRows),
       modal = (
-        <Modal show={showModal} onHide={e => this.close(e)}
-          container={this}
-          aria-labelledby="add-modal-title">
+        <Modal showModal={showModal} close={this.close}>
           <UiForm layout="modal"
             onSubmit={(e, state) => this.handleUpdate(e, state)}
             errors={errors}
@@ -326,7 +328,6 @@ console.log('list render modal config', config, Checkbox);
               type: 'button'
             }}}
             config={config} />
-
         </Modal>
     )
     return <ListLayout
@@ -347,6 +348,7 @@ console.log('list render modal config', config, Checkbox);
                 deselectRow={this.deselectRow.bind(this)} />
             }}
             toggleAll={this.toggleAll.bind(this)}
+            showModal={this.showModal.bind(this)}
             search={this.search()}
             selected={selected}
             rows={rows}

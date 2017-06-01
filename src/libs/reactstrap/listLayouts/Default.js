@@ -2,7 +2,8 @@ import React from 'react';
 import ListActions from './ListActions';
 import {Alert, Input, Col, Row, Table} from 'reactstrap';
 
-export default ({actions, canSelect, data, config, listRow, modal, msg, rowClick, rows, search, selected, toggleAll, user}) => {
+export default ({actions, canSelect, data, config, listRow, modal, msg, 
+  rowClick, rows, search, selected, showModal, toggleAll, user}) => {
   let list;
   const columns = config.list.columns,
       headings = Object.keys(columns)
@@ -54,7 +55,8 @@ export default ({actions, canSelect, data, config, listRow, modal, msg, rowClick
                 user={user}
                 selected={selected}
                 actions={actions}
-                config={config} />
+                config={config}
+                showModal={showModal} />
             </Col>
             <Col md={4}>{search}</Col>
             </Row>

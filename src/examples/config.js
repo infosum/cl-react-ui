@@ -38,7 +38,7 @@ export default {
         add: {
           id: 'list-action-add',
           visible: () => true,
-          render: (props) => <Button>Add</Button>
+          render: (props) => <Button onClick={() => props.showModal()}>Add</Button>
         },
         claim: {
           id: 'list-action-claim',

@@ -9,7 +9,8 @@ type Props = {
   user: User,
   selected: ListRow[],
   config: CrudConfig,
-  rowClick: Function
+  rowClick: Function,
+  showModal: () => void,
 };
 
 export default (props: Props) => {

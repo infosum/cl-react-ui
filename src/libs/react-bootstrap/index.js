@@ -5,9 +5,13 @@ import * as layouts from './layouts';
 import * as listLayouts from './listLayouts';
 import * as fields from './fields';
 
-import {Button, Checkbox, ControlLabel, Form, FormControl, HelpBlock} from 'react-bootstrap';
+import {Button, Checkbox, ControlLabel, Form, FormControl, HelpBlock, Modal as RModal} from 'react-bootstrap';
 
 let Feedback = FormControl.Feedback;
+
+const Modal = ({showModal, close, children}) => <RModal show={showModal} onHide={e => close(e)}>
+    {children}
+  </RModal>;
 
 export {
   Button,
@@ -21,5 +25,6 @@ export {
   FormGroup,
   HelpBlock,
   layouts,
-  listLayouts
+  listLayouts,
+  Modal
 };

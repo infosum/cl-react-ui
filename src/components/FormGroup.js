@@ -6,5 +6,5 @@ export default ({className, style, handle, label, type = 'button'}) => {
           onClick={handle}
           type={type}>
             {label}
-        </Button>;
+        </button>;
 }
