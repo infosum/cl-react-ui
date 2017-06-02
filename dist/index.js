@@ -687,7 +687,7 @@ var UiForm = function (_Component) {
         visibility[key] = true;
       }
     });
-    console.log('vis', visibility);
+
     _this.state = {
       errors: props.errors,
       form: config.form,
@@ -3131,52 +3131,23 @@ module.exports = g;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.validations = exports.fields = exports.List = exports.Icon = exports.Form = undefined;
-
-var _List = __webpack_require__(67);
-
-var _List2 = _interopRequireDefault(_List);
-
-var _Form = __webpack_require__(9);
-
-var _Form2 = _interopRequireDefault(_Form);
-
-var _Icon = __webpack_require__(22);
-
-var _Icon2 = _interopRequireDefault(_Icon);
-
-var _fields = __webpack_require__(14);
-
-var ReactStrapFields = _interopRequireWildcard(_fields);
-
-var _fields2 = __webpack_require__(12);
-
-var ReactBootstrapFields = _interopRequireWildcard(_fields2);
-
-var _validatePromise = __webpack_require__(19);
-
-var validations = _interopRequireWildcard(_validatePromise);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(70);
-
-
-var fields = {
-  reactstrap: ReactStrapFields,
-  reactBootstrap: ReactBootstrapFields
-};
-
-exports.Form = _Form2.default;
-exports.Icon = _Icon2.default;
-exports.List = _List2.default;
-exports.fields = fields;
+var validations = __webpack_require__(19);
 exports.validations = validations;
+var Icon_1 = __webpack_require__(22);
+exports.Icon = Icon_1.default;
+var Form_1 = __webpack_require__(9);
+exports.Form = Form_1.default;
+var ReactBootstrapFields = __webpack_require__(12);
+var ReactStrapFields = __webpack_require__(14);
+var List_1 = __webpack_require__(67);
+exports.List = List_1.default;
+var fields = {
+    reactBootstrap: ReactBootstrapFields,
+    reactstrap: ReactStrapFields
+};
+exports.fields = fields;
 
 /***/ }),
 /* 22 */
@@ -3185,68 +3156,39 @@ exports.validations = validations;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _classnames = __webpack_require__(71);
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-exports.default = function (_ref) {
-  var _classNames;
-
-  var icon = _ref.icon,
-      color = _ref.color,
-      label = _ref.label,
-      pull = _ref.pull,
-      size = _ref.size,
-      stack = _ref.stack,
-      inverse = _ref.inverse,
-      spin = _ref.spin;
-
-  if (!pull) {
-    pull = '';
-  }
-  if (!color) {
-    color = '';
-  }
-
-  if (!size) {
-    size = 0;
-  }
-
-  if (!stack) {
-    stack = 0;
-  }
-
-  if (!spin) {
-    spin = false;
-  }
-
-  var className = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, 'fa fa-' + icon, true), _defineProperty(_classNames, 'pull-' + pull, pull !== ''), _defineProperty(_classNames, 'text-' + color, color !== ''), _defineProperty(_classNames, 'fa-' + size + 'x', size !== 0), _defineProperty(_classNames, 'fa-stack-' + stack + 'x', stack !== 0), _defineProperty(_classNames, 'fa-inverse', inverse), _defineProperty(_classNames, 'fa-spin', spin), _classNames));
-  if (!label) {
-    return _react2.default.createElement(
-      'span',
-      null,
-      _react2.default.createElement('i', { className: className })
-    );
-  }
-  return _react2.default.createElement(
-    'span',
-    null,
-    _react2.default.createElement('i', { className: className }),
-    ' ',
-    label
-  );
+Object.defineProperty(exports, "__esModule", { value: true });
+var classNames = __webpack_require__(71);
+var react_1 = __webpack_require__(0);
+exports.default = function (_a) {
+    var icon = _a.icon,
+        color = _a.color,
+        label = _a.label,
+        pull = _a.pull,
+        size = _a.size,
+        stack = _a.stack,
+        inverse = _a.inverse,
+        spin = _a.spin;
+    if (!pull) {
+        pull = '';
+    }
+    if (!color) {
+        color = '';
+    }
+    if (!size) {
+        size = 0;
+    }
+    if (!stack) {
+        stack = 0;
+    }
+    if (!spin) {
+        spin = false;
+    }
+    var className = classNames((_b = {}, _b["fa fa-" + icon] = true, _b["pull-" + pull] = pull !== '', _b["text-" + color] = color !== '', _b["fa-" + size + "x"] = size !== 0, _b["fa-stack-" + stack + "x"] = stack !== 0, _b['fa-inverse'] = inverse, _b['fa-spin'] = spin, _b));
+    if (!label) {
+        return react_1.default.createElement("span", null, react_1.default.createElement("i", { className: className }));
+    }
+    return react_1.default.createElement("span", null, react_1.default.createElement("i", { className: className }), ' ', label);
+    var _b;
 };
 
 /***/ }),
@@ -4480,7 +4422,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+exports.Modal = exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _FormActions = __webpack_require__(24);
 
@@ -4514,6 +4456,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Feedback = _reactBootstrap.FormControl.Feedback;
 
+var Modal = function Modal(_ref) {
+  var showModal = _ref.showModal,
+      close = _ref.close,
+      children = _ref.children;
+  return React.createElement(
+    _reactBootstrap.Modal,
+    { show: showModal, onHide: function onHide(e) {
+        return close(e);
+      } },
+    children
+  );
+};
+
 exports.Button = _reactBootstrap.Button;
 exports.Checkbox = _reactBootstrap.Checkbox;
 exports.ControlLabel = _reactBootstrap.ControlLabel;
@@ -4526,6 +4481,7 @@ exports.FormGroup = _FormGroup2.default;
 exports.HelpBlock = _reactBootstrap.HelpBlock;
 exports.layouts = layouts;
 exports.listLayouts = listLayouts;
+exports.Modal = Modal;
 
 /***/ }),
 /* 40 */
@@ -6029,7 +5985,7 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
+exports.Modal = exports.listLayouts = exports.layouts = exports.HelpBlock = exports.FormGroup = exports.FormControl = exports.FormActions = exports.Form = exports.Feedback = exports.fields = exports.ControlLabel = exports.Checkbox = exports.Button = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -6069,6 +6025,18 @@ var Checkbox = function Checkbox(props) {
   }));
 };
 
+var Modal = function Modal(_ref) {
+  var showModal = _ref.showModal,
+      close = _ref.close,
+      children = _ref.children;
+  return React.createElement(
+    _reactstrap.Modal,
+    { isOpen: showModal, toggle: function toggle(e) {
+        return close(e);
+      } },
+    children
+  );
+};
 exports.Button = _reactstrap.Button;
 exports.Checkbox = Checkbox;
 exports.ControlLabel = _reactstrap.Label;
@@ -6081,6 +6049,7 @@ exports.FormGroup = _FormGroup2.default;
 exports.HelpBlock = _reactstrap.FormText;
 exports.layouts = layouts;
 exports.listLayouts = listLayouts;
+exports.Modal = Modal;
 
 /***/ }),
 /* 61 */
@@ -6310,6 +6279,7 @@ exports.default = function (_ref) {
       rows = _ref.rows,
       search = _ref.search,
       selected = _ref.selected,
+      showModal = _ref.showModal,
       toggleAll = _ref.toggleAll,
       user = _ref.user;
 
@@ -6388,7 +6358,8 @@ exports.default = function (_ref) {
           user: user,
           selected: selected,
           actions: actions,
-          config: config })
+          config: config,
+          showModal: showModal })
       ),
       _react2.default.createElement(
         _reactstrap.Col,
@@ -6534,7 +6505,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var layouts = void 0,
     lib = void 0,
-    Checkbox = void 0;
+    Checkbox = void 0,
+    Modal = void 0;
 
 /**
  * Create a list component
@@ -6589,6 +6561,7 @@ var UiList = function (_Component) {
       lib = libs[libType];
       layouts = lib.listLayouts;
       Checkbox = lib.Checkbox;
+      Modal = lib.Modal;
     }
 
     /**
@@ -6664,10 +6637,15 @@ var UiList = function (_Component) {
       if (actions.setForm) {
         actions.setForm(config.view, row);
       }
-      this.setState({ showModal: true });
+      this.showModal();
       if (actions.setModalState) {
         actions.setModalState(config.view, true);
       }
+    }
+  }, {
+    key: 'showModal',
+    value: function showModal() {
+      this.setState({ showModal: true });
     }
 
     /**
@@ -6879,7 +6857,8 @@ var UiList = function (_Component) {
           _props5 = this.props,
           _props5$data = _props5.data,
           data = _props5$data === undefined ? [] : _props5$data,
-          errors = _props5.errors,
+          _props5$errors = _props5.errors,
+          errors = _props5$errors === undefined ? {} : _props5$errors,
           config = _props5.config,
           _props5$actions = _props5.actions,
           actions = _props5$actions === undefined ? {} : _props5$actions,
@@ -6894,17 +6873,13 @@ var UiList = function (_Component) {
       if (ui && ui.modals && ui.modals[config.view]) {
         showModal = ui.modals[config.view];
       } else {
-        showModal = false;
+        showModal = this.state.showModal;
       }
-      console.log('list render modal config', config, Checkbox);
+
       var rows = data.filter(this.filterRows),
           modal = _react2.default.createElement(
-        _reactBootstrap.Modal,
-        { show: showModal, onHide: function onHide(e) {
-            return _this3.close(e);
-          },
-          container: this,
-          'aria-labelledby': 'add-modal-title' },
+        Modal,
+        { showModal: showModal, close: this.close },
         _react2.default.createElement(_Form2.default, { layout: 'modal',
           onSubmit: function onSubmit(e, state) {
             return _this3.handleUpdate(e, state);
@@ -6937,6 +6912,7 @@ var UiList = function (_Component) {
             deselectRow: _this3.deselectRow.bind(_this3) }));
         },
         toggleAll: this.toggleAll.bind(this),
+        showModal: this.showModal.bind(this),
         search: this.search(),
         selected: selected,
         rows: rows,

@@ -130,7 +130,7 @@ class RangeArray extends Component {
    * Render
    * @return {Node} Dom
    */
-  render(): React$Element<any> {
+  render(): JSX.Element {
     return (<Table>
       <thead>
         <tr>

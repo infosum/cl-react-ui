@@ -2,12 +2,23 @@ var webpack = require('webpack'),
   libraryName = 'cl-react-ui',
   path = require('path'),
   entry = [
-    './src/index.js'
+    './src/index.tsx'
   ],
   plugins = [
     new webpack.NoEmitOnErrorsPlugin()
   ],
   rules = [{
+    test: /\.ts(x?)$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'babel-loader'
+      },
+      {
+        loader: 'ts-loader'
+      }
+    ]
+  }, {
     test: /\.ts(x?)$/,
     exclude: /node_modules/,
     use: [
