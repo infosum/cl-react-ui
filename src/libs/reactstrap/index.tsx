@@ -6,7 +6,7 @@ import FormGroup from './fields/FormGroup';
 import FormActions from './FormActions';
 import * as layouts from './layouts';
 import * as listLayouts from './listLayouts';
-debugger;
+
 const Checkbox = (props) => <Input type="checkbox" {...props}
 style={{position: 'relative', margin: 0}}
 />;

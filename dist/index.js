@@ -1005,8 +1005,6 @@ var rs = _interopRequireWildcard(_reactstrap);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-console.log('reactstrap', reactstrap);
-// debugger;
 var reactBootstrap = rbs.default;
 var reactstrap = rs.default;
 exports.reactBootstrap = reactBootstrap;
@@ -4163,7 +4161,6 @@ var FormGroup_1 = __webpack_require__(43);
 var FormActions_1 = __webpack_require__(39);
 var layouts = __webpack_require__(57);
 var listLayouts = __webpack_require__(60);
-debugger;
 var Checkbox = function Checkbox(props) {
     return React.createElement(reactstrap_1.Input, __assign({ type: "checkbox" }, props, { style: { position: 'relative', margin: 0 } }));
 };
