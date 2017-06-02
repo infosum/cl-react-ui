@@ -320,9 +320,11 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
     const error = errors[name] || [];
     const FormGroup = lib.FormGroup;
     const FieldComponent = this.getReactField(field);
-
+    if (FieldComponent === null) {
+      return null;
+    }
     return <FormGroup
-      key={`field-formgroup-${name}`}
+      key={name}
       errors={error}
       FieldComponent={FieldComponent}
       field={field}
@@ -399,10 +401,13 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
       .filter(this.isVisible.bind(this))
       .forEach((name) => {
         const field = this.fields[name];
-        madeFields[name] = this.makeField(name, field);
+        const madeField = this.makeField(name, field);
+        if (madeField !== null) {
+          madeFields[name] = madeField;
+        }
     });
 
-    return( < FormLayout
+    return( <FormLayout
               actions={buttons}
               errors={errors}
               fields={madeFields}
