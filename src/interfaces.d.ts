@@ -110,7 +110,7 @@ interface IFormProps {
   formUpdate: (view: string, field: IFieldConfig, name: string, value: string | number) => void;
   layout: string;
   library?: 'reactstrap' | 'reactBootstrap';
-  onSubmit: Function;
+  onSubmit: (e: MouseEvent, data: any) => void;
   title?: (row: IListRow) => string | string;
   visibility?: {
       [key: string]: boolean;
@@ -204,7 +204,7 @@ interface IListActionsProps {
   user: any;
   selected: IListRow[];
   config: ICrudConfig;
-  rowClick: Function;
+  rowClick: (e: MouseEvent, clicked: boolean) => void;
   showModal: () => void;
 }
 
@@ -269,13 +269,13 @@ interface IListProps {
 
 interface IListRowProps {
   actions: IListActions;
-  canSelect: Function;
+  canSelect: (row: IListRow) => void;
   Checkbox: (any) => JSX.Element;
   columns: IListColumns;
-  deselectRow: Function;
+  deselectRow: (row: IListRow) => void;
   onClick: any;
   row: IListRow;
   selected: boolean;
-  selectRow: Function;
+  selectRow: (row: IListRow) => void;
   view: string;
 }

@@ -4,13 +4,12 @@ import {Component} from 'react';
 import {Input} from 'reactstrap';
 
 interface IState {
-  search?: string;
+  search: string;
   storeData?: any;
-  value?: string;
+  value: string;
 }
-export default class Lookup extends Component<FieldLookup, IState> {
+class Lookup extends Component<FieldLookup, IState> {
 
-  // handleChange: (e: MouseEvent) => {}
   private groupedData: any;
 
   constructor(props: FieldLookup) {
@@ -24,7 +23,7 @@ export default class Lookup extends Component<FieldLookup, IState> {
    * Get the relevant part of the store data for the list population
    * @return {Object} Partial store data to use for list population
    */
-  private getStoreData(): Object {
+  private getStoreData(): any {
     let group;
     this.groupedData = {};
 
@@ -108,7 +107,7 @@ export default class Lookup extends Component<FieldLookup, IState> {
    * Render
    * @return {Node} Dom
    */
-  public render(): JSX.Element {
+  public render() {
     const storeData = this.getStoreData();
     const opts = this.mapDataToOpts(storeData);
     const {value, onBlur, name} = this.props;
@@ -123,3 +122,5 @@ export default class Lookup extends Component<FieldLookup, IState> {
       </Input>);
   }
 }
+
+export default Lookup;

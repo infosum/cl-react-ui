@@ -6,31 +6,21 @@ import {Alert, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 /**
  * Layout for rendering form in a reactstrap modal
  */
-class UiFormLayoutModal extends Component<IFormLayout, {}> {
-
-  private errors(): JSX.Element | null {
-    const {errors} = this.props;
-    if (errors.message) {
-      return (<Alert color="danger">
-                    <p>{errors.message}</p>
-                </Alert>);
-    }
-    return null;
+export default ({errors, form, fields, actions}: IFormLayout) => {
+  let alert;
+  const allFields = Object.keys(fields).map((n) => fields[n]);
+  if (errors.message) {
+    alert = (<Alert color="danger">
+                  <p>{errors.message}</p>
+              </Alert>);
   }
-  /**
-   * Render
-   * @return {Node} Dom
-   */
-  public render(): JSX.Element {
-    const {form, fields, actions} = this.props;
-    const allFields = Object.keys(fields).map((n) => fields[n]);
 
-    return (<div>
+  return (<div>
               <ModalHeader>
                 {form.title}
               </ModalHeader>
               <ModalBody>
-                {this.errors()}
+                {alert}
                 <form>
                   {allFields}
                 </form>
@@ -39,7 +29,4 @@ class UiFormLayoutModal extends Component<IFormLayout, {}> {
                 {actions}
               </ModalFooter>
             </div>);
-  }
-}
-
-export default UiFormLayoutModal;
+};

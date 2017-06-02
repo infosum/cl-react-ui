@@ -18,5 +18,4 @@ export default ({form, fields, actions, errors, onSubmit}: IFormLayout) => {
               {allFields}
               {actions}
           </Form>);
-
 };
