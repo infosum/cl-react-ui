@@ -1,8 +1,9 @@
 /// <reference path="../../../interfaces.d.ts" />
-import React, {Component} from 'react';
+import * as React from 'react';
+import {Component} from 'react';
 import {Radio} from 'react-bootstrap';
 
-export default ({value, name, onChange, field}: IFormField) => {
+export default ({value, name, onChange, field}: FieldRadio) => {
 
     let {options} = field;
 
@@ -12,7 +13,7 @@ export default ({value, name, onChange, field}: IFormField) => {
       ));
     }
 
-    const opts = options.map((option: FormFieldOption, k: number) => {
+    const opts = options.map((option: IFieldOption, k: number) => {
         const active = option.value === value;
         return (<Radio
                   key={k}

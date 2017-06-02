@@ -1,4 +1,4 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
 import {Input} from 'reactstrap';
@@ -8,12 +8,12 @@ interface IState {
   storeData?: any;
   value?: string;
 }
-export default class Lookup extends Component<IFormField, IState> {
+export default class Lookup extends Component<FieldLookup, IState> {
 
   // handleChange: (e: MouseEvent) => {}
-  // groupedData: Object;
+  private groupedData: any;
 
-  constructor(props: IFormField) {
+  constructor(props: FieldLookup) {
     super(props);
     const storeData = this.getStoreData();
     // this.handleChange = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ export default class Lookup extends Component<IFormField, IState> {
         this.groupedData[thisGroup] = [];
       }
       this.groupedData[thisGroup].push(data);
-    })
+    });
     return this.groupedData;
   }
 
@@ -70,7 +70,7 @@ export default class Lookup extends Component<IFormField, IState> {
     Object.keys(storeData).forEach((optGroup: string) => {
       const opts = storeData[optGroup]
       .filter((option) => optionFilter(option))
-      .map((option: FormFieldOption, k: number) => {
+      .map((option: IFieldOption, k: number) => {
         const ref = 'lookup-option-' + k;
         const thisLabel = typeof label === 'function'
           ? label(option)
@@ -97,10 +97,11 @@ export default class Lookup extends Component<IFormField, IState> {
    * Handle change
    * @param {Event} e .
    */
-  private handleChange(e: MouseEvent) {
+  private handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {onChange, name} = this.props;
-    this.state.value = e.target.value;
-    onChange(name, e.target.value);
+    const target = e.target as HTMLInputElement;
+    this.setState({value: target.value});
+    onChange(name, target.value);
   }
 
   /**
@@ -115,7 +116,7 @@ export default class Lookup extends Component<IFormField, IState> {
     return (<Input type="select"
         value={value}
         onBlur={() => onBlur(name)}
-        onChange={(e: MouseEvent) => {
+        onChange={(e) => {
           this.handleChange(e);
         }}>
         {opts}

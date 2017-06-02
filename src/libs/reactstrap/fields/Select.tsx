@@ -1,24 +1,24 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
 import {Input} from 'reactstrap';
 
-export default ({field, value, onBlur, onChange, name}: IFormField) => {
+export default ({field, value, onBlur, onChange, name}: FieldSelect) => {
   const {options} = field;
   let opts;
   if (Array.isArray(options)) {
-    opts = options.map((option: FormFieldOption, k: number) =>
-        <option key={'select-option-' + k} value={option.value}>
+    opts = options.map((option: IFieldOption, k) =>
+        <option key={k} value={option.value}>
           {option.label}
-        </option>;
-      )
+        </option>,
+      );
   } else {
     // Tmp whilst we fix stuff
     opts = Object.keys(options).map((key) =>
-      <option key={'select-option-' + key} value={key}>
+      <option key={key} value={key}>
           {options[key]}
-        </option>;
-    )
+        </option>,
+    );
   }
 
   return (<Input

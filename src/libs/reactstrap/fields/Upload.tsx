@@ -1,9 +1,9 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
+import * as Dropzone from 'react-dropzone';
 import {Input} from 'reactstrap';
 
-export default ({value, name, onChange, onBlur, field}: IFormField) => {
+export default ({value, name, onChange, onBlur, field}: FieldUpload) => {
   const {placeholder, multiple} = field;
   return <div>
           <Dropzone

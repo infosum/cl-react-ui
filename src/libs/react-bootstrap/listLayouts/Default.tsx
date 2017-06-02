@@ -1,14 +1,14 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Alert, Col, Row, Table, Well} from 'react-bootstrap';
 import ListActions from './ListActions';
 
-export default ({actions, canSelect, data, config, listRow, 
-  modal, msg, rowClick, rows, search, selected, toggleAll, user}) => {
+export default ({actions, canSelect, data, config, listRow,
+  modal, msg, rowClick, rows, search, selected, showModal, toggleAll, user}) => {
   let list;
   const columns = config.list.columns;
   const headings = Object.keys(columns)
-        .map((heading: string, key: number): Element<any> => {
+        .map((heading: string, key: number): JSX.Element => {
           const th = columns[heading];
           return (<th key={th.id} className={th.class}>
             {th.label}
@@ -32,8 +32,8 @@ export default ({actions, canSelect, data, config, listRow,
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row: ListRowType, key: number) =>
-                  listRow({key, row, selected, columns, actions, canSelect})
+                {rows.map((row: IListRow, key: number) =>
+                  listRow({key, row, selected, columns, actions, canSelect}),
                 )}
               </tbody>
               </Table>
@@ -56,7 +56,8 @@ export default ({actions, canSelect, data, config, listRow,
                 user={user}
                 selected={selected}
                 actions={actions}
-                config={config} />
+                config={config}
+                showModal={showModal} />
             </Col>
             <Col md={4}>{search}</Col>
             </Row>

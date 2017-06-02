@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {FormControl} from 'react-bootstrap';
 
-export default ({value, name, onChange, field}: FormFieldOption) => {
+export default ({value, name, onChange, field}: IFormField) => {
   const {placeholder} = field;
   return <FormControl
             componentClass="textarea"

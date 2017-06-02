@@ -1,5 +1,5 @@
 /// <reference path="../interfaces.d.ts" />
-import React from 'react';
+import * as React from 'react';
 import {Component} from 'react';
 import Tip from '../components/Tip';
 import ListCell from './ListCell';

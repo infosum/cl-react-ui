@@ -1,39 +1,38 @@
 /// <reference path="../../../interfaces.d.ts" />
-import deepEqual from 'deep-equal';
+import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import {Component} from 'react';
 import {Button, Table} from 'react-bootstrap';
-
-interface IProps {
-  field: {
-    columns: Array<{label: string, type: string}>;
-  };
-  value: string;
-}
 
 interface IState {
   rows: any[];
 }
 
-type Props = IFormField & IProps;
-
 /**
  * Grid field
  */
-class Grid extends Component<Props, IState> {
+class Grid extends Component<FieldGrid, IState> {
 
-  public static defaultProps = {
-    columns: [
-      {label: 'Min', type: 'text'},
-      {label: 'Max', type: 'text'},
-    ],
+  public static defaultProps: Partial<FieldGrid> = {
+    field: {
+      columns: [
+        {label: 'Min', type: 'text'},
+        {label: 'Max', type: 'text'},
+      ],
+      default: '',
+      id: '',
+      label: '',
+      pristine: true,
+      type: 'text',
+      value: '',
+    },
   };
 
   /**
    * Constructor
    * @param {Object} props .
    */
-  constructor(props: Props) {
+  constructor(props: FieldGrid) {
     super(props);
     this.state = {
       rows: this.makeRowsFromValue(props.value),
@@ -59,7 +58,7 @@ class Grid extends Component<Props, IState> {
    * Will receive new props
    * @param {Object} newProps Props
    */
-  public componentWillReceiveProps(newProps: Props) {
+  public componentWillReceiveProps(newProps: FieldGrid) {
     if (!deepEqual(this.props.value, newProps.value)) {
       this.setState({
         rows: this.makeRowsFromValue(newProps.value),

@@ -1,4 +1,4 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../interfaces.d.ts" />
 import * as React from 'react';
 import {Button} from 'react-bootstrap';
 
@@ -6,7 +6,7 @@ export default ({actions, onSubmit}) => {
   const buttons = Object.keys(actions)
     .map((k: string, index: number) => {
       const {action, id, style, type, label} = actions[k];
-      const evnt = () => '';
+      let evnt;
       let handle;
 
       if (action) {
@@ -18,8 +18,8 @@ export default ({actions, onSubmit}) => {
         handle = (e) => evnt(e, this);
       }
 
-      return (<Button key={id}
-        key={'form-button-' + index}
+      return (<Button
+        key={id}
         bsStyle={style}
         onClick={handle}
         type={type ? type : 'button'}>

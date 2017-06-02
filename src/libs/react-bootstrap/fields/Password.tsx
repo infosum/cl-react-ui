@@ -1,8 +1,8 @@
 /// <reference path="../../../interfaces.d.ts" />
-import React from 'react';
+import * as React from 'react';
 import {FormControl} from 'react-bootstrap';
 
-export default ({value, name, onChange, onBlur, field}: FormFieldOption) => {
+export default ({value, name, onChange, onBlur, field}: IFormField) => {
   const {placeholder} = field;
   return <FormControl
             type="password"

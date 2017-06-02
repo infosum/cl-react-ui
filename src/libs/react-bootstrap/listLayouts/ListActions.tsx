@@ -11,7 +11,7 @@ export default (props: IListActionsProps): JSX.Element => {
     // For each button group
     config.list.actions.forEach((btns, index) => {
       const listActionNames = Object.keys(btns);
-      const listActions = listActionNames.map((listAction, key) => {
+      const listActions = listActionNames.map((listAction, key): React.ReactElement<any> | null => {
           const a = btns[listAction];
           const isVisible = a.visible(user, selected);
           return isVisible

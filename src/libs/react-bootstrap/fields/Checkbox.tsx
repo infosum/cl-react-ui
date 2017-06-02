@@ -3,7 +3,12 @@ import * as React from 'react';
 import {Checkbox} from 'react-bootstrap';
 
 export default ({value, name, onChange, field}: IFormField) => {
-  const checked = (value === true || value === '1' || value === 'true');
+  let checked;
+  if (typeof value === 'boolean') {
+    checked = value === true;
+  } else {
+    checked = (value === '1' || value === 'true');
+  }
   const {label} = field;
 
   return (<Checkbox

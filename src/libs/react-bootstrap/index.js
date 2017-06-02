@@ -13,7 +13,7 @@ const Modal = ({showModal, close, children}) => <RModal show={showModal} onHide=
     {children}
   </RModal>;
 
-export {
+export default {
   Button,
   Checkbox,
   ControlLabel,

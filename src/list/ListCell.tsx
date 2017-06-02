@@ -1,8 +1,8 @@
 /// <reference path="../interfaces.d.ts" />
-import React from 'react';
+import * as React from 'react';
 
 interface IProps {
-  data: string | number
+  data: string | number;
 }
 
 export default ({data}: IProps) =>

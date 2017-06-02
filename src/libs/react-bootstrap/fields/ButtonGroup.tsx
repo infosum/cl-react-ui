@@ -7,11 +7,9 @@ interface IState {
   value: string;
 }
 
-export default class UiButtonGroup extends Component<IFormField, IState> {
+export default class UiButtonGroup extends Component<FieldButtonGroup, IState> {
 
- // handleChange: (e: MouseEvent) => {}
-
-  constructor(props: IFormField) {
+  constructor(props: FieldButtonGroup) {
     super(props);
     this.state = {value: ''};
   }
@@ -21,9 +19,9 @@ export default class UiButtonGroup extends Component<IFormField, IState> {
    * @param {Object} field Field config
    * @return {Array} Nodes (buttons)
    */
-  private buttons(field: IFieldConfig): JSX.Element[] {
+  private buttons(field): JSX.Element[] {
     const {value, name} = this.props;
-    return field.options.map((option: FormFieldOption, k: number) => {
+    return field.options.map((option: IFieldOption, k: number) => {
       const fakeE = {
           altKey: false,
           target: {value: option.value},
@@ -38,7 +36,7 @@ export default class UiButtonGroup extends Component<IFormField, IState> {
       }
 
       return <Button key={key}
-        onClick={(e) => this.handleChange(fakeE as MouseEvent)} active={active}>
+        onClick={(e) => this.handleChange(fakeE as any)} active={active}>
         {icon}{option.label}
       </Button>;
     });

@@ -1,14 +1,4 @@
 
-// interface ITipProps {
-//     icon?: string;
-//     color?: string;
-//     label?: string;
-//     pull?: string;
-//     size?: 0 | 1 | 2 | 3 | 4 | 5;
-//     stack?: number;
-//     inverse?: boolean;
-//     spin?: boolean
-// }
 
 interface IListRow {
     [key: string]: any;
@@ -24,6 +14,14 @@ interface ITipProps {
     children?: any;
     config: ITipConfig;
     row: IListRow;
+    icon?: string;
+    color?: string;
+    label?: string;
+    pull?: string;
+    size?: 0 | 1 | 2 | 3 | 4 | 5;
+    stack?: number;
+    inverse?: boolean;
+    spin?: boolean
 }
 
 interface IFormErrors { [key: string]: string[] }
@@ -40,9 +38,9 @@ interface IFieldConfig {
     onChange?: (name: string, value: any) => void;
     placeholder?: string;
     pristine: boolean;
-    type: 'text';
+    type: string;
     vaidationState?: string;
-    validate: {
+    validate?: {
         key?: string;
         promises: [{
             rule: (value: string, row: IListRow, msg: () => string, arg : (value, row) => any | any | null ) => Promise<boolean>;
@@ -78,12 +76,13 @@ interface IFormField {
     value: string;
     name: string;
     onChange: (name: string, data: any) => {};
-    onBlur: () => void;
+    onBlur: (name: string) => void;
     field: IFieldConfig;
+    row?: IListRow;
 }
 
 interface IFormGroupProps {
-    FieldComponent: JSX.Element;
+    FieldComponent: string;
     errors: string[];
     field: IFieldConfig;
     validationState: string;
@@ -119,7 +118,30 @@ interface IFormProps {
 }
 
 // Specific field props
+interface IFieldOption {
+    value: string | number;
+    [key: string]: string | number;
+}
 
+// -- Button Group
+interface IFieldButtonGroup {
+    field: {
+        options: IFieldOption[]
+    }
+}
+
+type FieldButtonGroup = IFormField & IFieldButtonGroup;
+
+// -- Grid
+type FieldLookup = IFormField & IFieldLookup;
+
+interface IFieldGrid {
+    field: {
+        columns: Array<{label: string, type: string}>;
+    }
+}
+
+// -- Lookup
 interface IFieldLookup {
     field: {
         options: {
@@ -133,13 +155,46 @@ interface IFieldLookup {
     }
 }
 
-type FieldLookup = IFormField & IFieldLookup;
+type FieldGrid = IFormField & IFieldGrid;
+
+// -- Radio
+interface IFieldRadio {
+    field: {
+        options: IFieldOption[]
+    }
+}
+
+type FieldRadio = IFormField & IFieldRadio;
+
+// -- Select
+
+interface IFieldSelect {
+    field: {
+        options: IFieldOption;
+    }
+}
+
+type FieldSelect = IFormField & IFieldSelect;
+
+// -- Upload
+interface IFieldUpload {
+    field: {
+        multiple?: boolean;
+    },
+    value: Array<{
+        type: string;
+        preview: string;
+        name: string;
+    }>
+}
+
+type FieldUpload = IFormField & IFieldUpload;
 // LISTS
 
 interface IListAction {
   id: string;
   visible: (user: any, selected: IListRow) => boolean;
-  render: () => JSX.Element
+  render: string;
 }
 
 interface IListActions { [key: string]: IListAction }

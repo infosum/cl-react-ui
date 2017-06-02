@@ -1,5 +1,5 @@
 /// <reference path="../interfaces.d.ts" />
-import deepEqual from 'deep-equal';
+import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import {Component} from 'react';
 import uuid from 'uuid';
@@ -255,9 +255,9 @@ class UiForm extends Component<IFormProps, IState> {
     data[name] = value;
     this.setState({data});
 
-    if (field.onChange) {
-      field.onChange(this);
-    }
+    // if (field.onChange) {
+    //   field.onChange(this);
+    // }
   }
 
   /**

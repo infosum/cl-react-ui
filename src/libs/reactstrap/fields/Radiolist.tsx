@@ -1,9 +1,9 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
 import {Input, Label} from 'reactstrap';
 
-export default ({field, value, onChange, onBlur, name}: IFormField) => {
+export default ({field, value, onChange, onBlur, name}: FieldRadio) => {
     let {options} = field;
 
     if (!Array.isArray(field.options)) {
@@ -11,11 +11,11 @@ export default ({field, value, onChange, onBlur, name}: IFormField) => {
         {value: key, label: options[key]}
       ));
     }
-    const opts = options.map((option: FormFieldOption, k: number) => {
+    const opts = options.map((option: IFieldOption, k: number) => {
         const active = option.value === value;
         return (
           <Label check
-            key={`radiolist-${field.name}-${k}`}>
+            key={k}>
             <Input
               type="radio"
               key={k}
@@ -23,7 +23,10 @@ export default ({field, value, onChange, onBlur, name}: IFormField) => {
               defaultChecked={active}
               value={option.value}
               onBlur={() => onBlur(name)}
-              onClick={(e) => onChange(name, e.target.value)} />
+              onClick={(e) => {
+                const target = e.target as HTMLInputElement;
+                onChange(name, target.value);
+              }} />
                 {' '}{option.label}
           </Label>);
       });

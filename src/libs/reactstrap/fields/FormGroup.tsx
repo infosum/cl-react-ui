@@ -1,8 +1,8 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../interfaces.d.ts" />
 import * as React from 'react';
 import {FormFeedback, FormGroup, FormText, Label} from 'reactstrap';
 
-export default (props: IFormGroupProps) => {
+export default (props: IFormGroupProps & IFormField) => {
   const {FieldComponent, errors, field, onChange, onBlur, name, validationState, value} = props;
   const noLabels = ['checkbox', 'hidden'];
 
