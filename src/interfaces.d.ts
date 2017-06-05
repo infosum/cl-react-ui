@@ -78,7 +78,7 @@ interface IFormField {
     onChange: (name: string, data: any) => {};
     onBlur: (name: string) => void;
     field: IFieldConfig;
-    row?: IListRow;
+    row: IListRow;
 }
 
 interface IFormGroupProps {

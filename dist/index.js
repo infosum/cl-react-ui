@@ -2881,10 +2881,11 @@ exports.default = function (props) {
         onChange = props.onChange,
         onBlur = props.onBlur,
         name = props.name,
+        row = props.row,
         validationState = props.validationState,
         value = props.value;
     var label = field.type === 'hidden' || field.label === '' ? null : React.createElement(react_bootstrap_1.ControlLabel, null, field.label);
-    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
+    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field, row: row }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
         return React.createElement(react_bootstrap_1.HelpBlock, { key: 'help-' + name + '-' + i }, error);
     }));
 };
@@ -3665,6 +3666,7 @@ exports.default = function (props) {
         onChange = props.onChange,
         onBlur = props.onBlur,
         name = props.name,
+        row = props.row,
         validationState = props.validationState,
         value = props.value;
     var noLabels = ['checkbox', 'hidden'];
@@ -3678,7 +3680,7 @@ exports.default = function (props) {
     if (color === 'error') {
         color = 'danger';
     }
-    return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
+    return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, row: row, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
         return React.createElement(reactstrap_1.FormFeedback, { key: 'help-' + name + '-' + i }, error);
     }));
 };

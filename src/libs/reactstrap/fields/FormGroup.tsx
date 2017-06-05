@@ -3,7 +3,7 @@ import * as React from 'react';
 import {FormFeedback, FormGroup, FormText, Label} from 'reactstrap';
 
 export default (props: IFormGroupProps & IFormField) => {
-  const {FieldComponent, errors, field, onChange, onBlur, name, validationState, value} = props;
+  const {FieldComponent, errors, field, onChange, onBlur, name, row, validationState, value} = props;
   const noLabels = ['checkbox', 'hidden'];
 
   const {type, id, help, label} = field;
@@ -27,6 +27,7 @@ export default (props: IFormGroupProps & IFormField) => {
               name={name}
               onChange={onChange}
               onBlur={onBlur}
+              row={row}
               state={color}
               field={field} />
 

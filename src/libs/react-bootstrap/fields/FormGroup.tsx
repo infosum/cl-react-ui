@@ -3,7 +3,7 @@ import * as React from 'react';
 import {ControlLabel, Feedback, FormGroup, HelpBlock} from 'react-bootstrap';
 
 export default (props: IFormGroupProps & IFormField) => {
-  const {FieldComponent, errors, field, onChange, onBlur, name, validationState, value} = props;
+  const {FieldComponent, errors, field, onChange, onBlur, name, row, validationState, value} = props;
   const label = field.type === 'hidden' || field.label === ''
     ? null
     : <ControlLabel>{field.label}</ControlLabel>;
@@ -19,7 +19,8 @@ export default (props: IFormGroupProps & IFormField) => {
               name={name}
               onChange={onChange}
               onBlur={onBlur}
-              field={field} />
+              field={field}
+              row={row} />
 
             <HelpBlock>{field.help}</HelpBlock>
             {
