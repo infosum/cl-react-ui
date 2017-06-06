@@ -3,7 +3,6 @@ import {Button} from 'reactstrap';
 import {fields} from '../index';
 import {validations} from '../index';
 import {List, listActions} from '../index';
-console.log('list = ', listActions);
 
 const Claim = ({selected}) => {
   return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
