@@ -1,3 +1,5 @@
+/// <reference path="../../interfaces.d.ts" />
+import * as React from 'react';
 import FormActions from './FormActions';
 import FormGroup from './fields/FormGroup';
 import {default as ButtonGroup} from './fields/ButtonGroup';
