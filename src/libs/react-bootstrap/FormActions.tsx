@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {Button} from 'react-bootstrap';
 
-export default ({actions, onSubmit}) => {
+export default ({actions, form, onSubmit}) => {
   const buttons = Object.keys(actions)
     .map((k: string, index: number) => {
       const {action, id, style, type, label} = actions[k];
@@ -15,7 +15,7 @@ export default ({actions, onSubmit}) => {
       if (type === 'submit') {
         handle = onSubmit;
       } else {
-        handle = (e) => evnt(e, this);
+        handle = (e) => evnt(e, form);
       }
 
       return (<Button

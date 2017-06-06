@@ -385,6 +385,7 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
     const FormActions = lib.FormActions;
     const buttons = <FormActions
                   actions={this.actions}
+                  form={this}
                   onSubmit={(e) => {
                     e.preventDefault();
                     validate(this.toContract(), this.state.data)

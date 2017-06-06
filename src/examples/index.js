@@ -26215,7 +26215,7 @@ var UiForm = function (_super) {
         var _this = this;
         var errors = this.props.errors;
         var FormActions = lib.FormActions;
-        var buttons = React.createElement(FormActions, { actions: this.actions, onSubmit: function onSubmit(e) {
+        var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
                 e.preventDefault();
                 validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
                     return _this.onSubmit(e, _this.state.data);
@@ -26331,8 +26331,6 @@ var rs = _interopRequireWildcard(_reactstrap);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-console.log('reactstrap', reactstrap);
-// debugger;
 var reactBootstrap = rbs.default;
 var reactstrap = rs.default;
 exports.reactBootstrap = reactBootstrap;
@@ -52447,6 +52445,13 @@ exports.default = {
           return row.id === '' ? 'Create record' : 'Save record';
         },
         style: 'primary'
+      },
+      clear: {
+        id: 'clear',
+        type: 'button',
+        action: function action(e, form) {
+          debugger;
+        }
       }
     },
     fields: {
@@ -52693,12 +52698,12 @@ exports.default = function (_a) {
 "use strict";
 
 
-var _this = undefined;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(1);
 var react_bootstrap_1 = __webpack_require__(19);
 exports.default = function (_a) {
     var actions = _a.actions,
+        form = _a.form,
         onSubmit = _a.onSubmit;
     var buttons = Object.keys(actions).map(function (k, index) {
         var _a = actions[k],
@@ -52716,7 +52721,7 @@ exports.default = function (_a) {
             handle = onSubmit;
         } else {
             handle = function handle(e) {
-                return evnt(e, _this);
+                return evnt(e, form);
             };
         }
         return React.createElement(react_bootstrap_1.Button, { key: id, bsStyle: style, onClick: handle, type: type ? type : 'button' }, label);
@@ -52885,10 +52890,11 @@ exports.default = function (props) {
         onChange = props.onChange,
         onBlur = props.onBlur,
         name = props.name,
+        row = props.row,
         validationState = props.validationState,
         value = props.value;
     var label = field.type === 'hidden' || field.label === '' ? null : React.createElement(react_bootstrap_1.ControlLabel, null, field.label);
-    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
+    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field, row: row }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
         return React.createElement(react_bootstrap_1.HelpBlock, { key: 'help-' + name + '-' + i }, error);
     }));
 };
@@ -53545,13 +53551,13 @@ exports.Default = Default_1.default;
 "use strict";
 
 
-var _this = undefined;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(1);
 var reactstrap_1 = __webpack_require__(21);
 exports.default = function (_a) {
     var actions = _a.actions,
-        onSubmit = _a.onSubmit;
+        onSubmit = _a.onSubmit,
+        form = _a.form;
     var buttons = Object.keys(actions).map(function (k, index) {
         var _a = actions[k],
             action = _a.action,
@@ -53568,7 +53574,7 @@ exports.default = function (_a) {
             handle = onSubmit;
         } else {
             handle = function handle(e) {
-                return evnt(e, _this);
+                return evnt(e, form);
             };
         }
         return React.createElement(reactstrap_1.Button, { key: id, color: style, onClick: handle, type: type ? type : 'button' }, label);
@@ -53669,6 +53675,7 @@ exports.default = function (props) {
         onChange = props.onChange,
         onBlur = props.onBlur,
         name = props.name,
+        row = props.row,
         validationState = props.validationState,
         value = props.value;
     var noLabels = ['checkbox', 'hidden'];
@@ -53682,7 +53689,7 @@ exports.default = function (props) {
     if (color === 'error') {
         color = 'danger';
     }
-    return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
+    return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, row: row, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
         return React.createElement(reactstrap_1.FormFeedback, { key: 'help-' + name + '-' + i }, error);
     }));
 };
@@ -54165,7 +54172,6 @@ var FormGroup_1 = __webpack_require__(563);
 var FormActions_1 = __webpack_require__(559);
 var layouts = __webpack_require__(577);
 var listLayouts = __webpack_require__(580);
-debugger;
 var Checkbox = function Checkbox(props) {
     return React.createElement(reactstrap_1.Input, __assign({ type: "checkbox" }, props, { style: { position: 'relative', margin: 0 } }));
 };

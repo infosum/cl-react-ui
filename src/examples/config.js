@@ -69,6 +69,14 @@ export default {
         type: 'submit',
         _label: (row) => row.id === '' ? 'Create record' : 'Save record',
         style: 'primary'
+      },
+      clear: {
+        id: 'clear',
+        type: 'button',
+        label: 'clear',
+        action: (e, form) => {
+          console.log('this gives access to the form', form);
+        }
       }
     },
     fields: {
