@@ -1,4 +1,6 @@
-
+interface IUser {
+    [key: string]: any;
+  }
 
 interface IListRow {
     [key: string]: any;
@@ -189,23 +191,28 @@ interface IFieldUpload {
 }
 
 type FieldUpload = IFormField & IFieldUpload;
+
 // LISTS
 
 interface IListAction {
   id: string;
-  visible: (user: any, selected: IListRow) => boolean;
+  visible: (user: IUser, selected: IListRow) => boolean;
   render: string;
+  config?: {
+      [key: string]: any
+  };
 }
 
 interface IListActions { [key: string]: IListAction }
 
 interface IListActionsProps {
   actions: IListActions;
-  user: any;
+  user: IUser;
   selected: IListRow[];
   config: ICrudConfig;
   rowClick: (e: MouseEvent, clicked: boolean) => void;
   showModal: () => void;
+  update: (selected: IListRow[], update: {[key: string]: string}) => void;
 }
 
 interface IListColumns {
@@ -257,7 +264,8 @@ interface IListProps {
             modals: {
                 [key: string]: boolean
             }
-        }
+        };
+        update?: (view: string, selected: IListRow[], update: {[key: string]: any}) => void;
     };
     canSelect: (row: IListRow) => boolean;
     config: ICrudConfig;

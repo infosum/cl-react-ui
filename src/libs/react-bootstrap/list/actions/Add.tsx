@@ -14,7 +14,7 @@ interface IState {
 
 export default class Add extends Component<IProps, IState> {
 
-  constructor(props: PropType) {
+  constructor(props: IProps) {
     super(props);
     this.state = {open: false};
   }
@@ -25,7 +25,7 @@ export default class Add extends Component<IProps, IState> {
    */
   private handleClick(e: Event) {
     const {open} = this.props;
-    this.state.open = !this.state.open;
+    this.setState({open: !this.state.open});
     open(e);
   }
 

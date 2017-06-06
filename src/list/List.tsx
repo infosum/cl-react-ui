@@ -1,7 +1,6 @@
 /// <reference path="../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
-import {FormControl} from 'react-bootstrap';
 import UiForm from '../form/Form';
 import * as libs from '../libs';
 import ListRow from './ListRow';
@@ -10,6 +9,7 @@ let layouts;
 let lib;
 let Checkbox: (props: any) => any;
 let Modal;
+let FormControl;
 
 interface IState {
   search: string;
@@ -29,10 +29,8 @@ class UiList extends Component<IListProps, IState> {
     canSelect: (row) => true,
   };
 
-  private columns: any;
+  private columns: IListColumns;
   private messages: any;
-  // close: () => {}
-  // filterRows: () => {}
 
   /**
    * Constructor
@@ -69,6 +67,7 @@ class UiList extends Component<IListProps, IState> {
     lib = libs[libType];
     layouts = lib.listLayouts;
     Checkbox = lib.Checkbox;
+    FormControl = lib.FormControl;
     Modal = lib.Modal;
   }
 
@@ -294,6 +293,21 @@ class UiList extends Component<IListProps, IState> {
   }
 
   /**
+   * Update a set of rows with new values. Simply calls actions.update which should
+   * handle the update 
+   * @param {Array} selected List rows
+   * @param {Object} update Data to update
+   */
+  private updateRows(selected: IListRow[], update: {[key: string]: any}) {
+    const {actions, config} = this.props;
+    this.setState({rowUpdating: true});
+    if (!actions || !actions.update) {
+      return;
+    }
+    actions.update(config.view, selected, update);
+  }
+
+  /**
    * Render
    * @return {Dom} Node
    */
@@ -351,6 +365,7 @@ class UiList extends Component<IListProps, IState> {
             search={this.search()}
             selected={selected}
             rows={rows}
+            update={this.updateRows.bind(this)}
             msg={this.messages.emptyData}
             {...this.props} />;
 

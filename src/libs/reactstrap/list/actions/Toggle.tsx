@@ -1,15 +1,18 @@
 /// <reference path="../../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import {Button} from 'reactstrap';
 
 interface IProps {
-  update: (userSelected: IListRow[], update: any) => void;
+  update: (userSelected: IListRow[], update: {[key: string]: any}) => void;
   selected: IListRow[];
-  config: any;
-  user: any;
-  isVisible: boolean;
-  filter: (user: any, selected: IListRow[]) => IListRow[];
+  config: {
+    icon?: string;
+    label?: string;
+    update: {[key: string]: any};
+  };
+  user: IUser;
+  filter: (user: IUser, selected: IListRow[]) => IListRow[];
 }
 
 /**
@@ -30,10 +33,12 @@ export default class Toggle extends Component<IProps, {}> {
    * Update selected rows
    * @param {Event} e .
    */
-  private handleClick(e: MouseEvent) {
+  private handleClick(e) {
     e.preventDefault();
     const {update, selected, config, user, filter} = this.props;
-    const userSelected = filter(user, selected);
+    const userSelected = filter !== undefined
+      ? filter(user, selected)
+      : selected;
 
     this.setState(config.update);
     update(userSelected, config.update);
@@ -44,10 +49,7 @@ export default class Toggle extends Component<IProps, {}> {
    * @return {Dom} node
    */
   public render(): JSX.Element | null {
-    const {isVisible, config} = this.props;
-    if (!isVisible) {
-      return null;
-    }
+    const {config} = this.props;
     return (<Button onClick={(e) => this.handleClick(e)} >
         <i className={config.icon}></i> {config.label}
       </Button>);

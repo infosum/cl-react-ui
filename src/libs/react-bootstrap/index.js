@@ -2,6 +2,7 @@ import FormActions from './FormActions';
 import FormGroup from './fields/FormGroup';
 import {default as ButtonGroup} from './fields/ButtonGroup';
 import * as layouts from './layouts';
+import * as listActions from './list/actions';
 import * as listLayouts from './listLayouts';
 import * as fields from './fields';
 
@@ -25,6 +26,7 @@ export default {
   FormGroup,
   HelpBlock,
   layouts,
+  listActions,
   listLayouts,
   Modal
 };

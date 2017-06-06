@@ -2,6 +2,7 @@
 import * as React from 'react';
 import {Component} from 'react';
 import {ButtonGroup} from 'reactstrap';
+import * as listActions from '../list/actions';
 
 interface IButtonProps {
   id: string;
@@ -21,11 +22,10 @@ export default (props: IListActionsProps): JSX.Element => {
             return null;
           }
           const b: JSX.Element = <a.render
-              {...a}
               key={key}
               {...props}
               {...actions}
-              id={a.id}
+              {...a}
               open={(e) => rowClick(e, false)}
               />;
           return b;

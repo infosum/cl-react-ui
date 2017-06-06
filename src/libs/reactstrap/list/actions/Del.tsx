@@ -1,13 +1,13 @@
 /// <reference path="../../../../interfaces.d.ts" />
 import * as React from 'react';
 import {Component} from 'react';
-import {Button, Modal, closeButton} from 'react-bootstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 
 interface IProps {
-  del: (type: string, selected: any[],  user: Object, token: string) => Function;
-  user: Object;
+  del: (type: string, selected: IListRow[],  user: any, token?: string) => Function;
+  user: any;
   isVisible: boolean;
-  selected: any[];
+  selected: IListRow[];
 }
 
 interface IState {
@@ -29,10 +29,8 @@ export default class Del extends Component<IProps, IState> {
 
   /**
    * Close the modal
-   * @param {Event} e .
    */
-  private close(e: Event) {
-    e.preventDefault();
+  private close() {
     this.setState({showModal: false});
   }
 
@@ -40,7 +38,7 @@ export default class Del extends Component<IProps, IState> {
    * Open the modal
    * @param {Event} e .
    */
-  private open(e: Event) {
+  private open(e) {
     e.preventDefault();
     this.setState({showModal: true});
   }
@@ -49,11 +47,11 @@ export default class Del extends Component<IProps, IState> {
    * Handle the modal form's submission
    * @param {Event} e .
    */
-  private handleSubmit(e: Event) {
+  private handleSubmit(e) {
     e.preventDefault();
     const {del, user, selected} = this.props;
     del('user', selected, user);
-    this.close(e);
+    this.close();
   }
 
   /**
@@ -71,21 +69,21 @@ export default class Del extends Component<IProps, IState> {
         <Button onClick={(e) => this.open(e)} >
           <i className="fa fa-times"></i> Delete
         </Button>
-        <Modal show={this.state.showModal} onHide={(e) => this.close(e)}
-          container={this}
+        <Modal isOpen={this.state.showModal}
+          toggle={() => this.close()}
           aria-labelledby="del-modal-title">
-          <Modal.Header closeButton>
-              <Modal.Title id="del-modal-title">Delete...</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+          <ModalHeader>
+              Delete...
+          </ModalHeader>
+          <ModalBody>
               <h4>Do you want to delete {selected.length} records</h4>
-          </Modal.Body>
-          <Modal.Footer>
-              <Button onClick={(e) => this.close(e)}>Cancel</Button>
-              <Button onClick={(e) => this.handleSubmit(e)} bsStyle="primary">
+          </ModalBody>
+          <ModalFooter>
+              <Button onClick={(e) => this.close()}>Cancel</Button>
+              <Button onClick={(e) => this.handleSubmit(e)} color="primary">
                 OK
               </Button>
-          </Modal.Footer>
+          </ModalFooter>
         </Modal>
       </span>);
   }

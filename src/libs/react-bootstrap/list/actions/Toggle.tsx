@@ -4,12 +4,16 @@ import {Component} from 'react';
 import {Button} from 'react-bootstrap';
 
 interface IProps {
-  update: () => {};
+  update: (userSelected: IListRow[], update: {[key: string]: any}) => void;
   selected: IListRow[];
-  config: Object;
-  user: User;
+  config: {
+    icon?: string;
+    label?: string;
+    update: {[key: string]: any}
+  };
+  user: IUser;
   isVisible: boolean;
-  filter: () => {};
+  filter: (user: IUser, selected: IListRow[]) => IListRow[];
 }
 
 /**
@@ -21,7 +25,7 @@ export default class Toggle extends Component<IProps, {}> {
    * Constructor
    * @param {Object} props Props
    */
-  constructor(props: PropType) {
+  constructor(props: IProps) {
     super(props);
     this.state = {};
   }
@@ -33,7 +37,7 @@ export default class Toggle extends Component<IProps, {}> {
   private handleClick(e: Event) {
     e.preventDefault();
     const {update, selected, config, user, filter} = this.props;
-    selectedByUser = filter(user, selected);
+    const selectedByUser = filter(user, selected);
 
     this.setState(config.update);
     update(selectedByUser, config.update);

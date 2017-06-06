@@ -4,12 +4,10 @@ import {Component} from 'react';
 import {Button, closeButton, Modal} from 'react-bootstrap';
 
 interface IProps {
-  del: (type: string, selected: any[], user: Object, token: string) => any;
-  user: {
-    [key: string]: any;
-  };
+  del: (type: string, selected: IListRow[], user: IUser, token?: string) => any;
+  user: IUser;
   isVisible: boolean;
-  selected: any[];
+  selected: IListRow[];
 }
 
 interface IState {
@@ -25,16 +23,16 @@ export default class Del extends Component<IProps, IState> {
    * Constructor
    * @param {Object} props Props
    */
-  constructor(props: PropType) {
+  constructor(props: IProps) {
     super(props);
     this.state = {showModal: false};
   }
 
   /**
    * Close the modal
-   * @param {Event} e .
+   * @param {MouseEvent} e .
    */
-  private close(e: Event) {
+  private close(e: MouseEvent) {
     e.preventDefault();
     this.setState({showModal: false});
   }
@@ -43,7 +41,7 @@ export default class Del extends Component<IProps, IState> {
    * Open the modal
    * @param {Event} e .
    */
-  private open(e: Event) {
+  private open(e: MouseEvent) {
     e.preventDefault();
     this.setState({showModal: true});
   }
@@ -52,7 +50,7 @@ export default class Del extends Component<IProps, IState> {
    * Handle the modal form's submission
    * @param {Event} e .
    */
-  private handleSubmit(e: Event) {
+  private handleSubmit(e: MouseEvent) {
     e.preventDefault();
     const {del, user, selected} = this.props;
     del('user', selected, user);

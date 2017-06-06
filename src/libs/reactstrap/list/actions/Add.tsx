@@ -3,29 +3,29 @@ import * as React from 'react';
 import {Component} from 'react';
 import {Button} from 'react-bootstrap';
 
-interface IProps{
-  open: (e: Event) => void;
+interface IProps {
+  open: (e: MouseEvent) => void;
   isVisible: boolean;
 }
 
 interface IState {
-  open: boolean;
+  isOpen: boolean;
 }
 
 export default class Add extends Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-    this.state = {open: false};
+    this.state = {isOpen: false};
   }
 
   /**
    * Handle click
    * @param {Event} e .
    */
-  private handleClick(e: Event) {
+  private handleClick(e: MouseEvent) {
     const {open} = this.props;
-    this.setState({open: !this.state.open});
+    this.setState({isOpen: !this.state.isOpen});
     open(e);
   }
 

@@ -2,6 +2,8 @@ import React from 'react';
 import {Button} from 'reactstrap';
 import {fields} from '../index';
 import {validations} from '../index';
+import {List, listActions} from '../index';
+console.log('list = ', listActions);
 
 const Claim = ({selected}) => {
   return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
@@ -49,6 +51,16 @@ export default {
           id: 'list-action-describe',
           visible: () => true,
           render: (props) => <Button>Describe</Button>
+        },
+        toggle: {
+          id: 'toggle',
+          visible: () => true,
+          render: listActions.reactstrap.Toggle,
+          config: {
+            update: {admin: false},
+            label: 'User',
+            icon: 'fa fa-user'
+          },
         }
       }
     ]
