@@ -22,7 +22,7 @@ export default class Del extends Component<IProps, IState> {
    * Constructor
    * @param {Object} props Props
    */
-  constructor(props: PropType) {
+  constructor(props: IProps) {
     super(props);
     this.state = {showModal: false};
   }

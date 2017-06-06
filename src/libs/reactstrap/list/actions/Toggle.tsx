@@ -4,12 +4,12 @@ import {Component} from 'react';
 import {Button} from 'react-bootstrap';
 
 interface IProps {
-  update: () => {};
+  update: (userSelected: IListRow[], update: any) => void;
   selected: IListRow[];
   config: any;
   user: any;
   isVisible: boolean;
-  filter: () => void;
+  filter: (user: any, selected: IListRow[]) => IListRow[];
 }
 
 /**
@@ -21,7 +21,7 @@ export default class Toggle extends Component<IProps, {}> {
    * Constructor
    * @param {Object} props Props
    */
-  constructor(props: PropType) {
+  constructor(props: IProps) {
     super(props);
     this.state = {};
   }
