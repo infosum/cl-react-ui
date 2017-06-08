@@ -37,7 +37,7 @@ interface IFieldConfig {
     id: string;
     key?: string;
     label: string;
-    onChange?: (name: string, value: any) => void;
+    onChange?: (form: any) => void;
     placeholder?: string;
     pristine: boolean;
     type: string;

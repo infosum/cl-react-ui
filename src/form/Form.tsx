@@ -255,9 +255,10 @@ class UiForm extends Component<IFormProps, IState> {
     data[name] = value;
     this.setState({data});
 
-    // if (field.onChange) {
-    //   field.onChange(this);
-    // }
+    // Trigger any on change specified in config file.
+    if (field.onChange) {
+      field.onChange(this);
+    }
   }
 
   /**

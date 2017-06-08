@@ -809,6 +809,9 @@ var UiForm = function (_super) {
         var data = this.state.data;
         data[name] = value;
         this.setState({ data: data });
+        if (field.onChange) {
+            field.onChange(this);
+        }
     };
     UiForm.prototype.formLayout = function () {
         var layout = this.props.layout;
