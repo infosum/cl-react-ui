@@ -87,6 +87,7 @@ export default {
         label: 'clear',
         action: (e, form) => {
           console.log('this gives access to the form', form);
+          form.reset();
         }
       }
     },

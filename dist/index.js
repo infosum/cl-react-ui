@@ -659,10 +659,12 @@ var UiForm = function (_super) {
                 visibility[key] = true;
             }
         });
+        var data = _this.makeState(props.data);
         _this.state = {
-            data: _this.makeState(props.data),
+            data: data,
             errors: props.errors,
             form: config.form,
+            initialState: __assign({}, data),
             state: state,
             visibility: visibility
         };
@@ -688,7 +690,7 @@ var UiForm = function (_super) {
             this.applyDataToForm(newState.data);
         }
         this.setLib(newProps);
-        this.setState(__assign({}, newState, { state: state, errors: errors }));
+        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors }));
     };
     UiForm.prototype.setLib = function (newProps) {
         var config = newProps.config,
@@ -888,6 +890,17 @@ var UiForm = function (_super) {
         visibility[name] = false;
         this.setState({ visibility: visibility });
     };
+    UiForm.prototype.reset = function () {
+        var _this = this;
+        var data = __assign({}, this.state.initialState);
+        this.setState({
+            data: data
+        });
+        Object.keys(this.fields).forEach(function (key) {
+            _this.fields[key].pristine = true;
+        });
+        this.applyDataToForm(data);
+    };
     UiForm.prototype.render = function () {
         var _this = this;
         var errors = this.props.errors;
@@ -895,7 +908,8 @@ var UiForm = function (_super) {
         var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
                 e.preventDefault();
                 validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
-                    return _this.onSubmit(e, _this.state.data);
+                    _this.onSubmit(e, _this.state.data);
+                    _this.reset();
                 }).catch(_this.failFormSubmission.bind(_this));
             } });
         var FormLayout = this.formLayout();

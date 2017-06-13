@@ -16,6 +16,7 @@ interface IState {
   data: any;
   errors: any;
   form: IFormConfig;
+  initialState: any;
   state: any;
   visibility: {
     [key: string]: boolean;
@@ -53,10 +54,12 @@ class UiForm extends Component<IFormProps, IState> {
       }
     });
 
+    const data = this.makeState(props.data);
     this.state = {
-      data: this.makeState(props.data),
+      data,
       errors: props.errors,
       form: config.form,
+      initialState: {...data},
       state,
       visibility,
     };
@@ -84,7 +87,7 @@ class UiForm extends Component<IFormProps, IState> {
       this.applyDataToForm(newState.data);
     }
     this.setLib(newProps);
-    this.setState({...newState, state, errors});
+    this.setState({...newState, state, initialState: {...newState.data}, errors});
   }
 
   /**
@@ -377,6 +380,22 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
     visibility[name] = false;
     this.setState({visibility});
   }
+
+  /**
+   * Reset the form to its initial state and set fields
+   * back to pristine
+   */
+  private reset() {
+    const data = {...this.state.initialState};
+    this.setState({
+      data,
+    });
+    Object.keys(this.fields).forEach((key) => {
+      this.fields[key].pristine = true;
+    });
+    this.applyDataToForm(data);
+  }
+
   /**
    * Render
    * @return {Node} Dom node
@@ -390,7 +409,10 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
                   onSubmit={(e) => {
                     e.preventDefault();
                     validate(this.toContract(), this.state.data)
-                    .then(() => this.onSubmit(e, this.state.data))
+                    .then(() => {
+                      this.onSubmit(e, this.state.data);
+                      this.reset();
+                    })
                     .catch(this.failFormSubmission.bind(this));
                     }
                   }/>;

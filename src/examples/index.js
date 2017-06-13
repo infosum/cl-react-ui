@@ -25992,10 +25992,12 @@ var UiForm = function (_super) {
                 visibility[key] = true;
             }
         });
+        var data = _this.makeState(props.data);
         _this.state = {
-            data: _this.makeState(props.data),
+            data: data,
             errors: props.errors,
             form: config.form,
+            initialState: __assign({}, data),
             state: state,
             visibility: visibility
         };
@@ -26021,7 +26023,7 @@ var UiForm = function (_super) {
             this.applyDataToForm(newState.data);
         }
         this.setLib(newProps);
-        this.setState(__assign({}, newState, { state: state, errors: errors }));
+        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors }));
     };
     UiForm.prototype.setLib = function (newProps) {
         var config = newProps.config,
@@ -26142,6 +26144,9 @@ var UiForm = function (_super) {
         var data = this.state.data;
         data[name] = value;
         this.setState({ data: data });
+        if (field.onChange) {
+            field.onChange(this);
+        }
     };
     UiForm.prototype.formLayout = function () {
         var layout = this.props.layout;
@@ -26218,6 +26223,17 @@ var UiForm = function (_super) {
         visibility[name] = false;
         this.setState({ visibility: visibility });
     };
+    UiForm.prototype.reset = function () {
+        var _this = this;
+        var data = __assign({}, this.state.initialState);
+        this.setState({
+            data: data
+        });
+        Object.keys(this.fields).forEach(function (key) {
+            _this.fields[key].pristine = true;
+        });
+        this.applyDataToForm(data);
+    };
     UiForm.prototype.render = function () {
         var _this = this;
         var errors = this.props.errors;
@@ -26225,7 +26241,8 @@ var UiForm = function (_super) {
         var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
                 e.preventDefault();
                 validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
-                    return _this.onSubmit(e, _this.state.data);
+                    _this.onSubmit(e, _this.state.data);
+                    _this.reset();
                 }).catch(_this.failFormSubmission.bind(_this));
             } });
         var FormLayout = this.formLayout();
@@ -52388,8 +52405,6 @@ var _index = __webpack_require__(162);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log('list = ', _index.listActions);
-
 var Claim = function Claim(_ref) {
   var selected = _ref.selected;
 
@@ -52503,6 +52518,7 @@ exports.default = {
         label: 'clear',
         action: function action(e, form) {
           console.log('this gives access to the form', form);
+          form.reset();
         }
       }
     },
@@ -55209,6 +55225,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _react = __webpack_require__(1);
+
+var React = _interopRequireWildcard(_react);
+
 var _FormActions = __webpack_require__(540);
 
 var _FormActions2 = _interopRequireDefault(_FormActions);
@@ -55239,11 +55259,12 @@ var fields = _interopRequireWildcard(_fields);
 
 var _reactBootstrap = __webpack_require__(17);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Feedback = _reactBootstrap.FormControl.Feedback;
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../interfaces.d.ts" />
+
 
 var Modal = function Modal(_ref) {
   var showModal = _ref.showModal,
