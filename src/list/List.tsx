@@ -259,14 +259,30 @@ class UiList extends Component<IListProps, IState> {
       return;
     }
     if (state.id === '') {
-      if (access.add && actions.add !== undefined) {
+      if (this.can('add')) {
         actions.add(config.view, state);
       }
     } else {
-      if (access.edit && access.edit !== undefined) {
+      if (this.can('edit')) {
         actions.edit(config.view, state);
       }
     }
+  }
+
+  /**
+   * Check access props to determine if a task can be performed
+   * @param {string} task .
+   * @return {boolean}
+   */
+  private can(task: string) {
+    const {access} = this.props;
+    if (!access) {
+      return true;
+    }
+    if (access[task] && access[task] !== undefined) {
+       return access[task];
+     }
+    return false;
   }
 
   /**
@@ -294,7 +310,7 @@ class UiList extends Component<IListProps, IState> {
 
   /**
    * Update a set of rows with new values. Simply calls actions.update which should
-   * handle the update 
+   * handle the update
    * @param {Array} selected List rows
    * @param {Object} update Data to update
    */
