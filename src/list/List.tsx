@@ -255,10 +255,11 @@ class UiList extends Component<IListProps, IState> {
   private handleUpdate(e: Event, state: {id: string} = {id: ''}) {
     const {actions, config, access} = this.props;
     this.setState({rowUpdating: true});
+    const pk = this.getPrimaryKey();
     if (!actions) {
       return;
     }
-    if (state.id === '') {
+    if (state[pk] === '' || state[pk] === undefined) {
       if (this.can('add')) {
         actions.add(config.view, state);
       }
