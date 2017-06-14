@@ -2,8 +2,10 @@
 import * as React from 'react';
 import {Component} from 'react';
 import {Input} from 'reactstrap';
+import {Icon} from '../../../index';
 
 interface IState {
+  loading: boolean;
   search: string;
   storeData?: any;
   value: string;
@@ -14,27 +16,45 @@ class Lookup extends Component<FieldLookup, IState> {
 
   constructor(props: FieldLookup) {
     super(props);
-    const storeData = this.getStoreData();
-    // this.handleChange = this.handleChange.bind(this);
-    this.state = {storeData, search: '', value: ''};
+    this.state = {loading: true, search: '', value: ''};
+    this.get();
+  }
+
+  private get() {
+    this.setState({loading: true});
+    try {
+      this.getStoreData().then((storeData) => {
+        this.setState({storeData, loading: false});
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  /**
+   * If row props have updated get store state
+   */
+  public componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.row) !== JSON.stringify(this.props.row)) {
+      this.get();
+    }
   }
 
   /**
    * Get the relevant part of the store data for the list population
    * @return {Object} Partial store data to use for list population
    */
-  private getStoreData(): any {
+  private async getStoreData(): Promise<any> {
     let group;
     this.groupedData = {};
-
     const {field, row} = this.props;
-    const storeData = field.options.store(row);
-
     if (field.options.optGroup === undefined) {
       group = '';
     } else {
       group = field.options.optGroup;
     }
+
+    const storeData = await field.options.store(row, this.props);
     storeData.forEach((data) => {
       const thisGroup = data[group];
       if (this.groupedData[thisGroup] === undefined) {
@@ -108,8 +128,11 @@ class Lookup extends Component<FieldLookup, IState> {
    * @return {Node} Dom
    */
   public render() {
-    const storeData = this.getStoreData();
-    const opts = this.mapDataToOpts(storeData);
+    if (this.state.loading) {
+      return <Icon icon="spinner" spin label="loading..."/>;
+    }
+
+    const opts = this.mapDataToOpts(this.state.storeData);
     const {value, onBlur, name} = this.props;
 
     return (<Input type="select"

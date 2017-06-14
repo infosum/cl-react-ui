@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export default ({
   icon, color, label, pull, size, stack, inverse, spin,
-}: ITipProps) => {
+}: IIconProps) => {
   if (!pull) {
     pull = '';
   }

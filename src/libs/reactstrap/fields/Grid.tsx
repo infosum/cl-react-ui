@@ -3,6 +3,7 @@ import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import {Component} from 'react';
 import {Button, Input, Table} from 'reactstrap';
+import {Icon} from '../../../index';
 
 interface IState {
   rows: any[];
@@ -118,18 +119,23 @@ class Grid extends Component<FieldGrid, IState> {
           return <td key={columnIndex}>
             <Field value={typeof row === 'string' ? row : row[columnIndex]}
               name=""
-              field={{placeholder: col.label}}
+              field={{
+                ...col,
+                placeholder: col.label,
+              }}
               onBlur={() => ''}
               onChange={(name, value) => {
                 this.handleChange(rowIndex, columnIndex, value);
-              }} />
+              }}
+              row={[...row]}
+              rowIndex={rowIndex} />
         </td>;
         })
       }
 
       <td>
         <Button color="link" onClick={(e) => this.remove(rowIndex)}>
-          <i className="fa fa-times text-danger"></i>
+          <Icon icon="times" color="danger" />
         </Button>
       </td>
     </tr>);
@@ -152,7 +158,7 @@ class Grid extends Component<FieldGrid, IState> {
                 e.preventDefault();
                 this.add();
               }}>
-              <i className="fa fa-plus"></i>Add
+              <Icon icon="plus" label="Add"/>
             </Button>
           </th>
         </tr>

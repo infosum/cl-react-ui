@@ -132,7 +132,7 @@ export default {
           return '3';
         },
         options: {
-          store: (row) => [
+          store: (row, props) => [
             {id: 1, name: 'customer 1'},
             {id: 2, name: 'customer 2'},
             {id: 3, name: 'customer 3'}
@@ -231,7 +231,56 @@ export default {
         id: 'range-array',
         label: 'Range Array',
         type: 'grid',
-        columns: [{label: 'Min', type: fields.reactstrap.Text}]
+        columns: [
+          {label: 'Min', type: fields.reactstrap.Text},
+          {
+            label: 'Category', 
+            type: fields.reactstrap.Lookup,
+            options: {
+              store: async (row, props) => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve([
+                      {id: 1, name: 'cat 1'},
+                      {id: 2, name: 'cat 2'},
+                      {id: 3, name: 'cat 3'}
+                    ]);
+                  }, 2000);
+                });
+              },
+
+              key: 'id',
+              label: 'name',
+            }
+          },
+          {
+            label: 'Sub category',
+            type: fields.reactstrap.Lookup,
+            options: {
+              key: 'id',
+              label: 'name',
+              store: async (row, props) => {
+                return new Promise(resolve => {
+                  setTimeout(() => {
+                    console.log('row', row);
+                    debugger;
+                    if (row[1] === '1') {
+                      resolve([
+                      {id: 1, name: 'subcat 1'},
+                      ]);
+                    }
+                    resolve([
+                      {id: 1, name: 'subcat 1'},
+                      {id: 2, name: 'subcat 2'},
+                      {id: 3, name: 'subcat 3'}
+                    ]);
+                  }, 2000);
+                });
+              },
+ 
+            }
+          }
+        ]
       },
       signupname: {
         id: 'signup-name',

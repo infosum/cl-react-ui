@@ -26,6 +26,17 @@ interface ITipProps {
     spin?: boolean
 }
 
+interface IIconProps {
+    icon?: string;
+    color?: string;
+    label?: string;
+    pull?: string;
+    size?: 0 | 1 | 2 | 3 | 4 | 5;
+    stack?: number;
+    inverse?: boolean;
+    spin?: boolean
+}
+
 interface IFormErrors { [key: string]: string[] }
 
 interface IFieldConfig {
@@ -151,7 +162,7 @@ interface IFieldLookup {
             key: string;
             label: string;
             optionFitler: (row: IListRow) => boolean;
-            store: (row: IListRow) => any;
+            store: (row: IListRow, props?: any) => any;
         };
         
     }

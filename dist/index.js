@@ -370,6 +370,38 @@ process.umask = function() { return 0; };
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(74);
+var validations = __webpack_require__(17);
+exports.validations = validations;
+var Icon_1 = __webpack_require__(18);
+exports.Icon = Icon_1.default;
+var Form_1 = __webpack_require__(9);
+exports.Form = Form_1.default;
+var ReactBootstrapFields = __webpack_require__(10);
+var ReactBootstrapListActions = __webpack_require__(11);
+var ReactStrapFields = __webpack_require__(12);
+var ReactStrapListActions = __webpack_require__(13);
+var List_1 = __webpack_require__(69);
+exports.List = List_1.default;
+var fields = {
+    reactBootstrap: ReactBootstrapFields,
+    reactstrap: ReactStrapFields
+};
+exports.fields = fields;
+var listActions = {
+    reactBootstrap: ReactBootstrapListActions,
+    reactstrap: ReactStrapListActions
+};
+exports.listActions = listActions;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var pSlice = Array.prototype.slice;
 var objectKeys = __webpack_require__(77);
 var isArguments = __webpack_require__(76);
@@ -467,7 +499,7 @@ function objEquiv(a, b, opts) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -511,7 +543,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -573,7 +605,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -594,7 +626,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,11 +660,11 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(4);
+var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var validate_promise_1 = __webpack_require__(16);
-var libs = __webpack_require__(13);
+var validate_promise_1 = __webpack_require__(17);
+var libs = __webpack_require__(14);
 var lib;
 var fields;
 var FormControl;
@@ -931,7 +963,7 @@ UiForm.defaultProps = {
 exports.default = UiForm;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -966,7 +998,7 @@ var Upload_1 = __webpack_require__(35);
 exports.Upload = Upload_1.default;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -981,7 +1013,7 @@ var Toggle_1 = __webpack_require__(40);
 exports.Toggle = Toggle_1.default;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1016,7 +1048,7 @@ var Upload_1 = __webpack_require__(58);
 exports.Upload = Upload_1.default;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1031,7 +1063,7 @@ var Toggle_1 = __webpack_require__(65);
 exports.Toggle = Toggle_1.default;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1058,7 +1090,7 @@ exports.reactBootstrap = reactBootstrap;
 exports.reactstrap = reactstrap;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1074,7 +1106,7 @@ exports.reactstrap = reactstrap;
 
 
 
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -1131,7 +1163,7 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2011,7 +2043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2642,38 +2674,6 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(74);
-var validations = __webpack_require__(16);
-exports.validations = validations;
-var Icon_1 = __webpack_require__(18);
-exports.Icon = Icon_1.default;
-var Form_1 = __webpack_require__(8);
-exports.Form = Form_1.default;
-var ReactBootstrapFields = __webpack_require__(9);
-var ReactBootstrapListActions = __webpack_require__(10);
-var ReactStrapFields = __webpack_require__(11);
-var ReactStrapListActions = __webpack_require__(12);
-var List_1 = __webpack_require__(69);
-exports.List = List_1.default;
-var fields = {
-    reactBootstrap: ReactBootstrapFields,
-    reactstrap: ReactStrapFields
-};
-exports.fields = fields;
-var listActions = {
-    reactBootstrap: ReactBootstrapListActions,
-    reactstrap: ReactStrapListActions
-};
-exports.listActions = listActions;
-
-/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2968,7 +2968,7 @@ var __extends = undefined && undefined.__extends || function () {
     };
 }();
 Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(4);
+var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var react_bootstrap_1 = __webpack_require__(1);
@@ -3361,7 +3361,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var Dropzone = __webpack_require__(15);
+var Dropzone = __webpack_require__(16);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3951,11 +3951,21 @@ var __extends = undefined && undefined.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
+var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) {
+            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(4);
+var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(2);
+var index_1 = __webpack_require__(4);
 var Grid = function (_super) {
     __extends(Grid, _super);
     function Grid(props) {
@@ -4018,14 +4028,14 @@ var Grid = function (_super) {
         return rows.map(function (row, rowIndex) {
             return React.createElement("tr", { key: rowIndex }, field.columns.map(function (col, columnIndex) {
                 var Field = col.type;
-                return React.createElement("td", { key: columnIndex }, React.createElement(Field, { value: typeof row === 'string' ? row : row[columnIndex], name: "", field: { placeholder: col.label }, onBlur: function onBlur() {
+                return React.createElement("td", { key: columnIndex }, React.createElement(Field, { value: typeof row === 'string' ? row : row[columnIndex], name: "", field: __assign({}, col, { placeholder: col.label }), onBlur: function onBlur() {
                         return '';
                     }, onChange: function onChange(name, value) {
                         _this.handleChange(rowIndex, columnIndex, value);
-                    } }));
+                    }, row: row.slice(), rowIndex: rowIndex }));
             }), React.createElement("td", null, React.createElement(reactstrap_1.Button, { color: "link", onClick: function onClick(e) {
                     return _this.remove(rowIndex);
-                } }, React.createElement("i", { className: "fa fa-times text-danger" }))));
+                } }, React.createElement(index_1.Icon, { icon: "times", color: "danger" }))));
         });
     };
     Grid.prototype.render = function () {
@@ -4036,7 +4046,7 @@ var Grid = function (_super) {
         }), React.createElement("th", null, React.createElement(reactstrap_1.Button, { color: "link", onClick: function onClick(e) {
                 e.preventDefault();
                 _this.add();
-            } }, React.createElement("i", { className: "fa fa-plus" }), "Add")))), React.createElement("tbody", null, this.fields()));
+            } }, React.createElement(index_1.Icon, { icon: "plus", label: "Add" }))))), React.createElement("tbody", null, this.fields()));
     };
     return Grid;
 }(react_1.Component);
@@ -4097,39 +4107,143 @@ var __extends = undefined && undefined.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : new P(function (resolve) {
+                resolve(result.value);
+            }).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(2);
+var index_1 = __webpack_require__(4);
 var Lookup = function (_super) {
     __extends(Lookup, _super);
     function Lookup(props) {
         var _this = _super.call(this, props) || this;
-        var storeData = _this.getStoreData();
-        _this.state = { storeData: storeData, search: '', value: '' };
+        _this.state = { loading: true, search: '', value: '' };
+        _this.get();
         return _this;
     }
-    Lookup.prototype.getStoreData = function () {
+    Lookup.prototype.get = function () {
         var _this = this;
-        var group;
-        this.groupedData = {};
-        var _a = this.props,
-            field = _a.field,
-            row = _a.row;
-        var storeData = field.options.store(row);
-        if (field.options.optGroup === undefined) {
-            group = '';
-        } else {
-            group = field.options.optGroup;
+        this.setState({ loading: true });
+        try {
+            this.getStoreData().then(function (storeData) {
+                _this.setState({ storeData: storeData, loading: false });
+            });
+        } catch (e) {
+            console.log(e);
         }
-        storeData.forEach(function (data) {
-            var thisGroup = data[group];
-            if (_this.groupedData[thisGroup] === undefined) {
-                _this.groupedData[thisGroup] = [];
-            }
-            _this.groupedData[thisGroup].push(data);
+    };
+    Lookup.prototype.componentDidUpdate = function (prevProps) {
+        if (JSON.stringify(prevProps.row) !== JSON.stringify(this.props.row)) {
+            this.get();
+        }
+    };
+    Lookup.prototype.getStoreData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var group, _a, field, row, storeData;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.groupedData = {};
+                        _a = this.props, field = _a.field, row = _a.row;
+                        if (field.options.optGroup === undefined) {
+                            group = '';
+                        } else {
+                            group = field.options.optGroup;
+                        }
+                        return [4, field.options.store(row, this.props)];
+                    case 1:
+                        storeData = _b.sent();
+                        storeData.forEach(function (data) {
+                            var thisGroup = data[group];
+                            if (_this.groupedData[thisGroup] === undefined) {
+                                _this.groupedData[thisGroup] = [];
+                            }
+                            _this.groupedData[thisGroup].push(data);
+                        });
+                        return [2, this.groupedData];
+                }
+            });
         });
-        return this.groupedData;
     };
     Lookup.prototype.mapDataToOpts = function (storeData) {
         var field = this.props.field;
@@ -4171,8 +4285,10 @@ var Lookup = function (_super) {
     };
     Lookup.prototype.render = function () {
         var _this = this;
-        var storeData = this.getStoreData();
-        var opts = this.mapDataToOpts(storeData);
+        if (this.state.loading) {
+            return React.createElement(index_1.Icon, { icon: "spinner", spin: true, label: "loading..." });
+        }
+        var opts = this.mapDataToOpts(this.state.storeData);
         var _a = this.props,
             value = _a.value,
             _onBlur = _a.onBlur,
@@ -4359,7 +4475,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var Dropzone = __webpack_require__(15);
+var Dropzone = __webpack_require__(16);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4401,11 +4517,11 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(2);
-var fields = __webpack_require__(11);
+var fields = __webpack_require__(12);
 var FormGroup_1 = __webpack_require__(48);
 var FormActions_1 = __webpack_require__(44);
 var layouts = __webpack_require__(62);
-var listActions = __webpack_require__(12);
+var listActions = __webpack_require__(13);
 var listLayouts = __webpack_require__(68);
 var Checkbox = function Checkbox(props) {
     return React.createElement(reactstrap_1.Input, __assign({ type: "checkbox" }, props, { style: { position: 'relative', margin: 0 } }));
@@ -4820,8 +4936,8 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var Form_1 = __webpack_require__(8);
-var libs = __webpack_require__(13);
+var Form_1 = __webpack_require__(9);
+var libs = __webpack_require__(14);
 var ListRow_1 = __webpack_require__(71);
 var layouts;
 var lib;
@@ -4994,18 +5110,29 @@ var UiList = function (_super) {
             config = _a.config,
             access = _a.access;
         this.setState({ rowUpdating: true });
+        var pk = this.getPrimaryKey();
         if (!actions) {
             return;
         }
-        if (state.id === '') {
-            if (access.add && actions.add !== undefined) {
+        if (state[pk] === '' || state[pk] === undefined) {
+            if (this.can('add')) {
                 actions.add(config.view, state);
             }
         } else {
-            if (access.edit && access.edit !== undefined) {
+            if (this.can('edit')) {
                 actions.edit(config.view, state);
             }
         }
+    };
+    UiList.prototype.can = function (task) {
+        var access = this.props.access;
+        if (!access) {
+            return true;
+        }
+        if (access[task] && access[task] !== undefined) {
+            return access[task];
+        }
+        return false;
     };
     UiList.prototype.handleChange = function (e) {
         var target = e.target;
@@ -5222,7 +5349,7 @@ var _layouts = __webpack_require__(73);
 
 var layouts = _interopRequireWildcard(_layouts);
 
-var _actions = __webpack_require__(10);
+var _actions = __webpack_require__(11);
 
 var listActions = _interopRequireWildcard(_actions);
 
@@ -5230,7 +5357,7 @@ var _listLayouts = __webpack_require__(43);
 
 var listLayouts = _interopRequireWildcard(_listLayouts);
 
-var _fields = __webpack_require__(9);
+var _fields = __webpack_require__(10);
 
 var fields = _interopRequireWildcard(_fields);
 
@@ -5424,9 +5551,9 @@ function shim (obj) {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(6);
-  var warning = __webpack_require__(14);
-  var ReactPropTypesSecret = __webpack_require__(7);
+  var invariant = __webpack_require__(7);
+  var warning = __webpack_require__(15);
+  var ReactPropTypesSecret = __webpack_require__(8);
   var loggedTypeFailures = {};
 }
 
@@ -5492,9 +5619,9 @@ module.exports = checkPropTypes;
 
 
 
-var emptyFunction = __webpack_require__(5);
-var invariant = __webpack_require__(6);
-var ReactPropTypesSecret = __webpack_require__(7);
+var emptyFunction = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(8);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -5558,11 +5685,11 @@ module.exports = function() {
 
 
 
-var emptyFunction = __webpack_require__(5);
-var invariant = __webpack_require__(6);
-var warning = __webpack_require__(14);
+var emptyFunction = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(15);
 
-var ReactPropTypesSecret = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(8);
 var checkPropTypes = __webpack_require__(78);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -6136,7 +6263,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_83__;
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17);
+module.exports = __webpack_require__(4);
 
 
 /***/ })
