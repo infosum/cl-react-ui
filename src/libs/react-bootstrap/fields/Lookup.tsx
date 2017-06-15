@@ -20,6 +20,10 @@ export default class Lookup extends Component<FieldLookup, IState> {
     this.get();
   }
 
+  /**
+   * Get the store data
+   * @return {Array} option objects
+   */
   private get() {
     this.setState({loading: true});
     try {
@@ -30,6 +34,25 @@ export default class Lookup extends Component<FieldLookup, IState> {
       console.log(e);
     }
   }
+
+  /**
+   * If row props have updated get store state
+   * @param {Object} prevProps Previous props
+   */
+  public componentDidUpdate(prevProps) {
+    const {name, onChange, row, field} = this.props;
+    const observe = field.options.observe;
+    const isObserved = (value, index) => observe.indexOf(index) !== -1;
+    if (!observe || observe.length === 0) {
+      return;
+    }
+    if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+      this.setState({value: ''});
+      onChange(name, '');
+      this.get();
+    }
+  }
+
   /**
    * Get the relevant part of the store data for the list population
    * @return {Promise} Partial store data to use for list population

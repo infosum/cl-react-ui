@@ -52375,7 +52375,9 @@ exports.default = {
         id: 'range-array',
         label: 'Range Array',
         type: 'grid',
-        columns: [{ label: 'Min', type: _index.fields.reactstrap.Text }, {
+        columns: [{
+          label: 'Min', type: _index.fields.reactstrap.Text
+        }, {
           label: 'Category',
           type: _index.fields.reactstrap.Lookup,
           options: {
@@ -52396,6 +52398,7 @@ exports.default = {
           options: {
             key: 'id',
             label: 'name',
+            observe: [1],
             store: async function store(row, props) {
               return new Promise(function (resolve) {
                 setTimeout(function () {
@@ -54424,7 +54427,22 @@ var Lookup = function (_super) {
         }
     };
     Lookup.prototype.componentDidUpdate = function (prevProps) {
-        if (JSON.stringify(prevProps.row) !== JSON.stringify(this.props.row)) {
+        var _a = this.props,
+            name = _a.name,
+            onChange = _a.onChange,
+            row = _a.row,
+            field = _a.field;
+        var observe = field.options.observe;
+        var isObserved = function isObserved(value, index) {
+            return observe.indexOf(index) !== -1;
+        };
+        if (!observe || observe.length === 0) {
+            return;
+        }
+        if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+            debugger;
+            this.setState({ value: '' });
+            onChange(name, '');
             this.get();
         }
     };

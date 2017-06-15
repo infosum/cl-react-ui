@@ -3229,6 +3229,25 @@ var Lookup = function (_super) {
             console.log(e);
         }
     };
+    Lookup.prototype.componentDidUpdate = function (prevProps) {
+        var _a = this.props,
+            name = _a.name,
+            onChange = _a.onChange,
+            row = _a.row,
+            field = _a.field;
+        var observe = field.options.observe;
+        var isObserved = function isObserved(value, index) {
+            return observe.indexOf(index) !== -1;
+        };
+        if (!observe || observe.length === 0) {
+            return;
+        }
+        if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+            this.setState({ value: '' });
+            onChange(name, '');
+            this.get();
+        }
+    };
     Lookup.prototype.getStoreData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -4329,7 +4348,21 @@ var Lookup = function (_super) {
         }
     };
     Lookup.prototype.componentDidUpdate = function (prevProps) {
-        if (JSON.stringify(prevProps.row) !== JSON.stringify(this.props.row)) {
+        var _a = this.props,
+            name = _a.name,
+            onChange = _a.onChange,
+            row = _a.row,
+            field = _a.field;
+        var observe = field.options.observe;
+        var isObserved = function isObserved(value, index) {
+            return observe.indexOf(index) !== -1;
+        };
+        if (!observe || observe.length === 0) {
+            return;
+        }
+        if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+            this.setState({ value: '' });
+            onChange(name, '');
             this.get();
         }
     };

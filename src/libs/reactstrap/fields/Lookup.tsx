@@ -20,6 +20,10 @@ class Lookup extends Component<FieldLookup, IState> {
     this.get();
   }
 
+  /**
+   * Get the store data
+   * @return {Array} option objects
+   */
   private get() {
     this.setState({loading: true});
     try {
@@ -33,9 +37,18 @@ class Lookup extends Component<FieldLookup, IState> {
 
   /**
    * If row props have updated get store state
+   * @param {Object} prevProps Previous props
    */
   public componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.row) !== JSON.stringify(this.props.row)) {
+    const {name, onChange, row, field} = this.props;
+    const observe = field.options.observe;
+    const isObserved = (value, index) => observe.indexOf(index) !== -1;
+    if (!observe || observe.length === 0) {
+      return;
+    }
+    if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+      this.setState({value: ''});
+      onChange(name, '');
       this.get();
     }
   }

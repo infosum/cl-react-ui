@@ -159,6 +159,7 @@ interface IFieldGrid {
 interface IFieldLookup {
     field: {
         options: {
+            observe? : number[];
             optGroup?: string;
             key: string;
             label: string;

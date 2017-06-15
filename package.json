@@ -135,5 +135,5 @@
     "testold": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'",
     "test": "nyc --exclude '**/*.spec.js' --reporter=lcov mocha --recursive  './src/**/*.spec.js' --compilers js:babel-core/register"
   },
-  "version": "1.2.1"
+  "version": "1.2.2"
 }

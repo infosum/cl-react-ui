@@ -232,7 +232,9 @@ export default {
         label: 'Range Array',
         type: 'grid',
         columns: [
-          {label: 'Min', type: fields.reactstrap.Text},
+          {
+            label: 'Min', type: fields.reactstrap.Text
+          },
           {
             label: 'Category', 
             type: fields.reactstrap.Lookup,
@@ -259,6 +261,7 @@ export default {
             options: {
               key: 'id',
               label: 'name',
+              observe: [1],
               store: async (row, props) => {
                 return new Promise(resolve => {
                   setTimeout(() => {
