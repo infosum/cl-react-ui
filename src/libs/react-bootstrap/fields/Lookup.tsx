@@ -2,11 +2,13 @@
 import * as React from 'react';
 import {Component} from 'react';
 import {FormControl} from 'react-bootstrap';
+import {Icon} from '../../../index';
 
 interface IState {
-  search?: string;
+  loading: boolean;
+  search: string;
   storeData?: any;
-  value?: string;
+  value: string;
 }
 
 export default class Lookup extends Component<FieldLookup, IState> {
@@ -14,26 +16,35 @@ export default class Lookup extends Component<FieldLookup, IState> {
 
   constructor(props: FieldLookup) {
     super(props);
-    const storeData = this.getStoreData();
-    this.state = {storeData, search: '', value: ''};
+    this.state = {loading: true, search: '', value: ''};
+    this.get();
   }
 
+  private get() {
+    this.setState({loading: true});
+    try {
+      this.getStoreData().then((storeData) => {
+        this.setState({storeData, loading: false});
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   /**
    * Get the relevant part of the store data for the list population
-   * @return {Object} Partial store data to use for list population
+   * @return {Promise} Partial store data to use for list population
    */
-  private getStoreData(): Object {
+  private async getStoreData(): Promise<any> {
     let group;
     this.groupedData = {};
-
     const {field, row} = this.props;
-    const storeData = field.options.store(row);
-
     if (field.options.optGroup === undefined) {
       group = '';
     } else {
       group = field.options.optGroup;
     }
+
+    const storeData = await field.options.store(row, this.props);
     storeData.forEach((data) => {
       const thisGroup = data[group];
       if (this.groupedData[thisGroup] === undefined) {
@@ -107,13 +118,17 @@ export default class Lookup extends Component<FieldLookup, IState> {
    * @return {Node} Dom
    */
   public render(): JSX.Element {
-    const storeData = this.getStoreData();
-    const opts = this.mapDataToOpts(storeData);
-    const {value} = this.props;
+    if (this.state.loading) {
+      return <Icon icon="spinner" spin label="loading..."/>;
+    }
+
+    const opts = this.mapDataToOpts(this.state.storeData);
+    const {value, onBlur, name} = this.props;
 
     return (<FormControl componentClass="select"
         value={value}
-        onChange={(e: MouseEvent) => {
+        onBlur={() => onBlur(name)}
+        onChange={(e) => {
           this.handleChange(e);
         }}>
         {opts}

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {Alert, Col, Input, Row, Table} from 'reactstrap';
 import ListActions from './ListActions';
 
-export default ({actions, canSelect, data, config, listRow, modal, msg,
+export default ({actions, canSelect, data, config, listRow, msg,
   rowClick, rows, search, selected, showModal, toggleAll, update, user}) => {
   let list;
   const columns = config.list.columns;
@@ -38,14 +38,12 @@ export default ({actions, canSelect, data, config, listRow, modal, msg,
               </tbody>
               </Table>
 
-              {modal}
           </div>);
     } else {
       list = (<div>
            <Alert color="info">
           {msg}
           </Alert>
-          {modal}
           </div>);
     }
 

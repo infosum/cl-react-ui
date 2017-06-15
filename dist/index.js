@@ -375,16 +375,16 @@ process.umask = function() { return 0; };
 
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(74);
-var validations = __webpack_require__(17);
+var validations = __webpack_require__(16);
 exports.validations = validations;
-var Icon_1 = __webpack_require__(18);
+var Icon_1 = __webpack_require__(17);
 exports.Icon = Icon_1.default;
-var Form_1 = __webpack_require__(9);
+var Form_1 = __webpack_require__(19);
 exports.Form = Form_1.default;
-var ReactBootstrapFields = __webpack_require__(10);
-var ReactBootstrapListActions = __webpack_require__(11);
-var ReactStrapFields = __webpack_require__(12);
-var ReactStrapListActions = __webpack_require__(13);
+var ReactBootstrapFields = __webpack_require__(9);
+var ReactBootstrapListActions = __webpack_require__(10);
+var ReactStrapFields = __webpack_require__(11);
+var ReactStrapListActions = __webpack_require__(12);
 var List_1 = __webpack_require__(69);
 exports.List = List_1.default;
 var fields = {
@@ -632,343 +632,6 @@ module.exports = ReactPropTypesSecret;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-var __assign = undefined && undefined.__assign || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) {
-            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(5);
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var validate_promise_1 = __webpack_require__(17);
-var libs = __webpack_require__(14);
-var lib;
-var fields;
-var FormControl;
-var layouts;
-var Button;
-var UiForm = function (_super) {
-    __extends(UiForm, _super);
-    function UiForm(props) {
-        var _this = _super.call(this, props) || this;
-        var _a = _this.props,
-            config = _a.config,
-            library = _a.library,
-            onSubmit = _a.onSubmit,
-            _b = _a.visibility,
-            visibility = _b === void 0 ? {} : _b;
-        _this.fields = config.form.fields;
-        var state = {};
-        Object.keys(props.errors).forEach(function (key) {
-            return state[key] = 'error';
-        });
-        Object.keys(_this.fields).forEach(function (key) {
-            _this.fields[key].pristine = true;
-            if (!visibility.hasOwnProperty(key)) {
-                visibility[key] = true;
-            }
-        });
-        var data = _this.makeState(props.data);
-        _this.state = {
-            data: data,
-            errors: props.errors,
-            form: config.form,
-            initialState: __assign({}, data),
-            state: state,
-            visibility: visibility
-        };
-        _this.setLib(props);
-        _this.actions = config.form.actions;
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleBlur = _this.handleBlur.bind(_this);
-        _this.onSubmit = onSubmit.bind(_this);
-        _this.applyDataToForm(_this.state.data);
-        return _this;
-    }
-    UiForm.prototype.componentWillReceiveProps = function (newProps) {
-        var config = newProps.config,
-            errors = newProps.errors;
-        this.fields = config.form.fields;
-        var state = {};
-        var newState = {};
-        Object.keys(errors).forEach(function (key) {
-            return state[key] = 'error';
-        });
-        if (!deepEqual(this.props.data, newProps.data)) {
-            newState.data = this.makeState(newProps.data);
-            this.applyDataToForm(newState.data);
-        }
-        this.setLib(newProps);
-        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors }));
-    };
-    UiForm.prototype.setLib = function (newProps) {
-        var config = newProps.config,
-            library = newProps.library;
-        var libType = config.lib || library || 'reactBootstrap';
-        lib = libs[libType];
-        fields = lib.fields;
-        layouts = lib.layouts;
-        FormControl = lib.FormControl;
-        Button = lib.Button;
-    };
-    UiForm.prototype.makeState = function (data) {
-        var _this = this;
-        var state = {};
-        Object.keys(this.fields).forEach(function (name) {
-            var field = _this.fields[name];
-            var def = field.default;
-            if (data && data[name]) {
-                state[name] = data[name];
-            } else if (def === undefined) {
-                state[name] = '';
-            } else {
-                state[name] = typeof def === 'function' ? def(data, field) : def;
-            }
-        });
-        return state;
-    };
-    UiForm.prototype.applyDataToForm = function (row) {
-        var name;
-        var form = this.state.form;
-        var title = this.props.title;
-        if (title) {
-            this.state.form.title = typeof title === 'function' ? title(row) : title;
-        } else {
-            if (typeof form._title === 'function') {
-                this.state.form.title = form._title(row);
-            }
-        }
-        for (name in form.actions) {
-            if (typeof form.actions[name]._label === 'function') {
-                this.state.form.actions[name].label = form.actions[name]._label(row);
-            }
-        }
-    };
-    UiForm.prototype.validateOne = function (field, value, data) {
-        if (data === void 0) {
-            data = {};
-        }
-        if (field.validate === undefined || field.validate.promises === undefined) {
-            return Promise.resolve('');
-        }
-        var validate = function validate(p) {
-            var msg = p.msg || field.validate.msg;
-            return p.rule(value, data, msg, p.arg);
-        };
-        var promises = field.validate.promises.map(validate);
-        return new Promise(function (resolve, reject) {
-            return Promise.all(promises).then(function () {
-                return resolve('success');
-            }).catch(function (e) {
-                return reject(e);
-            });
-        });
-    };
-    UiForm.prototype.getValidationState = function (name) {
-        var _this = this;
-        var field = this.fields[name];
-        var errors = this.state.errors;
-        var state = __assign({}, this.state.state);
-        var i = 0;
-        var value = this.state.data[name];
-        var res = [];
-        var serverError = errors[name] && errors[name].length > 0;
-        var serverSuccess = errors[name] && errors[name].length === 0;
-        if (!field.pristine) {
-            this.validateOne(field, value, this.state.data).then(function (ok) {
-                state[name] = 'success';
-                errors[name] = [];
-                _this.setState({ state: state, errors: errors });
-            }).catch(function (err) {
-                errors[name] = [err];
-                state[name] = 'error';
-                _this.setState({ state: state, errors: errors });
-            });
-        } else {
-            if (serverError) {
-                state[name] = [serverError];
-                state[name] = 'error';
-            }
-            if (serverSuccess) {
-                state[name] = [];
-                state[name] = 'success';
-            }
-        }
-        this.setState({ state: state, errors: errors });
-        return state;
-    };
-    UiForm.prototype.access = function (name) {
-        var field = this.fields[name];
-        var mode = this.state.data.id === '' ? 'new' : 'edit';
-        if (!field.access) {
-            return true;
-        }
-        if (field.access[mode]) {
-            return field.access[mode](field, this.state.data);
-        }
-        return true;
-    };
-    UiForm.prototype.handleChange = function (name, value) {
-        var _a = this.props,
-            formUpdate = _a.formUpdate,
-            config = _a.config;
-        var field = this.fields[name];
-        this.fields[name].pristine = false;
-        if (typeof formUpdate === 'function') {
-            formUpdate(config.view, field, name, value);
-        }
-        var data = this.state.data;
-        data[name] = value;
-        this.setState({ data: data });
-        if (field.onChange) {
-            field.onChange(this);
-        }
-    };
-    UiForm.prototype.formLayout = function () {
-        var layout = this.props.layout;
-        if (typeof layout === 'function') {
-            return layout;
-        }
-        var layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
-        return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
-    };
-    UiForm.prototype.handleBlur = function (name) {
-        this.fields[name].pristine = false;
-        var state = this.getValidationState(name);
-    };
-    UiForm.prototype.getReactField = function (field) {
-        var FieldComponent = null;
-        var type;
-        if (typeof field === 'function') {
-            FieldComponent = field;
-        } else {
-            switch (_typeof(field.type)) {
-                case 'string':
-                    type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
-                    if (fields[type]) {
-                        FieldComponent = fields[type];
-                    }
-                    break;
-                case 'function':
-                    FieldComponent = field.type;
-                    break;
-            }
-        }
-        return FieldComponent;
-    };
-    UiForm.prototype.makeField = function (name, field) {
-        var _this = this;
-        var errors = this.state.errors;
-        var error = errors[name] || [];
-        var FormGroup = lib.FormGroup;
-        var FieldComponent = this.getReactField(field);
-        if (FieldComponent === null) {
-            return null;
-        }
-        return React.createElement(FormGroup, { key: name, errors: error, FieldComponent: FieldComponent, field: field, name: name, row: this.state.data, onBlur: this.handleBlur, onChange: function onChange(fieldName, value) {
-                return _this.handleChange(fieldName, value);
-            }, value: this.state.data[name] || field.value || '', validationState: this.state.state[name] });
-    };
-    UiForm.prototype.toContract = function () {
-        var _this = this;
-        return Object.keys(this.fields).filter(function (name) {
-            return _this.fields[name].validate !== undefined;
-        }).map(function (name) {
-            var field = _this.fields[name].validate;
-            field.key = name;
-            return field;
-        });
-    };
-    UiForm.prototype.failFormSubmission = function (errors) {
-        var state = {};
-        Object.keys(errors).forEach(function (name) {
-            return state[name] = 'error';
-        });
-        this.setState({ state: state, errors: errors });
-    };
-    UiForm.prototype.isVisible = function (name) {
-        return this.state.visibility[name];
-    };
-    UiForm.prototype.showField = function (name) {
-        var visibility = this.state.visibility;
-        visibility[name] = true;
-        this.setState({ visibility: visibility });
-    };
-    UiForm.prototype.hideField = function (name) {
-        var visibility = this.state.visibility;
-        visibility[name] = false;
-        this.setState({ visibility: visibility });
-    };
-    UiForm.prototype.reset = function () {
-        var _this = this;
-        var data = __assign({}, this.state.initialState);
-        this.setState({
-            data: data
-        });
-        Object.keys(this.fields).forEach(function (key) {
-            _this.fields[key].pristine = true;
-        });
-        this.applyDataToForm(data);
-    };
-    UiForm.prototype.render = function () {
-        var _this = this;
-        var errors = this.props.errors;
-        var FormActions = lib.FormActions;
-        var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
-                e.preventDefault();
-                validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
-                    _this.onSubmit(e, _this.state.data);
-                    _this.reset();
-                }).catch(_this.failFormSubmission.bind(_this));
-            } });
-        var FormLayout = this.formLayout();
-        var madeFields = {};
-        Object.keys(this.fields).filter(this.access.bind(this)).filter(this.isVisible.bind(this)).forEach(function (name) {
-            var field = _this.fields[name];
-            var madeField = _this.makeField(name, field);
-            if (madeField !== null) {
-                madeFields[name] = madeField;
-            }
-        });
-        return React.createElement(FormLayout, { actions: buttons, errors: errors, fields: madeFields, form: this.state.form, onSubmit: this.onSubmit });
-    };
-    return UiForm;
-}(react_1.Component);
-UiForm.defaultProps = {
-    layout: 'reactstrap'
-};
-exports.default = UiForm;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var Checkbox_1 = __webpack_require__(22);
 exports.Checkbox = Checkbox_1.default;
@@ -998,7 +661,7 @@ var Upload_1 = __webpack_require__(35);
 exports.Upload = Upload_1.default;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1013,7 +676,7 @@ var Toggle_1 = __webpack_require__(40);
 exports.Toggle = Toggle_1.default;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1048,7 +711,7 @@ var Upload_1 = __webpack_require__(58);
 exports.Upload = Upload_1.default;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1063,7 +726,7 @@ var Toggle_1 = __webpack_require__(65);
 exports.Toggle = Toggle_1.default;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1090,7 +753,7 @@ exports.reactBootstrap = reactBootstrap;
 exports.reactstrap = reactstrap;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1163,7 +826,7 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2043,7 +1706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2674,7 +2337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2716,7 +2379,7 @@ exports.default = function (_a) {
 };
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2735,6 +2398,345 @@ exports.default = function (_a) {
     var tooltip = React.createElement(react_bootstrap_1.Tooltip, { id: id }, content);
     return React.createElement(react_bootstrap_1.OverlayTrigger, { placement: config.position, trigger: trigger, overlay: tooltip }, React.createElement("div", null, children));
 };
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) {
+            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var deepEqual = __webpack_require__(5);
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var validate_promise_1 = __webpack_require__(16);
+var libs = __webpack_require__(13);
+var lib;
+var fields;
+var FormControl;
+var layouts;
+var Button;
+var UiForm = function (_super) {
+    __extends(UiForm, _super);
+    function UiForm(props) {
+        var _this = _super.call(this, props) || this;
+        var _a = _this.props,
+            config = _a.config,
+            library = _a.library,
+            onSubmit = _a.onSubmit,
+            _b = _a.visibility,
+            visibility = _b === void 0 ? {} : _b;
+        _this.fields = config.form.fields;
+        var state = {};
+        Object.keys(props.errors).forEach(function (key) {
+            return state[key] = 'error';
+        });
+        Object.keys(_this.fields).forEach(function (key) {
+            _this.fields[key].pristine = true;
+            if (!visibility.hasOwnProperty(key)) {
+                visibility[key] = true;
+            }
+        });
+        var data = _this.makeState(props.data);
+        _this.state = {
+            data: data,
+            errors: props.errors,
+            form: config.form,
+            initialState: __assign({}, data),
+            state: state,
+            visibility: visibility
+        };
+        _this.setLib(props);
+        _this.actions = config.form.actions;
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleBlur = _this.handleBlur.bind(_this);
+        _this.onSubmit = onSubmit.bind(_this);
+        _this.applyDataToForm(_this.state.data);
+        return _this;
+    }
+    UiForm.prototype.componentWillReceiveProps = function (newProps) {
+        var config = newProps.config,
+            errors = newProps.errors;
+        this.fields = config.form.fields;
+        var state = {};
+        var newState = {};
+        Object.keys(errors).forEach(function (key) {
+            return state[key] = 'error';
+        });
+        if (!deepEqual(this.props.data, newProps.data)) {
+            newState.data = this.makeState(newProps.data);
+            this.applyDataToForm(newState.data);
+        }
+        this.setLib(newProps);
+        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors }));
+    };
+    UiForm.prototype.setLib = function (newProps) {
+        var config = newProps.config,
+            library = newProps.library;
+        var libType = config.lib || library || 'reactBootstrap';
+        lib = libs[libType];
+        fields = lib.fields;
+        layouts = lib.layouts;
+        FormControl = lib.FormControl;
+        Button = lib.Button;
+    };
+    UiForm.prototype.makeState = function (data) {
+        var _this = this;
+        var state = {};
+        Object.keys(this.fields).forEach(function (name) {
+            var field = _this.fields[name];
+            var def = field.default;
+            if (data && data[name]) {
+                state[name] = data[name];
+            } else if (def === undefined) {
+                state[name] = '';
+            } else {
+                state[name] = typeof def === 'function' ? def(data, field) : def;
+            }
+        });
+        return state;
+    };
+    UiForm.prototype.applyDataToForm = function (row) {
+        var name;
+        var form = this.state.form;
+        var title = this.props.title;
+        if (title) {
+            this.state.form.title = typeof title === 'function' ? title(row) : title;
+        } else {
+            if (typeof form._title === 'function') {
+                this.state.form.title = form._title(row);
+            }
+        }
+        for (name in form.actions) {
+            if (typeof form.actions[name]._label === 'function') {
+                this.state.form.actions[name].label = form.actions[name]._label(row);
+            }
+        }
+    };
+    UiForm.prototype.validateOne = function (field, value, data) {
+        if (data === void 0) {
+            data = {};
+        }
+        if (field.validate === undefined || field.validate.promises === undefined) {
+            return Promise.resolve('');
+        }
+        var validate = function validate(p) {
+            var msg = p.msg || field.validate.msg;
+            return p.rule(value, data, msg, p.arg);
+        };
+        var promises = field.validate.promises.map(validate);
+        return new Promise(function (resolve, reject) {
+            return Promise.all(promises).then(function () {
+                return resolve('success');
+            }).catch(function (e) {
+                return reject(e);
+            });
+        });
+    };
+    UiForm.prototype.getValidationState = function (name) {
+        var _this = this;
+        var field = this.fields[name];
+        var errors = this.state.errors;
+        var state = __assign({}, this.state.state);
+        var i = 0;
+        var value = this.state.data[name];
+        var res = [];
+        var serverError = errors[name] && errors[name].length > 0;
+        var serverSuccess = errors[name] && errors[name].length === 0;
+        if (!field.pristine) {
+            this.validateOne(field, value, this.state.data).then(function (ok) {
+                state[name] = 'success';
+                errors[name] = [];
+                _this.setState({ state: state, errors: errors });
+            }).catch(function (err) {
+                errors[name] = [err];
+                state[name] = 'error';
+                _this.setState({ state: state, errors: errors });
+            });
+        } else {
+            if (serverError) {
+                state[name] = [serverError];
+                state[name] = 'error';
+            }
+            if (serverSuccess) {
+                state[name] = [];
+                state[name] = 'success';
+            }
+        }
+        this.setState({ state: state, errors: errors });
+        return state;
+    };
+    UiForm.prototype.access = function (name) {
+        var field = this.fields[name];
+        var mode = this.state.data.id === '' ? 'new' : 'edit';
+        if (!field.access) {
+            return true;
+        }
+        if (field.access[mode]) {
+            return field.access[mode](field, this.state.data);
+        }
+        return true;
+    };
+    UiForm.prototype.handleChange = function (name, value) {
+        var _a = this.props,
+            formUpdate = _a.formUpdate,
+            config = _a.config;
+        var field = this.fields[name];
+        this.fields[name].pristine = false;
+        if (typeof formUpdate === 'function') {
+            formUpdate(config.view, field, name, value);
+        }
+        var data = this.state.data;
+        data[name] = value;
+        this.setState({ data: data });
+        if (field.onChange) {
+            field.onChange(this);
+        }
+    };
+    UiForm.prototype.formLayout = function () {
+        var layout = this.props.layout;
+        if (typeof layout === 'function') {
+            return layout;
+        }
+        var layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
+        return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
+    };
+    UiForm.prototype.handleBlur = function (name) {
+        this.fields[name].pristine = false;
+        var state = this.getValidationState(name);
+    };
+    UiForm.prototype.getReactField = function (field) {
+        var FieldComponent = null;
+        var type;
+        if (typeof field === 'function') {
+            FieldComponent = field;
+        } else {
+            switch (_typeof(field.type)) {
+                case 'string':
+                    type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
+                    if (fields[type]) {
+                        FieldComponent = fields[type];
+                    }
+                    break;
+                case 'function':
+                    FieldComponent = field.type;
+                    break;
+            }
+        }
+        return FieldComponent;
+    };
+    UiForm.prototype.makeField = function (name, field) {
+        var _this = this;
+        var errors = this.state.errors;
+        var error = errors[name] || [];
+        var FormGroup = lib.FormGroup;
+        var FieldComponent = this.getReactField(field);
+        if (FieldComponent === null) {
+            return null;
+        }
+        return React.createElement(FormGroup, { key: name, errors: error, FieldComponent: FieldComponent, field: field, name: name, row: this.state.data, onBlur: this.handleBlur, onChange: function onChange(fieldName, value) {
+                return _this.handleChange(fieldName, value);
+            }, value: this.state.data[name] || field.value || '', validationState: this.state.state[name] });
+    };
+    UiForm.prototype.toContract = function () {
+        var _this = this;
+        return Object.keys(this.fields).filter(function (name) {
+            return _this.fields[name].validate !== undefined;
+        }).map(function (name) {
+            var field = _this.fields[name].validate;
+            field.key = name;
+            return field;
+        });
+    };
+    UiForm.prototype.failFormSubmission = function (errors) {
+        var state = {};
+        Object.keys(errors).forEach(function (name) {
+            return state[name] = 'error';
+        });
+        this.setState({ state: state, errors: errors });
+    };
+    UiForm.prototype.isVisible = function (name) {
+        return this.state.visibility[name];
+    };
+    UiForm.prototype.showField = function (name) {
+        var visibility = this.state.visibility;
+        visibility[name] = true;
+        this.setState({ visibility: visibility });
+    };
+    UiForm.prototype.hideField = function (name) {
+        var visibility = this.state.visibility;
+        visibility[name] = false;
+        this.setState({ visibility: visibility });
+    };
+    UiForm.prototype.reset = function () {
+        var _this = this;
+        var data = __assign({}, this.state.initialState);
+        this.setState({
+            data: data
+        });
+        Object.keys(this.fields).forEach(function (key) {
+            _this.fields[key].pristine = true;
+        });
+        this.applyDataToForm(data);
+    };
+    UiForm.prototype.render = function () {
+        var _this = this;
+        var errors = this.props.errors;
+        var FormActions = lib.FormActions;
+        var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
+                    _this.onSubmit(e, _this.state.data);
+                    _this.reset();
+                }).catch(_this.failFormSubmission.bind(_this));
+            } });
+        var FormLayout = this.formLayout();
+        var madeFields = {};
+        Object.keys(this.fields).filter(this.access.bind(this)).filter(this.isVisible.bind(this)).forEach(function (name) {
+            var field = _this.fields[name];
+            var madeField = _this.makeField(name, field);
+            if (madeField !== null) {
+                madeFields[name] = madeField;
+            }
+        });
+        return React.createElement(FormLayout, { actions: buttons, errors: errors, fields: madeFields, form: this.state.form, onSubmit: this.onSubmit });
+    };
+    return UiForm;
+}(react_1.Component);
+UiForm.defaultProps = {
+    data: {},
+    errors: {},
+    layout: 'reactstrap'
+};
+exports.default = UiForm;
 
 /***/ }),
 /* 20 */
@@ -2967,11 +2969,21 @@ var __extends = undefined && undefined.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
+var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) {
+            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var react_bootstrap_1 = __webpack_require__(1);
+var index_1 = __webpack_require__(4);
 var Grid = function (_super) {
     __extends(Grid, _super);
     function Grid(props) {
@@ -3034,14 +3046,14 @@ var Grid = function (_super) {
         return rows.map(function (row, rowIndex) {
             return React.createElement("tr", { key: rowIndex }, field.columns.map(function (col, columnIndex) {
                 var Field = col.type;
-                return React.createElement("td", { key: columnIndex }, React.createElement(Field, { value: typeof row === 'string' ? row : row[columnIndex], name: "", field: { placeholder: col.label }, onBlur: function onBlur() {
+                return React.createElement("td", { key: columnIndex }, React.createElement(Field, { value: typeof row === 'string' ? row : row[columnIndex], name: "", field: __assign({}, col, { placeholder: col.label }), onBlur: function onBlur() {
                         return '';
                     }, onChange: function onChange(name, value) {
                         _this.handleChange(rowIndex, columnIndex, value);
                     } }));
             }), React.createElement("td", null, React.createElement(react_bootstrap_1.Button, { bsStyle: "link", onClick: function onClick(e) {
                     return _this.remove(rowIndex);
-                } }, React.createElement("i", { className: "fa fa-times text-danger" }))));
+                } }, React.createElement(index_1.Icon, { icon: "times", color: "danger" }))));
         });
     };
     Grid.prototype.render = function () {
@@ -3052,7 +3064,7 @@ var Grid = function (_super) {
         }), React.createElement("th", null, React.createElement(react_bootstrap_1.Button, { color: "link", onClick: function onClick(e) {
                 e.preventDefault();
                 _this.add();
-            } }, React.createElement("i", { className: "fa fa-plus" }), "Add")))), React.createElement("tbody", null, this.fields()));
+            } }, React.createElement(index_1.Icon, { icon: "plus", label: "Add" }))))), React.createElement("tbody", null, this.fields()));
     };
     return Grid;
 }(react_1.Component);
@@ -3113,39 +3125,138 @@ var __extends = undefined && undefined.__extends || function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 }();
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : new P(function (resolve) {
+                resolve(result.value);
+            }).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var react_bootstrap_1 = __webpack_require__(1);
+var index_1 = __webpack_require__(4);
 var Lookup = function (_super) {
     __extends(Lookup, _super);
     function Lookup(props) {
         var _this = _super.call(this, props) || this;
-        var storeData = _this.getStoreData();
-        _this.state = { storeData: storeData, search: '', value: '' };
+        _this.state = { loading: true, search: '', value: '' };
+        _this.get();
         return _this;
     }
-    Lookup.prototype.getStoreData = function () {
+    Lookup.prototype.get = function () {
         var _this = this;
-        var group;
-        this.groupedData = {};
-        var _a = this.props,
-            field = _a.field,
-            row = _a.row;
-        var storeData = field.options.store(row);
-        if (field.options.optGroup === undefined) {
-            group = '';
-        } else {
-            group = field.options.optGroup;
+        this.setState({ loading: true });
+        try {
+            this.getStoreData().then(function (storeData) {
+                _this.setState({ storeData: storeData, loading: false });
+            });
+        } catch (e) {
+            console.log(e);
         }
-        storeData.forEach(function (data) {
-            var thisGroup = data[group];
-            if (_this.groupedData[thisGroup] === undefined) {
-                _this.groupedData[thisGroup] = [];
-            }
-            _this.groupedData[thisGroup].push(data);
+    };
+    Lookup.prototype.getStoreData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var group, _a, field, row, storeData;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.groupedData = {};
+                        _a = this.props, field = _a.field, row = _a.row;
+                        if (field.options.optGroup === undefined) {
+                            group = '';
+                        } else {
+                            group = field.options.optGroup;
+                        }
+                        return [4, field.options.store(row, this.props)];
+                    case 1:
+                        storeData = _b.sent();
+                        storeData.forEach(function (data) {
+                            var thisGroup = data[group];
+                            if (_this.groupedData[thisGroup] === undefined) {
+                                _this.groupedData[thisGroup] = [];
+                            }
+                            _this.groupedData[thisGroup].push(data);
+                        });
+                        return [2, this.groupedData];
+                }
+            });
         });
-        return this.groupedData;
     };
     Lookup.prototype.mapDataToOpts = function (storeData) {
         var field = this.props.field;
@@ -3187,10 +3298,17 @@ var Lookup = function (_super) {
     };
     Lookup.prototype.render = function () {
         var _this = this;
-        var storeData = this.getStoreData();
-        var opts = this.mapDataToOpts(storeData);
-        var value = this.props.value;
-        return React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", value: value, onChange: function onChange(e) {
+        if (this.state.loading) {
+            return React.createElement(index_1.Icon, { icon: "spinner", spin: true, label: "loading..." });
+        }
+        var opts = this.mapDataToOpts(this.state.storeData);
+        var _a = this.props,
+            value = _a.value,
+            _onBlur = _a.onBlur,
+            name = _a.name;
+        return React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", value: value, onBlur: function onBlur() {
+                return _onBlur(name);
+            }, onChange: function onChange(e) {
                 _this.handleChange(e);
             } }, opts);
     };
@@ -3361,7 +3479,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var Dropzone = __webpack_require__(16);
+var Dropzone = __webpack_require__(15);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3695,7 +3813,6 @@ exports.default = function (_a) {
         data = _a.data,
         config = _a.config,
         listRow = _a.listRow,
-        modal = _a.modal,
         msg = _a.msg,
         rowClick = _a.rowClick,
         rows = _a.rows,
@@ -3719,9 +3836,9 @@ exports.default = function (_a) {
     if (rows.length > 0) {
         list = React.createElement("div", null, React.createElement(react_bootstrap_1.Table, { responsive: true }, React.createElement("thead", null, React.createElement("tr", null, headings)), React.createElement("tbody", null, rows.map(function (row, key) {
             return listRow({ key: key, row: row, selected: selected, columns: columns, actions: actions, canSelect: canSelect });
-        }))), modal);
+        }))));
     } else {
-        list = React.createElement("div", null, React.createElement(react_bootstrap_1.Alert, { bsStyle: "info" }, msg), modal);
+        list = React.createElement("div", null, React.createElement(react_bootstrap_1.Alert, { bsStyle: "info" }, msg));
     }
     return React.createElement("div", null, React.createElement(react_bootstrap_1.Row, null, React.createElement(react_bootstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(react_bootstrap_1.Col, { md: 4 }, search)), list);
 };
@@ -4475,7 +4592,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var Dropzone = __webpack_require__(16);
+var Dropzone = __webpack_require__(15);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4517,11 +4634,11 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(2);
-var fields = __webpack_require__(12);
+var fields = __webpack_require__(11);
 var FormGroup_1 = __webpack_require__(48);
 var FormActions_1 = __webpack_require__(44);
 var layouts = __webpack_require__(62);
-var listActions = __webpack_require__(13);
+var listActions = __webpack_require__(12);
 var listLayouts = __webpack_require__(68);
 var Checkbox = function Checkbox(props) {
     return React.createElement(reactstrap_1.Input, __assign({ type: "checkbox" }, props, { style: { position: 'relative', margin: 0 } }));
@@ -4539,16 +4656,16 @@ exports.default = {
     Checkbox: Checkbox,
     ControlLabel: reactstrap_1.Label,
     Feedback: reactstrap_1.FormFeedback,
-    fields: fields,
     Form: reactstrap_1.Form,
-    FormControl: reactstrap_1.Input,
     FormActions: FormActions_1.default,
+    FormControl: reactstrap_1.Input,
     FormGroup: FormGroup_1.default,
     HelpBlock: reactstrap_1.FormText,
+    Modal: Modal,
+    fields: fields,
     layouts: layouts,
     listActions: listActions,
-    listLayouts: listLayouts,
-    Modal: Modal
+    listLayouts: listLayouts
 };
 
 /***/ }),
@@ -4814,7 +4931,6 @@ exports.default = function (_a) {
         data = _a.data,
         config = _a.config,
         listRow = _a.listRow,
-        modal = _a.modal,
         msg = _a.msg,
         rowClick = _a.rowClick,
         rows = _a.rows,
@@ -4838,9 +4954,9 @@ exports.default = function (_a) {
     if (rows.length > 0) {
         list = React.createElement("div", null, React.createElement(reactstrap_1.Table, { responsive: true }, React.createElement("thead", null, React.createElement("tr", null, headings)), React.createElement("tbody", null, rows.map(function (row, key) {
             return listRow({ key: key, row: row, selected: selected, columns: columns, actions: actions });
-        }))), modal);
+        }))));
     } else {
-        list = React.createElement("div", null, React.createElement(reactstrap_1.Alert, { color: "info" }, msg), modal);
+        list = React.createElement("div", null, React.createElement(reactstrap_1.Alert, { color: "info" }, msg));
     }
     return React.createElement("div", null, React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(reactstrap_1.Col, { md: 4 }, search)), list);
 };
@@ -4936,13 +5052,11 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var Form_1 = __webpack_require__(9);
-var libs = __webpack_require__(14);
+var libs = __webpack_require__(13);
 var ListRow_1 = __webpack_require__(71);
 var layouts;
 var lib;
 var Checkbox;
-var Modal;
 var FormControl;
 var UiList = function (_super) {
     __extends(UiList, _super);
@@ -4974,7 +5088,6 @@ var UiList = function (_super) {
         layouts = lib.listLayouts;
         Checkbox = lib.Checkbox;
         FormControl = lib.FormControl;
-        Modal = lib.Modal;
     };
     UiList.prototype.toggleAll = function (e) {
         var _a = this.props,
@@ -5163,13 +5276,9 @@ var UiList = function (_super) {
         var _a = this.props,
             _b = _a.data,
             data = _b === void 0 ? [] : _b,
-            _c = _a.errors,
-            errors = _c === void 0 ? {} : _c,
             config = _a.config,
-            _d = _a.actions,
-            actions = _d === void 0 ? {} : _d,
-            _e = _a.form,
-            form = _e === void 0 ? {} : _e,
+            _c = _a.actions,
+            actions = _c === void 0 ? {} : _c,
             layout = _a.layout;
         var selected = this.state.selected;
         var ui = actions.ui;
@@ -5181,19 +5290,19 @@ var UiList = function (_super) {
             showModal = this.state.showModal;
         }
         var rows = data.filter(this.filterRows);
-        var modal = React.createElement(Modal, { showModal: showModal, close: this.close }, React.createElement(Form_1.default, { actions: { close: {
-                    action: this.close,
-                    id: 'modal-close',
-                    label: 'Close',
-                    type: 'button'
-                } }, data: form, errors: errors, formUpdate: actions.formUpdate, layout: layout, config: config, onSubmit: function onSubmit(e, state) {
-                return _this.handleUpdate(e, state);
-            } }));
-        return React.createElement(ListLayout, __assign({ modal: modal, data: data, listRow: function listRow(props) {
+        var formModalProps = {
+            actions: {
+                formUpdate: actions.formUpdate
+            },
+            close: this.close,
+            handleUpdate: this.handleUpdate,
+            showModal: showModal
+        };
+        return React.createElement("div", null, React.createElement(ListLayout, __assign({ data: data, listRow: function listRow(props) {
                 var rowSelected = _this.state.selected;
                 var isSelected = _this.isSelected(props.row);
                 return React.createElement(ListRow_1.default, __assign({}, props, { Checkbox: Checkbox, canSelect: _this.props.canSelect, selected: isSelected, view: config.view, columns: _this.columns, rowClick: _this.rowClick.bind(_this), selectRow: _this.selectRow.bind(_this), deselectRow: _this.deselectRow.bind(_this) }));
-            }, toggleAll: this.toggleAll.bind(this), showModal: this.showModal.bind(this), search: this.search(), selected: selected, rows: rows, update: this.updateRows.bind(this), msg: this.messages.emptyData }, this.props));
+            }, toggleAll: this.toggleAll.bind(this), showModal: this.showModal.bind(this), search: this.search(), selected: selected, rows: rows, update: this.updateRows.bind(this), msg: this.messages.emptyData }, this.props)), this.props.children(formModalProps));
     };
     return UiList;
 }(react_1.Component);
@@ -5254,7 +5363,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var Tip_1 = __webpack_require__(19);
+var Tip_1 = __webpack_require__(18);
 var ListCell_1 = __webpack_require__(70);
 var ListRow = function (_super) {
     __extends(ListRow, _super);
@@ -5349,7 +5458,7 @@ var _layouts = __webpack_require__(73);
 
 var layouts = _interopRequireWildcard(_layouts);
 
-var _actions = __webpack_require__(11);
+var _actions = __webpack_require__(10);
 
 var listActions = _interopRequireWildcard(_actions);
 
@@ -5357,7 +5466,7 @@ var _listLayouts = __webpack_require__(43);
 
 var listLayouts = _interopRequireWildcard(_listLayouts);
 
-var _fields = __webpack_require__(10);
+var _fields = __webpack_require__(9);
 
 var fields = _interopRequireWildcard(_fields);
 
@@ -5552,7 +5661,7 @@ function shim (obj) {
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(7);
-  var warning = __webpack_require__(15);
+  var warning = __webpack_require__(14);
   var ReactPropTypesSecret = __webpack_require__(8);
   var loggedTypeFailures = {};
 }
@@ -5687,7 +5796,7 @@ module.exports = function() {
 
 var emptyFunction = __webpack_require__(6);
 var invariant = __webpack_require__(7);
-var warning = __webpack_require__(15);
+var warning = __webpack_require__(14);
 
 var ReactPropTypesSecret = __webpack_require__(8);
 var checkPropTypes = __webpack_require__(78);

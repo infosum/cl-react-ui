@@ -42,7 +42,7 @@ class Lookup extends Component<FieldLookup, IState> {
 
   /**
    * Get the relevant part of the store data for the list population
-   * @return {Object} Partial store data to use for list population
+   * @return {Promise} Partial store data to use for list population
    */
   private async getStoreData(): Promise<any> {
     let group;

@@ -110,6 +110,7 @@ interface IFormLayout {
     form: IFormConfig;
     onSubmit: () => void;
 }
+type FormUpdate = (view: string, field: IFieldConfig, name: string, value: string | number) => void;
 
 interface IFormProps {
   actions: IFormActionsConfig;
@@ -119,8 +120,8 @@ interface IFormProps {
     form: IFormConfig;
   };
   data: IListRow;
-  errors: IFormErrors;
-  formUpdate: (view: string, field: IFieldConfig, name: string, value: string | number) => void;
+  errors?: IFormErrors;
+  formUpdate: FormUpdate;
   layout: string;
   library?: 'reactstrap' | 'reactBootstrap';
   onSubmit: (e: MouseEvent, data: any) => void;
@@ -255,6 +256,17 @@ interface ICrudConfig {
     view: string;
 }
 
+interface IFormModalProps {
+    actions: {
+        formUpdate: FormUpdate;
+      };
+      close: () => void;
+      errors: IFormErrors;
+      form: FormData;
+      handleUpdate: (e: Event, state: FormData) => void;
+      showModal: () => void;
+}
+
 interface IListProps {
     access: {
         add?: (view: string, state: any) => boolean;
@@ -279,10 +291,9 @@ interface IListProps {
         update?: (view: string, selected: IListRow[], update: {[key: string]: any}) => void;
     };
     canSelect: (row: IListRow) => boolean;
+    children?: (IFormModalProps) => any;
     config: ICrudConfig;
     data: IListRow[];
-    errors: IFormErrors;
-    form?: FormData;
     layout?: string;
 }
 

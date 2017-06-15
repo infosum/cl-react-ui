@@ -4,7 +4,7 @@ import {Alert, Col, Row, Table, Well} from 'react-bootstrap';
 import ListActions from './ListActions';
 
 export default ({actions, canSelect, data, config, listRow,
-  modal, msg, rowClick, rows, search, selected, showModal, toggleAll, update, user}) => {
+  msg, rowClick, rows, search, selected, showModal, toggleAll, update, user}) => {
   let list;
   const columns = config.list.columns;
   const headings = Object.keys(columns)
@@ -37,15 +37,12 @@ export default ({actions, canSelect, data, config, listRow,
                 )}
               </tbody>
               </Table>
-
-              {modal}
           </div>);
     } else {
       list = (<div>
            <Alert bsStyle="info">
           {msg}
           </Alert>
-          {modal}
           </div>);
     }
 

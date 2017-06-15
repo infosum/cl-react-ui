@@ -13,8 +13,8 @@ let layouts;
 let Button;
 
 interface IState {
-  data: any;
-  errors: any;
+  data: IListRow;
+  errors: IFormErrors;
   form: IFormConfig;
   initialState: any;
   state: any;
@@ -33,6 +33,8 @@ class UiForm extends Component<IFormProps, IState> {
   private onSubmit: (e: MouseEvent, data: any) => void;
 
   public static defaultProps: Partial<IFormProps> = {
+    data: {},
+    errors: {},
     layout: 'reactstrap',
   };
 

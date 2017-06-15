@@ -4,7 +4,7 @@ import {Icon, Form, List, validations} from '../index';
 import config from './config';
 import configToggleGroup from './config-toggle-group';
 import CustomLayout from './CustomLayout';
-import {Button, Container} from 'reactstrap';
+import {Button, Container, Modal} from 'reactstrap';
 
 class Demo extends Component {
 
@@ -47,7 +47,25 @@ console.log('data = ', data);
           spin={true} />
 
         <List config={config}
-          data={data}/>
+          data={data}>
+          {({actions, handleUpdate, showModal, close}) => 
+          <Modal isOpen={showModal} toggle={close}>
+            <Form
+              actions={{close: {
+                action: close,
+                id: 'modal-close',
+                label: 'Close',
+                type: 'button',
+              }}}
+              data={{}}
+              formUpdate={actions.formUpdate}
+              layout="Modal"
+              config={config}
+              onSubmit={(e, state) => handleUpdate(e, state)}
+            />
+          </Modal>
+          }
+        </List>
 
         <Form config={config}
           layout={CustomLayout}
@@ -56,7 +74,7 @@ console.log('data = ', data);
           errors={{}}
           onSubmit={e => console.log(e)} />
 
-          <Form config={configToggleGroup}
+        <Form config={configToggleGroup}
           data={{}}
           lib={this.state.lib}
           errors={{}}

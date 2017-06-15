@@ -8,7 +8,6 @@ import ListRow from './ListRow';
 let layouts;
 let lib;
 let Checkbox: (props: any) => any;
-let Modal;
 let FormControl;
 
 interface IState {
@@ -68,7 +67,6 @@ class UiList extends Component<IListProps, IState> {
     layouts = lib.listLayouts;
     Checkbox = lib.Checkbox;
     FormControl = lib.FormControl;
-    Modal = lib.Modal;
   }
 
   /**
@@ -96,7 +94,7 @@ class UiList extends Component<IListProps, IState> {
   }
 
   /**
-   * Get the form's layout
+   * Get the lists's layout
    * @return {Dom} Dom node
    */
   private listLayout() {
@@ -329,7 +327,7 @@ class UiList extends Component<IListProps, IState> {
    * @return {Dom} Node
    */
   public render(): JSX.Element {
-    const {data = [], errors = {}, config, actions = {}, form = {}, layout} = this.props;
+    const {data = [], config, actions = {}, layout} = this.props;
     const {selected} = this.state;
     const ui = actions.ui;
     const ListLayout = this.listLayout();
@@ -342,49 +340,43 @@ class UiList extends Component<IListProps, IState> {
     }
 
     const rows = data.filter(this.filterRows);
-    const modal = (
-        <Modal showModal={showModal} close={this.close}>
-          <UiForm
-            actions={{close: {
-              action: this.close,
-              id: 'modal-close',
-              label: 'Close',
-              type: 'button',
-            }}}
-            data={form}
-            errors={errors}
-            formUpdate={actions.formUpdate}
-            layout={layout}
-            config={config}
-            onSubmit={(e, state) => this.handleUpdate(e, state)}
-          />
-        </Modal>
-    );
-    return <ListLayout
-            modal={modal}
-            data={data}
-            listRow={(props) => {
-              const rowSelected = this.state.selected;
-              const isSelected = this.isSelected(props.row);
-              return <ListRow
-                {...props}
-                Checkbox={Checkbox}
-                canSelect={this.props.canSelect}
-                selected={isSelected}
-                view={config.view}
-                columns={this.columns}
-                rowClick={this.rowClick.bind(this)}
-                selectRow={this.selectRow.bind(this)}
-                deselectRow={this.deselectRow.bind(this)} />;
-            }}
-            toggleAll={this.toggleAll.bind(this)}
-            showModal={this.showModal.bind(this)}
-            search={this.search()}
-            selected={selected}
-            rows={rows}
-            update={this.updateRows.bind(this)}
-            msg={this.messages.emptyData}
-            {...this.props} />;
+
+    const formModalProps = {
+      actions: {
+        formUpdate: actions.formUpdate,
+      },
+      close: this.close,
+      handleUpdate: this.handleUpdate,
+      showModal,
+    };
+    return <div>
+            <ListLayout
+              data={data}
+              listRow={(props) => {
+                const rowSelected = this.state.selected;
+                const isSelected = this.isSelected(props.row);
+                return <ListRow
+                  {...props}
+                  Checkbox={Checkbox}
+                  canSelect={this.props.canSelect}
+                  selected={isSelected}
+                  view={config.view}
+                  columns={this.columns}
+                  rowClick={this.rowClick.bind(this)}
+                  selectRow={this.selectRow.bind(this)}
+                  deselectRow={this.deselectRow.bind(this)} />;
+              }}
+              toggleAll={this.toggleAll.bind(this)}
+              showModal={this.showModal.bind(this)}
+              search={this.search()}
+              selected={selected}
+              rows={rows}
+              update={this.updateRows.bind(this)}
+              msg={this.messages.emptyData}
+              {...this.props}>
+            </ListLayout>
+          {this.props.children(formModalProps)}
+          </div>;
 
   }
 }

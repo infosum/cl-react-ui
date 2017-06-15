@@ -70,7 +70,6 @@ const config = {
 
 Validations use the validate-promise library
 
-
 ## Errors
 
 Form errors should be an object, keyed on the field name, whose values are an array of error messages
@@ -82,6 +81,69 @@ let errors = {
 };
 
 ```
+## Lists
+
+``` javascript
+render() {
+
+  const config = {
+    view: 'example',
+    lib : 'reactstrap',
+    list: {
+      columns: {
+        id: {
+          label: 'ID'
+        },
+        name: {
+          label: 'Name'
+        },
+      }
+    },
+    messages: {
+      emptyData: 'No records found',
+    },
+  }
+  const data = [
+    {id: '1', name: 'one'},
+    {id: '2', name: 'two'}
+  ];
+
+  const listActions = {
+    add: (view, state) => {
+      this.props.save(state);
+    },
+    selectRow: () => null,
+  }
+  
+  return <List 
+      config={config} 
+      data={data}
+      access={{
+        add: true,
+      }}
+      actions={listActions}>
+      {({actions, handleUpdate, showModal, close}) => <Modal isOpen={showModal} toggle={close}>
+            <Form
+              actions={{close: {
+                action: close,
+                id: 'modal-close',
+                label: 'Close',
+                type: 'button',
+              }}}
+              data={{            // Initial form data
+                name: 'three',
+              }}
+              formUpdate={actions.formUpdate}
+              layout="Modal"
+              config={config}
+              onSubmit={(e, state) => handleUpdate(e, state)}
+            />
+        </Modal>
+          }
+    <List>
+}
+```
+
 # Icon
 
 Renders a font-awesome icon
