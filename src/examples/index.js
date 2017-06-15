@@ -28978,7 +28978,8 @@ var Demo = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Demo.__proto__ || Object.getPrototypeOf(Demo)).call(this, props));
 
     _this.state = {
-      lib: 'reactstrap'
+      lib: 'reactstrap',
+      data: [{ custom_id: '1', label: 'label 1', claimed: false }, { custom_id: '2', label: 'label 2', claimed: true }]
     };
     return _this;
   }
@@ -28995,12 +28996,20 @@ var Demo = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var data = [{ drone_id: '1', label: 'label 1', claimed: false }, { drone_id: '2', label: 'label 2', claimed: true }],
-          row = {
+      var data = this.state.data;
+
+      var row = {
         label: 'hi'
       };
 
       console.log('data = ', data);
+      var listActions = {
+        add: function add(view, state) {
+          _this2.setState({ data: data.concat(state) });
+          console.log('save: would normally be connected to a redux action');
+        }
+      };
+
       return _react2.default.createElement(
         _reactstrap.Container,
         null,
@@ -29026,7 +29035,8 @@ var Demo = function (_Component) {
         _react2.default.createElement(
           _index.List,
           { config: _config2.default,
-            data: data },
+            data: data,
+            actions: listActions },
           function (_ref) {
             var actions = _ref.actions,
                 handleUpdate = _ref.handleUpdate,
@@ -29047,7 +29057,8 @@ var Demo = function (_Component) {
                 layout: 'Modal',
                 config: _config2.default,
                 onSubmit: function onSubmit(e, state) {
-                  return handleUpdate(e, state);
+                  handleUpdate(e, state);
+                  close();
                 }
               })
             );
@@ -52214,7 +52225,7 @@ exports.default = {
       }
     },
     fields: {
-      id: {
+      custom_id: {
         id: 'activation-id',
         label: 'ID',
         type: 'hidden',
@@ -52388,8 +52399,6 @@ exports.default = {
             store: async function store(row, props) {
               return new Promise(function (resolve) {
                 setTimeout(function () {
-                  console.log('row', row);
-                  debugger;
                   if (row[1] === '1') {
                     resolve([{ id: 1, name: 'subcat 1' }]);
                   }
@@ -55381,7 +55390,7 @@ var UiList = function (_super) {
                 formUpdate: actions.formUpdate
             },
             close: this.close,
-            handleUpdate: this.handleUpdate,
+            handleUpdate: this.handleUpdate.bind(this),
             showModal: showModal
         };
         return React.createElement("div", null, React.createElement(ListLayout, __assign({ data: data, listRow: function listRow(props) {

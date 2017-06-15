@@ -5295,7 +5295,7 @@ var UiList = function (_super) {
                 formUpdate: actions.formUpdate
             },
             close: this.close,
-            handleUpdate: this.handleUpdate,
+            handleUpdate: this.handleUpdate.bind(this),
             showModal: showModal
         };
         return React.createElement("div", null, React.createElement(ListLayout, __assign({ data: data, listRow: function listRow(props) {

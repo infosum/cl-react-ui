@@ -11,7 +11,11 @@ class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lib: 'reactstrap'
+      lib: 'reactstrap',
+      data: [
+        {custom_id: '1', label: 'label 1', claimed: false},
+        {custom_id: '2', label: 'label 2', claimed: true}
+      ]
     }
   }
 
@@ -24,15 +28,19 @@ class Demo extends Component {
   }
 
   render() {
-    let data = [
-      {drone_id: '1', label: 'label 1', claimed: false},
-      {drone_id: '2', label: 'label 2', claimed: true}
-    ],
-    row = {
+    const {data} = this.state;
+    const row = {
       label: 'hi'
     };
 
 console.log('data = ', data);
+    const listActions = {
+      add: (view, state) => {
+        this.setState({data: data.concat(state)});
+        console.log('save: would normally be connected to a redux action');
+      }
+    };
+
     return <Container>
         <Button onClick={e => this.toggleLib()}>
           lib: {this.state.lib}
@@ -47,7 +55,8 @@ console.log('data = ', data);
           spin={true} />
 
         <List config={config}
-          data={data}>
+          data={data}
+          actions={listActions}>
           {({actions, handleUpdate, showModal, close}) => 
           <Modal isOpen={showModal} toggle={close}>
             <Form
@@ -61,7 +70,10 @@ console.log('data = ', data);
               formUpdate={actions.formUpdate}
               layout="Modal"
               config={config}
-              onSubmit={(e, state) => handleUpdate(e, state)}
+              onSubmit={(e, state) => {
+                handleUpdate(e, state);
+                close();
+              }}
             />
           </Modal>
           }

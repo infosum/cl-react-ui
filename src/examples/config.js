@@ -92,7 +92,7 @@ export default {
       }
     },
     fields: {
-      id: {
+      custom_id: {
         id: 'activation-id',
         label: 'ID',
         type: 'hidden',
@@ -262,8 +262,6 @@ export default {
               store: async (row, props) => {
                 return new Promise(resolve => {
                   setTimeout(() => {
-                    console.log('row', row);
-                    debugger;
                     if (row[1] === '1') {
                       resolve([
                       {id: 1, name: 'subcat 1'},

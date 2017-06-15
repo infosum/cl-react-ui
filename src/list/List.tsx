@@ -346,7 +346,7 @@ class UiList extends Component<IListProps, IState> {
         formUpdate: actions.formUpdate,
       },
       close: this.close,
-      handleUpdate: this.handleUpdate,
+      handleUpdate: this.handleUpdate.bind(this),
       showModal,
     };
     return <div>
