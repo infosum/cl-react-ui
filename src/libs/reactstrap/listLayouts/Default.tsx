@@ -4,7 +4,7 @@ import {Alert, Col, Input, Row, Table} from 'reactstrap';
 import ListActions from './ListActions';
 
 export default ({actions, canSelect, data, config, listRow, msg,
-  rowClick, rows, search, selected, showModal, toggleAll, update, user}) => {
+  rowClick, rows, search, selected, showAddModal, toggleAll, update, user}) => {
   let list;
   const columns = config.list.columns;
   const headings = Object.keys(columns)
@@ -55,7 +55,7 @@ export default ({actions, canSelect, data, config, listRow, msg,
                 selected={selected}
                 actions={actions}
                 config={config}
-                showModal={showModal}
+                showAddModal={showAddModal}
                 update={update} />
             </Col>
             <Col md={4}>{search}</Col>

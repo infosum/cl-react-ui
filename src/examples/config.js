@@ -18,6 +18,13 @@ export default {
         id: 'heading-id',
         label: 'ID'
       },
+      edit: {
+        id: 'edit',
+        label: 'Edit',
+        render: (props) => <Button onClick={(e) => {
+          props.rowClick(e, false, props.row);
+        }}>Edit</Button>,
+      },
       label: {
         id: 'heading-name',
         label: 'Name'
@@ -39,7 +46,7 @@ export default {
         add: {
           id: 'list-action-add',
           visible: () => true,
-          render: (props) => <Button onClick={() => props.showModal()}>Add</Button>
+          render: (props) => <Button onClick={() => props.showAddModal()}>Add</Button>
         },
         claim: {
           id: 'list-action-claim',
@@ -95,7 +102,7 @@ export default {
       custom_id: {
         id: 'activation-id',
         label: 'ID',
-        type: 'hidden',
+        type: 'text',
         value: ''
       },
       select: {

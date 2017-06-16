@@ -38,6 +38,11 @@ console.log('data = ', data);
       add: (view, state) => {
         this.setState({data: data.concat(state)});
         console.log('save: would normally be connected to a redux action');
+      },
+      edit: (view, state) => {
+        var i = data.findIndex(d => d.custom_id === state.custom_id);
+        data[i] = state;
+        console.log('save: would normally be connected to a redux action');
       }
     };
 
@@ -57,7 +62,7 @@ console.log('data = ', data);
         <List config={config}
           data={data}
           actions={listActions}>
-          {({actions, handleUpdate, showModal, close}) => 
+          {({actions, handleUpdate, selected, showModal, close}) => 
           <Modal isOpen={showModal} toggle={close}>
             <Form
               actions={{close: {
@@ -66,7 +71,7 @@ console.log('data = ', data);
                 label: 'Close',
                 type: 'button',
               }}}
-              data={{}}
+              data={selected}
               formUpdate={actions.formUpdate}
               layout="Modal"
               config={config}

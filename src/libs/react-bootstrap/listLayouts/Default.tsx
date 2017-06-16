@@ -4,7 +4,7 @@ import {Alert, Col, Row, Table, Well} from 'react-bootstrap';
 import ListActions from './ListActions';
 
 export default ({actions, canSelect, data, config, listRow,
-  msg, rowClick, rows, search, selected, showModal, toggleAll, update, user}) => {
+  msg, rowClick, rows, search, selected, showAddModal, toggleAll, update, user}) => {
   let list;
   const columns = config.list.columns;
   const headings = Object.keys(columns)
@@ -48,16 +48,16 @@ export default ({actions, canSelect, data, config, listRow,
 
   return (<div>
             <Row>
-            <Col md={8}>
-              <ListActions rowClick={rowClick}
-                user={user}
-                selected={selected}
-                actions={actions}
-                config={config}
-                showModal={showModal}
-                update={update} />
-            </Col>
-            <Col md={4}>{search}</Col>
+              <Col md={8}>
+                <ListActions rowClick={rowClick}
+                  user={user}
+                  selected={selected}
+                  actions={actions}
+                  config={config}
+                  showAddModal={showAddModal}
+                  update={update} />
+              </Col>
+              <Col md={4}>{search}</Col>
             </Row>
             {list}
 

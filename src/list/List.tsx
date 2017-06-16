@@ -123,7 +123,7 @@ class UiList extends Component<IListProps, IState> {
     if (checkType && isButtonIsh) {
       return;
     }
-
+    this.selectRow(row);
     e.preventDefault();
     if (actions.setForm) {
       actions.setForm(config.view, row);
@@ -148,10 +148,16 @@ class UiList extends Component<IListProps, IState> {
       e.preventDefault();
     }
     this.setState({showModal: false});
+    this.clearSelected();
     const {actions, config} = this.props;
     if (actions.setModalState) {
       actions.setModalState(config.view, false);
     }
+  }
+
+  private showAddModal() {
+    this.clearSelected();
+    this.showModal();
   }
 
   /**
@@ -166,6 +172,10 @@ class UiList extends Component<IListProps, IState> {
     if (actions.selectRow) {
       actions.selectRow(row);
     }
+  }
+
+  private clearSelected() {
+    this.setState({selected: []});
   }
 
   /**
@@ -347,13 +357,15 @@ class UiList extends Component<IListProps, IState> {
       },
       close: this.close,
       handleUpdate: this.handleUpdate.bind(this),
+      selected: selected.length === 0 ? {} : selected[0],
       showModal,
     };
     return <div>
             <ListLayout
+              showAddModal={this.showAddModal.bind(this)}
               data={data}
               listRow={(props) => {
-                const rowSelected = this.state.selected;
+                const rowSelected = selected;
                 const isSelected = this.isSelected(props.row);
                 return <ListRow
                   {...props}

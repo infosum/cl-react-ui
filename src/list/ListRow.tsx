@@ -51,10 +51,12 @@ export default class ListRow extends Component<IListRowProps, IState> {
 
         if (th.render) {
           cell = <th.render column={columnName} row={row}
+            rowClick={this.props.rowClick}
             config={th.config} {...actions} />;
         } else {
           cell = <ListCell key={'listcell-' + key}
-            data={row[columnName]} {...actions} />;
+            rowClick={this.props.rowClick}
+            data={row[columnName]} {...actions}  />;
         }
         if (th.tip) {
           cell = <Tip config={th.tip} row={row}>{cell}</Tip>;
