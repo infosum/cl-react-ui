@@ -240,9 +240,16 @@ interface IListColumns {
   };
 }
 
+interface IFilter {
+    type: 'select';
+}
+
 interface IListConfig {
   actions: IListActions[];
   columns: IListColumns;
+  filters?: {
+      [key: string]: IFilter;
+  };
   searchall: {
     label: string;
     like: string[];
@@ -310,4 +317,8 @@ interface IListRowProps {
   selected: boolean;
   selectRow: (row: IListRow) => void;
   view: string;
+}
+
+interface IListFilterProps {
+    config: ICrudConfig
 }

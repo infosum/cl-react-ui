@@ -12,6 +12,7 @@ export default {
   view: 'example',
   lib: 'reactstrap',
   primary_key: 'custom_id',
+  
   list: {
     columns: {
       custom_id: {
@@ -29,10 +30,19 @@ export default {
         id: 'heading-name',
         label: 'Name'
       },
+      select: {
+        id: 'select',
+        label: 'Select',
+      },
       claimed: {
         class: 'text-center',
         id: 'heading-claimed',
         label: 'Claimed',
+      }
+    },
+    filters: {
+      select: {
+        type: 'select'
       }
     },
     searchall: {

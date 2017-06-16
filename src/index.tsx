@@ -8,6 +8,7 @@ import * as ReactBootstrapListActions from './libs/react-bootstrap/list/actions'
 import * as ReactStrapFields from './libs/reactstrap/fields';
 import * as ReactStrapListActions from './libs/reactstrap/list/actions';
 import List from './list/List';
+import ListFilters from './list/ListFilters';
 
 const fields = {
   reactBootstrap: ReactBootstrapFields,
@@ -24,6 +25,7 @@ export {
   Icon,
   List,
   listActions,
+  ListFilters,
   fields,
   validations,
 };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Icon, Form, List, validations} from '../index';
+import {Icon, Form, List, ListFilters, validations} from '../index';
 import config from './config';
 import configToggleGroup from './config-toggle-group';
 import CustomLayout from './CustomLayout';
@@ -63,24 +63,28 @@ console.log('data = ', data);
           data={data}
           actions={listActions}>
           {({actions, handleUpdate, selected, showModal, close}) => 
-          <Modal isOpen={showModal} toggle={close}>
-            <Form
-              actions={{close: {
-                action: close,
-                id: 'modal-close',
-                label: 'Close',
-                type: 'button',
-              }}}
-              data={selected}
-              formUpdate={actions.formUpdate}
-              layout="Modal"
-              config={config}
-              onSubmit={(e, state) => {
-                handleUpdate(e, state);
-                close();
-              }}
-            />
-          </Modal>
+          <div>
+            <Modal isOpen={showModal} toggle={close}>
+              <Form
+                actions={{close: {
+                  action: close,
+                  id: 'modal-close',
+                  label: 'Close',
+                  type: 'button',
+                }}}
+                data={selected}
+                formUpdate={actions.formUpdate}
+                layout="Modal"
+                config={config}
+                onSubmit={(e, state) => {
+                  handleUpdate(e, state);
+                  close();
+                }}
+              />
+            </Modal>
+            <ListFilters 
+              config={config} />
+          </div>
           }
         </List>
 
