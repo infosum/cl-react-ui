@@ -3837,7 +3837,7 @@ exports.default = function (_a) {
         rows = _a.rows,
         search = _a.search,
         selected = _a.selected,
-        showModal = _a.showModal,
+        showAddModal = _a.showAddModal,
         toggleAll = _a.toggleAll,
         update = _a.update,
         user = _a.user;
@@ -3859,7 +3859,7 @@ exports.default = function (_a) {
     } else {
         list = React.createElement("div", null, React.createElement(react_bootstrap_1.Alert, { bsStyle: "info" }, msg));
     }
-    return React.createElement("div", null, React.createElement(react_bootstrap_1.Row, null, React.createElement(react_bootstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(react_bootstrap_1.Col, { md: 4 }, search)), list);
+    return React.createElement("div", null, React.createElement(react_bootstrap_1.Row, null, React.createElement(react_bootstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showAddModal: showAddModal, update: update })), React.createElement(react_bootstrap_1.Col, { md: 4 }, search)), list);
 };
 
 /***/ }),
@@ -4969,7 +4969,7 @@ exports.default = function (_a) {
         rows = _a.rows,
         search = _a.search,
         selected = _a.selected,
-        showModal = _a.showModal,
+        showAddModal = _a.showAddModal,
         toggleAll = _a.toggleAll,
         update = _a.update,
         user = _a.user;
@@ -4991,7 +4991,7 @@ exports.default = function (_a) {
     } else {
         list = React.createElement("div", null, React.createElement(reactstrap_1.Alert, { color: "info" }, msg));
     }
-    return React.createElement("div", null, React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(reactstrap_1.Col, { md: 4 }, search)), list);
+    return React.createElement("div", null, React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showAddModal: showAddModal, update: update })), React.createElement(reactstrap_1.Col, { md: 4 }, search)), list);
 };
 
 /***/ }),
@@ -5168,6 +5168,7 @@ var UiList = function (_super) {
         if (checkType && isButtonIsh) {
             return;
         }
+        this.selectRow(row);
         e.preventDefault();
         if (actions.setForm) {
             actions.setForm(config.view, row);
@@ -5185,12 +5186,17 @@ var UiList = function (_super) {
             e.preventDefault();
         }
         this.setState({ showModal: false });
+        this.clearSelected();
         var _a = this.props,
             actions = _a.actions,
             config = _a.config;
         if (actions.setModalState) {
             actions.setModalState(config.view, false);
         }
+    };
+    UiList.prototype.showAddModal = function () {
+        this.clearSelected();
+        this.showModal();
     };
     UiList.prototype.selectRow = function (row) {
         var actions = this.props.actions;
@@ -5200,6 +5206,9 @@ var UiList = function (_super) {
         if (actions.selectRow) {
             actions.selectRow(row);
         }
+    };
+    UiList.prototype.clearSelected = function () {
+        this.setState({ selected: [] });
     };
     UiList.prototype.getPrimaryKey = function () {
         var config = this.props.config;
@@ -5329,10 +5338,11 @@ var UiList = function (_super) {
             },
             close: this.close,
             handleUpdate: this.handleUpdate.bind(this),
+            selected: selected.length === 0 ? {} : selected[0],
             showModal: showModal
         };
-        return React.createElement("div", null, React.createElement(ListLayout, __assign({ data: data, listRow: function listRow(props) {
-                var rowSelected = _this.state.selected;
+        return React.createElement("div", null, React.createElement(ListLayout, __assign({ showAddModal: this.showAddModal.bind(this), data: data, listRow: function listRow(props) {
+                var rowSelected = selected;
                 var isSelected = _this.isSelected(props.row);
                 return React.createElement(ListRow_1.default, __assign({}, props, { Checkbox: Checkbox, canSelect: _this.props.canSelect, selected: isSelected, view: config.view, columns: _this.columns, rowClick: _this.rowClick.bind(_this), selectRow: _this.selectRow.bind(_this), deselectRow: _this.deselectRow.bind(_this) }));
             }, toggleAll: this.toggleAll.bind(this), showModal: this.showModal.bind(this), search: this.search(), selected: selected, rows: rows, update: this.updateRows.bind(this), msg: this.messages.emptyData }, this.props)), this.props.children(formModalProps));
@@ -5437,9 +5447,9 @@ var ListRow = function (_super) {
             var th = columns[columnName];
             var cell;
             if (th.render) {
-                cell = React.createElement(th.render, __assign({ column: columnName, row: row, config: th.config }, actions));
+                cell = React.createElement(th.render, __assign({ column: columnName, row: row, rowClick: _this.props.rowClick, config: th.config }, actions));
             } else {
-                cell = React.createElement(ListCell_1.default, __assign({ key: 'listcell-' + key, data: row[columnName] }, actions));
+                cell = React.createElement(ListCell_1.default, __assign({ key: 'listcell-' + key, rowClick: _this.props.rowClick, data: row[columnName] }, actions));
             }
             if (th.tip) {
                 cell = React.createElement(Tip_1.default, { config: th.tip, row: row }, cell);

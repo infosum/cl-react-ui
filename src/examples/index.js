@@ -29007,6 +29007,13 @@ var Demo = function (_Component) {
         add: function add(view, state) {
           _this2.setState({ data: data.concat(state) });
           console.log('save: would normally be connected to a redux action');
+        },
+        edit: function edit(view, state) {
+          var i = data.findIndex(function (d) {
+            return d.custom_id === state.custom_id;
+          });
+          data[i] = state;
+          console.log('save: would normally be connected to a redux action');
         }
       };
 
@@ -29040,6 +29047,7 @@ var Demo = function (_Component) {
           function (_ref) {
             var actions = _ref.actions,
                 handleUpdate = _ref.handleUpdate,
+                selected = _ref.selected,
                 showModal = _ref.showModal,
                 close = _ref.close;
             return _react2.default.createElement(
@@ -29052,7 +29060,7 @@ var Demo = function (_Component) {
                     label: 'Close',
                     type: 'button'
                   } },
-                data: {},
+                data: selected,
                 formUpdate: actions.formUpdate,
                 layout: 'Modal',
                 config: _config2.default,
@@ -52129,6 +52137,19 @@ exports.default = {
         id: 'heading-id',
         label: 'ID'
       },
+      edit: {
+        id: 'edit',
+        label: 'Edit',
+        render: function render(props) {
+          return _react2.default.createElement(
+            _reactstrap.Button,
+            { onClick: function onClick(e) {
+                props.rowClick(e, false, props.row);
+              } },
+            'Edit'
+          );
+        }
+      },
       label: {
         id: 'heading-name',
         label: 'Name'
@@ -52153,7 +52174,7 @@ exports.default = {
           return _react2.default.createElement(
             _reactstrap.Button,
             { onClick: function onClick() {
-                return props.showModal();
+                return props.showAddModal();
               } },
             'Add'
           );
@@ -52228,7 +52249,7 @@ exports.default = {
       custom_id: {
         id: 'activation-id',
         label: 'ID',
-        type: 'hidden',
+        type: 'text',
         value: ''
       },
       select: {
@@ -53327,6 +53348,25 @@ var Lookup = function (_super) {
             console.log(e);
         }
     };
+    Lookup.prototype.componentDidUpdate = function (prevProps) {
+        var _a = this.props,
+            name = _a.name,
+            onChange = _a.onChange,
+            row = _a.row,
+            field = _a.field;
+        var observe = field.options.observe;
+        var isObserved = function isObserved(value, index) {
+            return observe.indexOf(index) !== -1;
+        };
+        if (!observe || observe.length === 0) {
+            return;
+        }
+        if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
+            this.setState({ value: '' });
+            onChange(name, '');
+            this.get();
+        }
+    };
     Lookup.prototype.getStoreData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -53916,7 +53956,7 @@ exports.default = function (_a) {
         rows = _a.rows,
         search = _a.search,
         selected = _a.selected,
-        showModal = _a.showModal,
+        showAddModal = _a.showAddModal,
         toggleAll = _a.toggleAll,
         update = _a.update,
         user = _a.user;
@@ -53938,7 +53978,7 @@ exports.default = function (_a) {
     } else {
         list = React.createElement("div", null, React.createElement(react_bootstrap_1.Alert, { bsStyle: "info" }, msg));
     }
-    return React.createElement("div", null, React.createElement(react_bootstrap_1.Row, null, React.createElement(react_bootstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(react_bootstrap_1.Col, { md: 4 }, search)), list);
+    return React.createElement("div", null, React.createElement(react_bootstrap_1.Row, null, React.createElement(react_bootstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showAddModal: showAddModal, update: update })), React.createElement(react_bootstrap_1.Col, { md: 4 }, search)), list);
 };
 
 /***/ }),
@@ -54440,7 +54480,6 @@ var Lookup = function (_super) {
             return;
         }
         if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
-            debugger;
             this.setState({ value: '' });
             onChange(name, '');
             this.get();
@@ -55049,7 +55088,7 @@ exports.default = function (_a) {
         rows = _a.rows,
         search = _a.search,
         selected = _a.selected,
-        showModal = _a.showModal,
+        showAddModal = _a.showAddModal,
         toggleAll = _a.toggleAll,
         update = _a.update,
         user = _a.user;
@@ -55071,7 +55110,7 @@ exports.default = function (_a) {
     } else {
         list = React.createElement("div", null, React.createElement(reactstrap_1.Alert, { color: "info" }, msg));
     }
-    return React.createElement("div", null, React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showModal: showModal, update: update })), React.createElement(reactstrap_1.Col, { md: 4 }, search)), list);
+    return React.createElement("div", null, React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, { md: 8 }, React.createElement(ListActions_1.default, { rowClick: rowClick, user: user, selected: selected, actions: actions, config: config, showAddModal: showAddModal, update: update })), React.createElement(reactstrap_1.Col, { md: 4 }, search)), list);
 };
 
 /***/ }),
@@ -55248,6 +55287,7 @@ var UiList = function (_super) {
         if (checkType && isButtonIsh) {
             return;
         }
+        this.selectRow(row);
         e.preventDefault();
         if (actions.setForm) {
             actions.setForm(config.view, row);
@@ -55265,12 +55305,17 @@ var UiList = function (_super) {
             e.preventDefault();
         }
         this.setState({ showModal: false });
+        this.clearSelected();
         var _a = this.props,
             actions = _a.actions,
             config = _a.config;
         if (actions.setModalState) {
             actions.setModalState(config.view, false);
         }
+    };
+    UiList.prototype.showAddModal = function () {
+        this.clearSelected();
+        this.showModal();
     };
     UiList.prototype.selectRow = function (row) {
         var actions = this.props.actions;
@@ -55280,6 +55325,9 @@ var UiList = function (_super) {
         if (actions.selectRow) {
             actions.selectRow(row);
         }
+    };
+    UiList.prototype.clearSelected = function () {
+        this.setState({ selected: [] });
     };
     UiList.prototype.getPrimaryKey = function () {
         var config = this.props.config;
@@ -55409,10 +55457,11 @@ var UiList = function (_super) {
             },
             close: this.close,
             handleUpdate: this.handleUpdate.bind(this),
+            selected: selected.length === 0 ? {} : selected[0],
             showModal: showModal
         };
-        return React.createElement("div", null, React.createElement(ListLayout, __assign({ data: data, listRow: function listRow(props) {
-                var rowSelected = _this.state.selected;
+        return React.createElement("div", null, React.createElement(ListLayout, __assign({ showAddModal: this.showAddModal.bind(this), data: data, listRow: function listRow(props) {
+                var rowSelected = selected;
                 var isSelected = _this.isSelected(props.row);
                 return React.createElement(ListRow_1.default, __assign({}, props, { Checkbox: Checkbox, canSelect: _this.props.canSelect, selected: isSelected, view: config.view, columns: _this.columns, rowClick: _this.rowClick.bind(_this), selectRow: _this.selectRow.bind(_this), deselectRow: _this.deselectRow.bind(_this) }));
             }, toggleAll: this.toggleAll.bind(this), showModal: this.showModal.bind(this), search: this.search(), selected: selected, rows: rows, update: this.updateRows.bind(this), msg: this.messages.emptyData }, this.props)), this.props.children(formModalProps));
@@ -55517,9 +55566,9 @@ var ListRow = function (_super) {
             var th = columns[columnName];
             var cell;
             if (th.render) {
-                cell = React.createElement(th.render, __assign({ column: columnName, row: row, config: th.config }, actions));
+                cell = React.createElement(th.render, __assign({ column: columnName, row: row, rowClick: _this.props.rowClick, config: th.config }, actions));
             } else {
-                cell = React.createElement(ListCell_1.default, __assign({ key: 'listcell-' + key, data: row[columnName] }, actions));
+                cell = React.createElement(ListCell_1.default, __assign({ key: 'listcell-' + key, rowClick: _this.props.rowClick, data: row[columnName] }, actions));
             }
             if (th.tip) {
                 cell = React.createElement(Tip_1.default, { config: th.tip, row: row }, cell);

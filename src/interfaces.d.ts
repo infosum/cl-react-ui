@@ -224,7 +224,7 @@ interface IListActionsProps {
   selected: IListRow[];
   config: ICrudConfig;
   rowClick: (e: MouseEvent, clicked: boolean) => void;
-  showModal: () => void;
+  showAddModal: () => void;
   update: (selected: IListRow[], update: {[key: string]: string}) => void;
 }
 
@@ -306,6 +306,7 @@ interface IListRowProps {
   deselectRow: (row: IListRow) => void;
   onClick: any;
   row: IListRow;
+  rowClick: (row: IListRow) => void;
   selected: boolean;
   selectRow: (row: IListRow) => void;
   view: string;
