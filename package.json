@@ -82,14 +82,12 @@
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^3.5.0",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
-    "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.47.0",
     "istanbul": "^0.4.5",
@@ -135,5 +133,5 @@
     "testold": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'",
     "test": "nyc --exclude '**/*.spec.js' --reporter=lcov mocha --recursive  './src/**/*.spec.js' --compilers js:babel-core/register"
   },
-  "version": "1.3.0"
+  "version": "1.3.1"
 }
