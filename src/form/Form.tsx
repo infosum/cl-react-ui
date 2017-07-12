@@ -1,7 +1,7 @@
 /// <reference path="../interfaces.d.ts" />
 import * as deepEqual from 'deep-equal';
 import * as React from 'react';
-import {Component} from 'react';
+import { Component } from 'react';
 import uuid from 'uuid';
 import validate from 'validate-promise';
 import * as libs from '../libs';
@@ -28,7 +28,7 @@ interface IState {
  */
 class UiForm extends Component<IFormProps, IState> {
 
-  private fields: {[key: string]: IFieldConfig};
+  private fields: { [key: string]: IFieldConfig };
   private actions: IFormActionsConfig;
   private onSubmit: (e: MouseEvent, data: any) => void;
 
@@ -44,16 +44,13 @@ class UiForm extends Component<IFormProps, IState> {
    */
   constructor(props: IFormProps) {
     super(props);
-    const {config, library, onSubmit, visibility = {}} = this.props;
+    const { config, library, onSubmit } = this.props;
     this.fields = config.form.fields;
     const state = {};
 
     Object.keys(props.errors).forEach((key) => state[key] = 'error');
     Object.keys(this.fields).forEach((key) => {
       this.fields[key].pristine = true;
-      if (!visibility.hasOwnProperty(key)) {
-        visibility[key] = true;
-      }
     });
 
     const data = this.makeState(props.data);
@@ -61,9 +58,9 @@ class UiForm extends Component<IFormProps, IState> {
       data,
       errors: props.errors,
       form: config.form,
-      initialState: {...data},
+      initialState: { ...data },
       state,
-      visibility,
+      visibility: this.makeVisiblity(),
     };
     this.setLib(props);
     this.actions = config.form.actions;
@@ -78,9 +75,10 @@ class UiForm extends Component<IFormProps, IState> {
    * @param {Object} newProps Props
    */
   public componentWillReceiveProps(newProps: IFormProps) {
-    const {config, errors} = newProps;
+    const { config, errors } = newProps;
     this.fields = config.form.fields;
     const state = {};
+    const visibility = this.makeVisiblity();
     const newState: any = {};
     Object.keys(errors).forEach((key) => state[key] = 'error');
 
@@ -89,7 +87,21 @@ class UiForm extends Component<IFormProps, IState> {
       this.applyDataToForm(newState.data);
     }
     this.setLib(newProps);
-    this.setState({...newState, state, initialState: {...newState.data}, errors});
+    this.setState({ ...newState, state, initialState: { ...newState.data }, errors, visibility });
+  }
+
+  /**
+   * Make field visiblity state from props
+   * @return { Object } field visibility
+   */
+  private makeVisiblity() {
+    const { visibility = {} } = this.props;
+    Object.keys(this.fields).forEach((key) => {
+      if (!visibility.hasOwnProperty(key)) {
+        visibility[key] = true;
+      }
+    });
+    return visibility;
   }
 
   /**
@@ -97,7 +109,7 @@ class UiForm extends Component<IFormProps, IState> {
    * @param {Object} newProps props
    */
   private setLib(newProps) {
-    const {config, library} = newProps;
+    const { config, library } = newProps;
     const libType = config.lib || library || 'reactBootstrap';
     lib = libs[libType];
     fields = lib.fields;
@@ -123,8 +135,8 @@ class UiForm extends Component<IFormProps, IState> {
         state[name] = '';
       } else {
         state[name] = typeof def === 'function'
-        ? def(data, field)
-        : def;
+          ? def(data, field)
+          : def;
       }
     });
 
@@ -139,9 +151,9 @@ class UiForm extends Component<IFormProps, IState> {
   private applyDataToForm(row: IListRow) {
     let name;
     const form = this.state.form;
-    const {title} = this.props;
+    const { title } = this.props;
     if (title) {
-      this.state.form.title = typeof(title) === 'function' ? title(row) : title;
+      this.state.form.title = typeof (title) === 'function' ? title(row) : title;
     } else {
       if (typeof (form._title) === 'function') {
         this.state.form.title = form._title(row);
@@ -188,8 +200,8 @@ class UiForm extends Component<IFormProps, IState> {
    */
   private getValidationState(name: string): Object {
     const field = this.fields[name];
-    const {errors} = this.state;
-    const state = {...this.state.state};
+    const { errors } = this.state;
+    const state = { ...this.state.state };
     const i = 0;
     const value = this.state.data[name];
     const res = [];
@@ -198,28 +210,28 @@ class UiForm extends Component<IFormProps, IState> {
 
     if (!field.pristine) {
       this.validateOne(field, value, this.state.data)
-      .then((ok) => {
-        state[name] = 'success';
-        errors[name] = [];
-        this.setState({state, errors});
-      })
-      .catch((err: string) => {
-        errors[name] = [err];
-        state[name] = 'error';
-        this.setState({state, errors});
-      });
+        .then((ok) => {
+          state[name] = 'success';
+          errors[name] = [];
+          this.setState({ state, errors });
+        })
+        .catch((err: string) => {
+          errors[name] = [err];
+          state[name] = 'error';
+          this.setState({ state, errors });
+        });
     } else {
-       if (serverError) {
-         state[name] = [serverError];
-         state[name] = 'error';
+      if (serverError) {
+        state[name] = [serverError];
+        state[name] = 'error';
       }
-       if (serverSuccess) {
+      if (serverSuccess) {
         state[name] = [];
         state[name] = 'success';
       }
     }
 
-    this.setState({state, errors});
+    this.setState({ state, errors });
     return state;
   }
 
@@ -250,7 +262,7 @@ class UiForm extends Component<IFormProps, IState> {
    * @param {String|number} value Field value
    */
   private handleChange(name: string, value: string | number) {
-    const {formUpdate, config} = this.props;
+    const { formUpdate, config } = this.props;
     const field = this.fields[name];
     this.fields[name].pristine = false;
     if (typeof formUpdate === 'function') {
@@ -258,7 +270,7 @@ class UiForm extends Component<IFormProps, IState> {
     }
     const data = this.state.data;
     data[name] = value;
-    this.setState({data});
+    this.setState({ data });
 
     // Trigger any on change specified in config file.
     if (field.onChange) {
@@ -271,7 +283,7 @@ class UiForm extends Component<IFormProps, IState> {
    * @return {Dom} Dom node
    */
   private formLayout() {
-    const {layout} = this.props;
+    const { layout } = this.props;
     if (typeof layout === 'function') {
       return layout;
     }
@@ -299,17 +311,17 @@ class UiForm extends Component<IFormProps, IState> {
       FieldComponent = field;
     } else {
       switch (typeof field.type) {
-      case 'string':
-        // Ucase first the name
-        type = field.type && field.type[0].toUpperCase()
-          + field.type.slice(1);
-        if (fields[type]) {
-           FieldComponent = fields[type];
-        }
-        break;
-      case 'function':
-        FieldComponent = field.type;
-        break;
+        case 'string':
+          // Ucase first the name
+          type = field.type && field.type[0].toUpperCase()
+            + field.type.slice(1);
+          if (fields[type]) {
+            FieldComponent = fields[type];
+          }
+          break;
+        case 'function':
+          FieldComponent = field.type;
+          break;
       }
     }
 
@@ -321,8 +333,8 @@ class UiForm extends Component<IFormProps, IState> {
    * @param {Object} field Field
    * @return {Node} FormGroup - field, help and label
    */
-private makeField(name: string, field: IFieldConfig): JSX.Element | null {
-    const {errors} = this.state;
+  private makeField(name: string, field: IFieldConfig): JSX.Element | null {
+    const { errors } = this.state;
     const error = errors[name] || [];
     const FormGroup = lib.FormGroup;
     const FieldComponent = this.getReactField(field);
@@ -339,7 +351,7 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
       onBlur={this.handleBlur}
       onChange={(fieldName, value) => this.handleChange(fieldName, value)}
       value={this.state.data[name] || field.value || ''}
-      validationState = {this.state.state[name]} />;
+      validationState={this.state.state[name]} />;
   }
 
   /**
@@ -348,12 +360,12 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
    */
   private toContract(): any[] {
     return Object.keys(this.fields)
-    .filter((name) => this.fields[name].validate !== undefined)
-    .map((name) => {
-      const field = this.fields[name].validate;
-      field.key = name;
-      return field;
-    });
+      .filter((name) => this.fields[name].validate !== undefined)
+      .map((name) => {
+        const field = this.fields[name].validate;
+        field.key = name;
+        return field;
+      });
   }
 
   /**
@@ -364,7 +376,7 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
   private failFormSubmission(errors) {
     const state = {};
     Object.keys(errors).forEach((name) => state[name] = 'error');
-    this.setState({state, errors});
+    this.setState({ state, errors });
   }
 
   private isVisible(name) {
@@ -374,13 +386,13 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
   private showField(name: string) {
     const visibility = this.state.visibility;
     visibility[name] = true;
-    this.setState({visibility});
+    this.setState({ visibility });
   }
 
   private hideField(name: string) {
     const visibility = this.state.visibility;
     visibility[name] = false;
-    this.setState({visibility});
+    this.setState({ visibility });
   }
 
   /**
@@ -388,7 +400,7 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
    * back to pristine
    */
   private reset() {
-    const data = {...this.state.initialState};
+    const data = { ...this.state.initialState };
     this.setState({
       data,
     });
@@ -403,21 +415,21 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
    * @return {Node} Dom node
    */
   public render(): JSX.Element {
-    const {errors} = this.props;
+    const { errors } = this.props;
     const FormActions = lib.FormActions;
     const buttons = <FormActions
-                  actions={this.actions}
-                  form={this}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    validate(this.toContract(), this.state.data)
-                    .then(() => {
-                      this.onSubmit(e, this.state.data);
-                      this.reset();
-                    })
-                    .catch(this.failFormSubmission.bind(this));
-                    }
-                  }/>;
+      actions={this.actions}
+      form={this}
+      onSubmit={(e) => {
+        e.preventDefault();
+        validate(this.toContract(), this.state.data)
+          .then(() => {
+            this.onSubmit(e, this.state.data);
+            this.reset();
+          })
+          .catch(this.failFormSubmission.bind(this));
+      }
+      } />;
     const FormLayout = this.formLayout();
 
     const madeFields = {};
@@ -431,14 +443,14 @@ private makeField(name: string, field: IFieldConfig): JSX.Element | null {
         if (madeField !== null) {
           madeFields[name] = madeField;
         }
-    });
+      });
 
-    return( <FormLayout
-              actions={buttons}
-              errors={errors}
-              fields={madeFields}
-              form={this.state.form}
-              onSubmit = {this.onSubmit} /> );
+    return (<FormLayout
+      actions={buttons}
+      errors={errors}
+      fields={madeFields}
+      form={this.state.form}
+      onSubmit={this.onSubmit} />);
   }
 }
 
