@@ -46,20 +46,20 @@ class UiForm extends Component<IFormProps, IState> {
     super(props);
     const { config, library, onSubmit } = this.props;
     this.fields = config.form.fields;
-    const state = {};
+    const formState = {};
 
-    Object.keys(props.errors).forEach((key) => state[key] = 'error');
+    Object.keys(props.errors).forEach((key) => formState[key] = 'error');
     Object.keys(this.fields).forEach((key) => {
       this.fields[key].pristine = true;
     });
 
     const data = this.makeState(props.data);
-    this.state = {
+    const state = {
       data,
       errors: props.errors,
       form: config.form,
       initialState: { ...data },
-      state,
+      state: formState,
       visibility: this.makeVisiblity(),
     };
     this.setLib(props);
@@ -67,7 +67,8 @@ class UiForm extends Component<IFormProps, IState> {
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.onSubmit = onSubmit.bind(this);
-    this.applyDataToForm(this.state.data);
+    state.form = this.createFormData(state.form, state.data);
+    this.state = state;
   }
 
   /**
@@ -81,13 +82,13 @@ class UiForm extends Component<IFormProps, IState> {
     const visibility = this.makeVisiblity();
     const newState: any = {};
     Object.keys(errors).forEach((key) => state[key] = 'error');
-
+    let { form } = this.state;
     if (!deepEqual(this.props.data, newProps.data)) {
       newState.data = this.makeState(newProps.data);
-      this.applyDataToForm(newState.data);
+      form = this.createFormData(form, newState.data);
     }
     this.setLib(newProps);
-    this.setState({ ...newState, state, initialState: { ...newState.data }, errors, visibility });
+    this.setState({ ...newState, state, initialState: { ...newState.data }, errors, form, visibility });
   }
 
   /**
@@ -147,24 +148,26 @@ class UiForm extends Component<IFormProps, IState> {
    * Update the form's properties so that any config value that is a function is
    * run and the current record's data applied.
    * @param {Object} row Form state
+   * @return {Object} New form state
    */
-  private applyDataToForm(row: IListRow) {
+  private createFormData(form, row: IListRow) {
     let name;
-    const form = this.state.form;
     const { title } = this.props;
     if (title) {
-      this.state.form.title = typeof (title) === 'function' ? title(row) : title;
+      form.title = typeof (title) === 'function' ? title(row) : title;
     } else {
+      // Deprecated just use 'title'
       if (typeof (form._title) === 'function') {
-        this.state.form.title = form._title(row);
+        form.title = form._title(row);
       }
     }
 
     for (name in form.actions) {
       if (typeof (form.actions[name]._label) === 'function') {
-        this.state.form.actions[name].label = form.actions[name]._label(row);
+        form.actions[name].label = form.actions[name]._label(row);
       }
     }
+    return form;
   }
 
   /**
@@ -420,7 +423,9 @@ class UiForm extends Component<IFormProps, IState> {
     Object.keys(this.fields).forEach((key) => {
       this.fields[key].pristine = true;
     });
-    this.applyDataToForm(data);
+    this.setState({
+      form: this.createFormData(this.state.form, data),
+    });
   }
 
   /**

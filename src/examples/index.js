@@ -52588,35 +52588,31 @@ var UiForm = function (_super) {
         var _a = _this.props,
             config = _a.config,
             library = _a.library,
-            onSubmit = _a.onSubmit,
-            _b = _a.visibility,
-            visibility = _b === void 0 ? {} : _b;
+            onSubmit = _a.onSubmit;
         _this.fields = config.form.fields;
-        var state = {};
+        var formState = {};
         Object.keys(props.errors).forEach(function (key) {
-            return state[key] = 'error';
+            return formState[key] = 'error';
         });
         Object.keys(_this.fields).forEach(function (key) {
             _this.fields[key].pristine = true;
-            if (!visibility.hasOwnProperty(key)) {
-                visibility[key] = true;
-            }
         });
         var data = _this.makeState(props.data);
-        _this.state = {
+        var state = {
             data: data,
             errors: props.errors,
             form: config.form,
             initialState: __assign({}, data),
-            state: state,
-            visibility: visibility
+            state: formState,
+            visibility: _this.makeVisiblity()
         };
         _this.setLib(props);
         _this.actions = config.form.actions;
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleBlur = _this.handleBlur.bind(_this);
         _this.onSubmit = onSubmit.bind(_this);
-        _this.applyDataToForm(_this.state.data);
+        state.form = _this.createFormData(state.form, state.data);
+        _this.state = state;
         return _this;
     }
     UiForm.prototype.componentWillReceiveProps = function (newProps) {
@@ -52624,16 +52620,28 @@ var UiForm = function (_super) {
             errors = newProps.errors;
         this.fields = config.form.fields;
         var state = {};
+        var visibility = this.makeVisiblity();
         var newState = {};
         Object.keys(errors).forEach(function (key) {
             return state[key] = 'error';
         });
+        var form = this.state.form;
         if (!deepEqual(this.props.data, newProps.data)) {
             newState.data = this.makeState(newProps.data);
-            this.applyDataToForm(newState.data);
+            form = this.createFormData(form, newState.data);
         }
         this.setLib(newProps);
-        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors }));
+        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
+    };
+    UiForm.prototype.makeVisiblity = function () {
+        var _a = this.props.visibility,
+            visibility = _a === void 0 ? {} : _a;
+        Object.keys(this.fields).forEach(function (key) {
+            if (!visibility.hasOwnProperty(key)) {
+                visibility[key] = true;
+            }
+        });
+        return visibility;
     };
     UiForm.prototype.setLib = function (newProps) {
         var config = newProps.config,
@@ -52661,22 +52669,22 @@ var UiForm = function (_super) {
         });
         return state;
     };
-    UiForm.prototype.applyDataToForm = function (row) {
+    UiForm.prototype.createFormData = function (form, row) {
         var name;
-        var form = this.state.form;
         var title = this.props.title;
         if (title) {
-            this.state.form.title = typeof title === 'function' ? title(row) : title;
+            form.title = typeof title === 'function' ? title(row) : title;
         } else {
             if (typeof form._title === 'function') {
-                this.state.form.title = form._title(row);
+                form.title = form._title(row);
             }
         }
         for (name in form.actions) {
             if (typeof form.actions[name]._label === 'function') {
-                this.state.form.actions[name].label = form.actions[name]._label(row);
+                form.actions[name].label = form.actions[name]._label(row);
             }
         }
+        return form;
     };
     UiForm.prototype.validateOne = function (field, value, data) {
         if (data === void 0) {
@@ -52842,7 +52850,9 @@ var UiForm = function (_super) {
         Object.keys(this.fields).forEach(function (key) {
             _this.fields[key].pristine = true;
         });
-        this.applyDataToForm(data);
+        this.setState({
+            form: this.createFormData(this.state.form, data)
+        });
     };
     UiForm.prototype.render = function () {
         var _this = this;
