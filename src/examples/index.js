@@ -52615,9 +52615,11 @@ var UiForm = function (_super) {
         _this.state = state;
         return _this;
     }
-    UiForm.prototype.componentWillReceiveProps = function (newProps) {
-        var config = newProps.config,
-            errors = newProps.errors;
+    UiForm.prototype.componentDidUpdate = function (prevProps) {
+        var _a = this.props,
+            config = _a.config,
+            data = _a.data,
+            errors = _a.errors;
         this.fields = config.form.fields;
         var state = {};
         var visibility = this.makeVisiblity();
@@ -52626,11 +52628,11 @@ var UiForm = function (_super) {
             return state[key] = 'error';
         });
         var form = this.state.form;
-        if (!deepEqual(this.props.data, newProps.data)) {
-            newState.data = this.makeState(newProps.data);
-            form = this.createFormData(form, newState.data);
+        if (!deepEqual(data, prevProps.data)) {
+            newState.data = this.makeState(data);
+            form = this.createFormData(form, data);
         }
-        this.setLib(newProps);
+        this.setLib(this.props);
         this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
     };
     UiForm.prototype.makeVisiblity = function () {

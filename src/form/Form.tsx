@@ -72,22 +72,22 @@ class UiForm extends Component<IFormProps, IState> {
   }
 
   /**
-   * Will receive new props
-   * @param {Object} newProps Props
+   * Will receive new props componentDidUpdate
+   * @param {Object} prevProps Props
    */
-  public componentWillReceiveProps(newProps: IFormProps) {
-    const { config, errors } = newProps;
+  public componentDidUpdate(prevProps: IFormProps) {
+    const { config, data, errors } = this.props;
     this.fields = config.form.fields;
     const state = {};
     const visibility = this.makeVisiblity();
     const newState: any = {};
     Object.keys(errors).forEach((key) => state[key] = 'error');
     let { form } = this.state;
-    if (!deepEqual(this.props.data, newProps.data)) {
-      newState.data = this.makeState(newProps.data);
-      form = this.createFormData(form, newState.data);
+    if (!deepEqual(data, prevProps.data)) {
+      newState.data = this.makeState(data);
+      form = this.createFormData(form, data);
     }
-    this.setLib(newProps);
+    this.setLib(this.props);
     this.setState({ ...newState, state, initialState: { ...newState.data }, errors, form, visibility });
   }
 
