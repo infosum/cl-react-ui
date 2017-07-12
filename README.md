@@ -108,11 +108,13 @@ render() {
     {id: '2', name: 'two'}
   ];
 
+// Hooks into various list events, this is a good place to bind your redux actions
   const listActions = {
     add: (view, state) => {
       this.props.save(state);
     },
-    selectRow: () => null,
+    setForm: (view, row) => null, // A row is selected for editing
+    selectRow: () => null, // A Row is selected
   }
   
   return <List 
