@@ -59,6 +59,7 @@ const config = {
   layout={layout}
   errors={errors}
   title="override title (can be a function or string)"
+  visibility={{age: false}} // Hide the age field
   onSubmit={(e: Event, data: Object) => {
 
   }} />

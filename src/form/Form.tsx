@@ -379,16 +379,29 @@ class UiForm extends Component<IFormProps, IState> {
     this.setState({ state, errors });
   }
 
-  private isVisible(name) {
+  /**
+   * Is a field visible
+   * @param {string} name Field key
+   * @return {boolean}
+   */
+  private isVisible(name: string) {
     return this.state.visibility[name];
   }
 
+  /**
+   * Show a field
+   * @param {string} name Field key
+   */
   private showField(name: string) {
     const visibility = this.state.visibility;
     visibility[name] = true;
     this.setState({ visibility });
   }
 
+  /**
+   * Hide a field
+   * @param {string} name Field key
+   */
   private hideField(name: string) {
     const visibility = this.state.visibility;
     visibility[name] = false;
