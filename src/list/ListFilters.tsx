@@ -1,6 +1,6 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
+import { Component } from 'react';
 import * as filters from '../libs/reactstrap/list/filters';
 
 class ListFilters extends Component<IListFilterProps, any> {
@@ -9,7 +9,7 @@ class ListFilters extends Component<IListFilterProps, any> {
         console.log('on Blur', name, value);
     }
     public render() {
-        const {config} = this.props;
+        const { config } = this.props;
         console.log('filters', filters);
         if (!config.list.filters) {
             return;
@@ -28,7 +28,7 @@ class ListFilters extends Component<IListFilterProps, any> {
                         field={field}
                         value=""
                         name={name}
-                        onBlur={this.onBlur.bind(this)}/>;
+                        onBlur={this.onBlur.bind(this)} />;
                 })
             }
         </div>;

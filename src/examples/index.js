@@ -52349,7 +52349,6 @@ exports.default = {
 
       claimed: {
         id: 'claimed',
-
         label: 'Claimed',
         type: 'checkbox',
         value: false,
@@ -52616,24 +52615,24 @@ var UiForm = function (_super) {
         return _this;
     }
     UiForm.prototype.componentDidUpdate = function (prevProps) {
-        var _a = this.props,
-            config = _a.config,
-            data = _a.data,
-            errors = _a.errors;
-        this.fields = config.form.fields;
-        var state = {};
-        var visibility = this.makeVisiblity();
-        var newState = {};
-        Object.keys(errors).forEach(function (key) {
-            return state[key] = 'error';
-        });
-        var form = this.state.form;
-        if (!deepEqual(data, prevProps.data)) {
+        if (!deepEqual(this.props, prevProps)) {
+            var _a = this.props,
+                config = _a.config,
+                data = _a.data,
+                errors = _a.errors;
+            this.fields = config.form.fields;
+            var state_1 = {};
+            var visibility = this.makeVisiblity();
+            var newState = {};
+            Object.keys(errors).forEach(function (key) {
+                return state_1[key] = 'error';
+            });
+            var form = this.state.form;
             newState.data = this.makeState(data);
             form = this.createFormData(form, data);
+            this.setLib(this.props);
+            this.setState(__assign({}, newState, { state: state_1, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
         }
-        this.setLib(this.props);
-        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
     };
     UiForm.prototype.makeVisiblity = function () {
         var _a = this.props.visibility,
@@ -54208,6 +54207,9 @@ exports.default = function (props) {
     if (color === 'error') {
         color = 'danger';
     }
+    if (field.pristine) {
+        color = '';
+    }
     return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, row: row, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
         return React.createElement(reactstrap_1.FormFeedback, { key: 'help-' + name + '-' + i }, error);
     }));
@@ -55760,7 +55762,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../interfaces.d.ts" />
+var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../index.d.ts" />
 
 
 var Modal = function Modal(_ref) {

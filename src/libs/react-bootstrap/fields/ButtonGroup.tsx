@@ -1,7 +1,7 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
-import {Button, ButtonGroup} from 'react-bootstrap';
+import { Component } from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 interface IState {
   value: string;
@@ -11,7 +11,7 @@ export default class UiButtonGroup extends Component<FieldButtonGroup, IState> {
 
   constructor(props: FieldButtonGroup) {
     super(props);
-    this.state = {value: ''};
+    this.state = { value: '' };
   }
 
   /**
@@ -20,12 +20,12 @@ export default class UiButtonGroup extends Component<FieldButtonGroup, IState> {
    * @return {Array} Nodes (buttons)
    */
   private buttons(field): JSX.Element[] {
-    const {value, name} = this.props;
+    const { value, name } = this.props;
     return field.options.map((option: IFieldOption, k: number) => {
       const fakeE = {
-          altKey: false,
-          target: {value: option.value},
-        };
+        altKey: false,
+        target: { value: option.value },
+      };
       const key = 'button-group-' + name + '-' + k;
       const active = value === option.value;
       let icon;
@@ -47,9 +47,9 @@ export default class UiButtonGroup extends Component<FieldButtonGroup, IState> {
    * @param {Event} e .
    */
   private handleChange(e: MouseEvent) {
-    const {onChange, name} = this.props;
+    const { onChange, name } = this.props;
     const target = e.target as HTMLInputElement;
-    this.setState({value: target.value});
+    this.setState({ value: target.value });
     onChange(name, target.value);
   }
 
@@ -58,7 +58,7 @@ export default class UiButtonGroup extends Component<FieldButtonGroup, IState> {
    * @return {Node} Dom
    */
   public render(): JSX.Element {
-    const {field} = this.props;
+    const { field } = this.props;
 
     return (<div className="form-group has-feedback">
       <ButtonGroup>

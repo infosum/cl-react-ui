@@ -1,13 +1,13 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../index.d.ts" />
 import * as React from 'react';
-import {Button} from 'react-bootstrap';
-export default ({className, style, handle, label, type = 'button'}) => {
+import { Button } from 'react-bootstrap';
+export default ({ className, style, handle, label, type = 'button' }) => {
 
-  return <Button type={button}
-          bsStyle={style}
-          className={className}
-          onClick={handle}
-          type={type}>
-            {label}
-        </Button>;
+  return <Button type="button"
+    bsStyle={style}
+    className={className}
+    onClick={handle}
+  >
+    {label}
+  </Button>;
 };

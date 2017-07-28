@@ -1,4 +1,4 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import { Component } from 'react';
@@ -76,24 +76,24 @@ class UiForm extends Component<IFormProps, IState> {
    * @param {Object} prevProps Props
    */
   public componentDidUpdate(prevProps: IFormProps) {
-    const { config, data, errors } = this.props;
-    this.fields = config.form.fields;
-    const state = {};
-    const visibility = this.makeVisiblity();
-    const newState: any = {};
-    Object.keys(errors).forEach((key) => state[key] = 'error');
-    let { form } = this.state;
-    if (!deepEqual(data, prevProps.data)) {
+    if (!deepEqual(this.props, prevProps)) {
+      const { config, data, errors } = this.props;
+      this.fields = config.form.fields;
+      const state = {};
+      const visibility = this.makeVisiblity();
+      const newState: any = {};
+      Object.keys(errors).forEach((key) => state[key] = 'error');
+      let { form } = this.state;
       newState.data = this.makeState(data);
       form = this.createFormData(form, data);
+      this.setLib(this.props);
+      this.setState({ ...newState, state, initialState: { ...newState.data }, errors, form, visibility });
     }
-    this.setLib(this.props);
-    this.setState({ ...newState, state, initialState: { ...newState.data }, errors, form, visibility });
   }
 
   /**
    * Make field visiblity state from props
-   * @return { Object } field visibility
+   * @return {Object} field visibility
    */
   private makeVisiblity() {
     const { visibility = {} } = this.props;

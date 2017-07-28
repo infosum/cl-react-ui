@@ -1,8 +1,8 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
-import {Input} from 'reactstrap';
-import {Icon} from '../../../index';
+import { Component } from 'react';
+import { Input } from 'reactstrap';
+import { Icon } from '../../../index';
 
 interface IState {
   loading: boolean;
@@ -16,7 +16,7 @@ class Lookup extends Component<FieldLookup, IState> {
 
   constructor(props: FieldLookup) {
     super(props);
-    this.state = {loading: true, search: '', value: ''};
+    this.state = { loading: true, search: '', value: '' };
     this.get();
   }
 
@@ -25,10 +25,10 @@ class Lookup extends Component<FieldLookup, IState> {
    * @return {Array} option objects
    */
   private get() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       this.getStoreData().then((storeData) => {
-        this.setState({storeData, loading: false});
+        this.setState({ storeData, loading: false });
       });
     } catch (e) {
       console.log(e);
@@ -40,14 +40,14 @@ class Lookup extends Component<FieldLookup, IState> {
    * @param {Object} prevProps Previous props
    */
   public componentDidUpdate(prevProps) {
-    const {name, onChange, row, field} = this.props;
+    const { name, onChange, row, field } = this.props;
     const observe = field.options.observe;
     const isObserved = (value, index) => observe.indexOf(index) !== -1;
     if (!observe || observe.length === 0) {
       return;
     }
     if (JSON.stringify(prevProps.row.filter(isObserved)) !== JSON.stringify(row.filter(isObserved))) {
-      this.setState({value: ''});
+      this.setState({ value: '' });
       onChange(name, '');
       this.get();
     }
@@ -60,7 +60,7 @@ class Lookup extends Component<FieldLookup, IState> {
   private async getStoreData(): Promise<any> {
     let group;
     this.groupedData = {};
-    const {field, row} = this.props;
+    const { field, row } = this.props;
     if (field.options.optGroup === undefined) {
       group = '';
     } else {
@@ -84,13 +84,13 @@ class Lookup extends Component<FieldLookup, IState> {
    * @return {Array.Node} Dom nodes
    */
   private mapDataToOpts(storeData: Object): JSX.Element[] {
-    const {field} = this.props;
+    const { field } = this.props;
     const key = field.options.key;
     const label = field.options.label;
     let optionFilter;
     const ok = (row) => true;
     const allOpts = [<option key="lookup-option-sel" value="">
-        Please select
+      Please select
       </option>];
 
     if (field.options.optionFitler === undefined) {
@@ -101,24 +101,24 @@ class Lookup extends Component<FieldLookup, IState> {
 
     Object.keys(storeData).forEach((optGroup: string) => {
       const opts = storeData[optGroup]
-      .filter((option) => optionFilter(option))
-      .map((option: IFieldOption, k: number) => {
-        const ref = 'lookup-option-' + k;
-        const thisLabel = typeof label === 'function'
-          ? label(option)
-          : option[label];
-        return <option key={ref} value={option[key]}>
-          {thisLabel}
-        </option>;
-      });
+        .filter((option) => optionFilter(option))
+        .map((option: IFieldOption, k: number) => {
+          const ref = 'lookup-option-' + k;
+          const thisLabel = typeof label === 'function'
+            ? label(option)
+            : option[label];
+          return <option key={ref} value={option[key]}>
+            {thisLabel}
+          </option>;
+        });
 
       if (optGroup === 'undefined') {
         allOpts.push(opts);
       } else {
         allOpts.push(<optgroup key={'lookup-optgroup-' + optGroup}
           label={optGroup}>
-            {opts}
-          </optgroup>);
+          {opts}
+        </optgroup>);
       }
     });
 
@@ -130,9 +130,9 @@ class Lookup extends Component<FieldLookup, IState> {
    * @param {Event} e .
    */
   private handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const {onChange, name} = this.props;
+    const { onChange, name } = this.props;
     const target = e.target as HTMLInputElement;
-    this.setState({value: target.value});
+    this.setState({ value: target.value });
     onChange(name, target.value);
   }
 
@@ -142,20 +142,20 @@ class Lookup extends Component<FieldLookup, IState> {
    */
   public render() {
     if (this.state.loading) {
-      return <Icon icon="spinner" spin label="loading..."/>;
+      return <Icon icon="spinner" spin label="loading..." />;
     }
 
     const opts = this.mapDataToOpts(this.state.storeData);
-    const {value, onBlur, name} = this.props;
+    const { value, onBlur, name } = this.props;
 
     return (<Input type="select"
-        value={value}
-        onBlur={() => onBlur(name)}
-        onChange={(e) => {
-          this.handleChange(e);
-        }}>
-        {opts}
-      </Input>);
+      value={value}
+      onBlur={() => onBlur(name)}
+      onChange={(e) => {
+        this.handleChange(e);
+      }}>
+      {opts}
+    </Input>);
   }
 }
 

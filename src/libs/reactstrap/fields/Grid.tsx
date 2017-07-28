@@ -1,9 +1,9 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../../index.d.ts" />
 import * as deepEqual from 'deep-equal';
 import * as React from 'react';
-import {Component} from 'react';
-import {Button, Input, Table} from 'reactstrap';
-import {Icon} from '../../../index';
+import { Component } from 'react';
+import { Button, Input, Table } from 'reactstrap';
+import { Icon } from '../../../index';
 
 interface IState {
   rows: any[];
@@ -16,8 +16,8 @@ class Grid extends Component<FieldGrid, IState> {
   public static defaultProps: Partial<FieldGrid> = {
     field: {
       columns: [
-        {label: 'Min', type: 'text'},
-        {label: 'Max', type: 'text'},
+        { label: 'Min', type: 'text' },
+        { label: 'Max', type: 'text' },
       ],
       default: '',
       id: '',
@@ -70,11 +70,11 @@ class Grid extends Component<FieldGrid, IState> {
    * Add a row
    */
   private add() {
-    const {field, name, onChange} = this.props;
+    const { field, name, onChange } = this.props;
     const rows = [...this.state.rows];
     const nextRange = Array(field.columns.length).fill('');
     rows.push(nextRange);
-    this.setState({rows});
+    this.setState({ rows });
     onChange(name, rows);
   }
 
@@ -83,10 +83,10 @@ class Grid extends Component<FieldGrid, IState> {
    * @param {Number} index Array index to remove
    */
   private remove(index: number) {
-    const {name, onChange} = this.props;
+    const { name, onChange } = this.props;
     const rows = [...this.state.rows]
       .filter((v, i) => i !== index);
-    this.setState({rows});
+    this.setState({ rows });
     onChange(name, rows);
   }
 
@@ -97,10 +97,10 @@ class Grid extends Component<FieldGrid, IState> {
    * @param {String} value Value
    */
   private handleChange(rowIndex: number, colIndex: number, value: string) {
-    const {onChange, name} = this.props;
+    const { onChange, name } = this.props;
     const rows = [...this.state.rows];
     rows[rowIndex][colIndex] = value;
-    this.setState({rows});
+    this.setState({ rows });
     onChange(name, rows);
   }
 
@@ -109,8 +109,8 @@ class Grid extends Component<FieldGrid, IState> {
    * @return {Node[]} Dom nodes
    */
   private fields(): JSX.Element[] {
-    const {rows} = this.state;
-    const {field} = this.props;
+    const { rows } = this.state;
+    const { field } = this.props;
 
     return rows.map((row: any, rowIndex: number) => <tr key={rowIndex}>
       {
@@ -129,7 +129,7 @@ class Grid extends Component<FieldGrid, IState> {
               }}
               row={[...row]}
               rowIndex={rowIndex} />
-        </td>;
+          </td>;
         })
       }
 
@@ -146,7 +146,7 @@ class Grid extends Component<FieldGrid, IState> {
    * @return {Node} Dom
    */
   public render(): JSX.Element {
-    const {field} = this.props;
+    const { field } = this.props;
     return (<Table>
       <thead>
         <tr>
@@ -155,10 +155,10 @@ class Grid extends Component<FieldGrid, IState> {
           }
           <th>
             <Button color="link" onClick={(e) => {
-                e.preventDefault();
-                this.add();
-              }}>
-              <Icon icon="plus" label="Add"/>
+              e.preventDefault();
+              this.add();
+            }}>
+              <Icon icon="plus" label="Add" />
             </Button>
           </th>
         </tr>

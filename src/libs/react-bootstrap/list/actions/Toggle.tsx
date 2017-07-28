@@ -1,15 +1,15 @@
-/// <reference path="../../../../interfaces.d.ts" />
+/// <reference path="../../../../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import { Component } from 'react';
+import { Button } from 'react-bootstrap';
 
 interface IProps {
-  update: (userSelected: IListRow[], update: {[key: string]: any}) => void;
+  update: (userSelected: IListRow[], update: { [key: string]: any }) => void;
   selected: IListRow[];
   config: {
     icon?: string;
     label?: string;
-    update: {[key: string]: any}
+    update: { [key: string]: any }
   };
   user: IUser;
   isVisible: boolean;
@@ -36,7 +36,7 @@ export default class Toggle extends Component<IProps, {}> {
    */
   private handleClick(e: Event) {
     e.preventDefault();
-    const {update, selected, config, user, filter} = this.props;
+    const { update, selected, config, user, filter } = this.props;
     const selectedByUser = filter(user, selected);
 
     this.setState(config.update);
@@ -48,12 +48,12 @@ export default class Toggle extends Component<IProps, {}> {
    * @return {Dom} node
    */
   public render(): JSX.Element | null {
-    const {isVisible, config} = this.props;
+    const { isVisible, config } = this.props;
     if (!isVisible) {
       return null;
     }
     return (<Button onClick={(e) => this.handleClick(e)} >
-        <i className={config.icon}></i> {config.label}
-      </Button>);
+      <i className={config.icon}></i> {config.label}
+    </Button>);
   }
 }

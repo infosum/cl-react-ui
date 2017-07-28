@@ -1,12 +1,12 @@
-/// <reference path="../../interfaces.d.ts" />
+/// <reference path="../../index.d.ts" />
 import * as React from 'react';
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 
-export default ({actions, onSubmit, form}) => {
+export default ({ actions, onSubmit, form }) => {
 
   const buttons = Object.keys(actions)
     .map((k: string, index: number) => {
-      const {action, id, style, type, label} = actions[k];
+      const { action, id, style, type, label } = actions[k];
       let evnt;
       let handle;
 
@@ -24,7 +24,7 @@ export default ({actions, onSubmit, form}) => {
         color={style}
         onClick={handle}
         type={type ? type : 'button'}>
-          {label}
+        {label}
       </Button>);
     });
 

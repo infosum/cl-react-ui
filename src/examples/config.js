@@ -1,10 +1,10 @@
 import React from 'react';
-import {Button} from 'reactstrap';
-import {fields} from '../index';
-import {validations} from '../index';
-import {List, listActions} from '../index';
+import { Button } from 'reactstrap';
+import { fields } from '../index';
+import { validations } from '../index';
+import { List, listActions } from '../index';
 
-const Claim = ({selected}) => {
+const Claim = ({ selected }) => {
   return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
 };
 
@@ -12,7 +12,7 @@ export default {
   view: 'example',
   lib: 'reactstrap',
   primary_key: 'custom_id',
-  
+
   list: {
     columns: {
       custom_id: {
@@ -61,7 +61,7 @@ export default {
         claim: {
           id: 'list-action-claim',
           visible: () => true,
-          render: (props) => <Claim {...props}/>
+          render: (props) => <Claim {...props} />
         },
         describe: {
           id: 'list-action-describe',
@@ -73,7 +73,7 @@ export default {
           visible: () => true,
           render: listActions.reactstrap.Toggle,
           config: {
-            update: {admin: false},
+            update: { admin: false },
             label: 'User',
             icon: 'fa fa-user'
           },
@@ -121,8 +121,8 @@ export default {
         label: 'select',
         type: 'select',
         options: [
-          {value: '1', label: 'one'},
-          {value: '2', label: 'two'}
+          { value: '1', label: 'one' },
+          { value: '2', label: 'two' }
         ]
       },
       label: {
@@ -140,7 +140,6 @@ export default {
       },
       customer: {
         id: 'customer',
-
         label: 'Customer',
         type: 'lookup',
         value: 2,
@@ -150,15 +149,15 @@ export default {
         },
         options: {
           store: (row, props) => [
-            {id: 1, name: 'customer 1'},
-            {id: 2, name: 'customer 2'},
-            {id: 3, name: 'customer 3'}
+            { id: 1, name: 'customer 1' },
+            { id: 2, name: 'customer 2' },
+            { id: 3, name: 'customer 3' }
           ],
           key: 'id',
           label: 'name',
           optionFitler: (row) => true
         }
-      },
+      } as IFieldLookup,
       sector: {
         id: 'sector',
         value: Date.now(),
@@ -195,7 +194,6 @@ export default {
 
       claimed: {
         id: 'claimed',
-
         label: 'Claimed',
         type: 'checkbox',
         value: false,
@@ -253,16 +251,16 @@ export default {
             label: 'Min', type: fields.reactstrap.Text
           },
           {
-            label: 'Category', 
+            label: 'Category',
             type: fields.reactstrap.Lookup,
             options: {
               store: async (row, props) => {
                 return new Promise(resolve => {
                   setTimeout(() => {
                     resolve([
-                      {id: 1, name: 'cat 1'},
-                      {id: 2, name: 'cat 2'},
-                      {id: 3, name: 'cat 3'}
+                      { id: 1, name: 'cat 1' },
+                      { id: 2, name: 'cat 2' },
+                      { id: 3, name: 'cat 3' }
                     ]);
                   }, 2000);
                 });
@@ -284,18 +282,18 @@ export default {
                   setTimeout(() => {
                     if (row[1] === '1') {
                       resolve([
-                      {id: 1, name: 'subcat 1'},
+                        { id: 1, name: 'subcat 1' },
                       ]);
                     }
                     resolve([
-                      {id: 1, name: 'subcat 1'},
-                      {id: 2, name: 'subcat 2'},
-                      {id: 3, name: 'subcat 3'}
+                      { id: 1, name: 'subcat 1' },
+                      { id: 2, name: 'subcat 2' },
+                      { id: 3, name: 'subcat 3' }
                     ]);
                   }, 2000);
                 });
               },
- 
+
             }
           }
         ]

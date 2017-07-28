@@ -1,4 +1,4 @@
-/// <reference path="../../../interfaces.d.ts" />
+/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import {FormControl} from 'react-bootstrap';
 

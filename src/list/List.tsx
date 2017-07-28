@@ -1,6 +1,6 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
+import { Component } from 'react';
 import UiForm from '../form/Form';
 import * as libs from '../libs';
 import ListRow from './ListRow';
@@ -37,7 +37,7 @@ class UiList extends Component<IListProps, IState> {
    */
   constructor(props: IListProps) {
     super(props);
-    const {config} = this.props;
+    const { config } = this.props;
     this.columns = config.list.columns;
     this.messages = config.messages;
     this.close = this.close.bind(this);
@@ -61,7 +61,7 @@ class UiList extends Component<IListProps, IState> {
    * @param {Object} newProps props
    */
   private setLib(newProps) {
-    const {config, library} = newProps;
+    const { config, library } = newProps;
     const libType = config.lib || library || 'reactBootstrap';
     lib = libs[libType];
     layouts = lib.listLayouts;
@@ -74,23 +74,23 @@ class UiList extends Component<IListProps, IState> {
    * @param {Event} e .
    */
   private toggleAll(e: MouseEvent) {
-    const {actions = {}, data} = this.props;
-    let {selected} = this.state;
+    const { actions = {}, data } = this.props;
+    let { selected } = this.state;
     const target = e.target as HTMLInputElement;
     if (target.checked) {
-      this.setState({allToggled: true});
+      this.setState({ allToggled: true });
       selected = [...data];
       if (actions.selectAllRows) {
         actions.selectAllRows();
       }
     } else {
       selected = [];
-      this.setState({allToggled: false});
+      this.setState({ allToggled: false });
       if (actions.deselectAllRows) {
         actions.deselectAllRows();
       }
     }
-    this.setState({selected});
+    this.setState({ selected });
   }
 
   /**
@@ -98,7 +98,7 @@ class UiList extends Component<IListProps, IState> {
    * @return {Dom} Dom node
    */
   private listLayout() {
-    const {layout} = this.props;
+    const { layout } = this.props;
     let layoutName;
     if (layout === null) {
       layoutName = 'reactstrap';
@@ -116,7 +116,7 @@ class UiList extends Component<IListProps, IState> {
    */
   private rowClick(e: MouseEvent, checkType: boolean = true, row: IListRow) {
     // Ignore the event if clicking on button etc in row
-    const {actions = {}, config} = this.props;
+    const { actions = {}, config } = this.props;
     const buttonTypes = ['checkbox', 'button', 'a'];
     const target = e.target as HTMLButtonElement;
     const isButtonIsh = buttonTypes.indexOf(target.type) !== -1;
@@ -135,7 +135,7 @@ class UiList extends Component<IListProps, IState> {
   }
 
   private showModal() {
-    this.setState({showModal: true});
+    this.setState({ showModal: true });
   }
 
   /**
@@ -147,9 +147,9 @@ class UiList extends Component<IListProps, IState> {
       // Clicking on background doesn't pass in an event
       e.preventDefault();
     }
-    this.setState({showModal: false});
+    this.setState({ showModal: false });
     this.clearSelected();
-    const {actions, config} = this.props;
+    const { actions, config } = this.props;
     if (actions.setModalState) {
       actions.setModalState(config.view, false);
     }
@@ -165,17 +165,17 @@ class UiList extends Component<IListProps, IState> {
    * @param {Object} row List row to deselect
    */
   private selectRow(row: IListRow) {
-    const {actions} = this.props;
-    const {selected} = this.state;
+    const { actions } = this.props;
+    const { selected } = this.state;
     selected.push(row);
-    this.setState({selected});
+    this.setState({ selected });
     if (actions.selectRow) {
       actions.selectRow(row);
     }
   }
 
   private clearSelected() {
-    this.setState({selected: []});
+    this.setState({ selected: [] });
   }
 
   /**
@@ -183,7 +183,7 @@ class UiList extends Component<IListProps, IState> {
    * @return string
    */
   private getPrimaryKey(): string {
-    const {config} = this.props;
+    const { config } = this.props;
     return config.primary_key || 'id';
   }
 
@@ -194,7 +194,7 @@ class UiList extends Component<IListProps, IState> {
    * @return {Number} index
    */
   private selectedIndex(row: IListRow): number {
-    const {selected} = this.state;
+    const { selected } = this.state;
     const pk = this.getPrimaryKey();
     return selected.findIndex((r, index) => r[pk] === row[pk]);
   }
@@ -213,9 +213,9 @@ class UiList extends Component<IListProps, IState> {
    * @param {Object} row List row to deselect
    */
   private deselectRow(row: IListRow) {
-    const {actions} = this.props;
+    const { actions } = this.props;
     const pk = this.getPrimaryKey();
-    let {selected} = this.state;
+    let { selected } = this.state;
 
     const i = this.selectedIndex(row);
     if (i !== -1) {
@@ -225,7 +225,7 @@ class UiList extends Component<IListProps, IState> {
       ];
     }
 
-    this.setState({selected});
+    this.setState({ selected });
     if (actions.deselectRow) {
       actions.deselectRow(row);
     }
@@ -237,7 +237,7 @@ class UiList extends Component<IListProps, IState> {
    * @return {Bool} OK to show
    */
   private filterRows(row: Object): boolean {
-    const {config} = this.props;
+    const { config } = this.props;
     const pattern = new RegExp(this.state.search, 'i');
     let key;
     let fields;
@@ -255,14 +255,14 @@ class UiList extends Component<IListProps, IState> {
     return false;
   }
 
-/**
- * Update or add a row
- * @param {Event} e .
- * @param {Object} state New state
- */
-  private handleUpdate(e: Event, state: {id: string} = {id: ''}) {
-    const {actions, config, access} = this.props;
-    this.setState({rowUpdating: true});
+  /**
+   * Update or add a row
+   * @param {Event} e .
+   * @param {Object} state New state
+   */
+  private handleUpdate(e: Event, state: { id: string } = { id: '' }) {
+    const { actions, config, access } = this.props;
+    this.setState({ rowUpdating: true });
     const pk = this.getPrimaryKey();
     if (!actions) {
       return;
@@ -284,13 +284,13 @@ class UiList extends Component<IListProps, IState> {
    * @return {boolean}
    */
   private can(task: string) {
-    const {access} = this.props;
+    const { access } = this.props;
     if (!access) {
       return true;
     }
     if (access[task] && access[task] !== undefined) {
-       return access[task];
-     }
+      return access[task];
+    }
     return false;
   }
 
@@ -300,7 +300,7 @@ class UiList extends Component<IListProps, IState> {
    */
   private handleChange(e: MouseEvent) {
     const target = e.target as HTMLInputElement;
-    this.setState({search: target.value});
+    this.setState({ search: target.value });
   }
 
   /**
@@ -308,7 +308,7 @@ class UiList extends Component<IListProps, IState> {
    * @return {Dom} node
    */
   private search(): JSX.Element | null {
-    const {config} = this.props;
+    const { config } = this.props;
     if (config.list.searchall) {
       return (<FormControl type="search"
         onChange={(e) => this.handleChange(e)}
@@ -323,9 +323,9 @@ class UiList extends Component<IListProps, IState> {
    * @param {Array} selected List rows
    * @param {Object} update Data to update
    */
-  private updateRows(selected: IListRow[], update: {[key: string]: any}) {
-    const {actions, config} = this.props;
-    this.setState({rowUpdating: true});
+  private updateRows(selected: IListRow[], update: { [key: string]: any }) {
+    const { actions, config } = this.props;
+    this.setState({ rowUpdating: true });
     if (!actions || !actions.update) {
       return;
     }
@@ -337,8 +337,8 @@ class UiList extends Component<IListProps, IState> {
    * @return {Dom} Node
    */
   public render(): JSX.Element {
-    const {data = [], config, actions = {}, layout} = this.props;
-    const {selected} = this.state;
+    const { data = [], config, actions = {}, layout } = this.props;
+    const { selected } = this.state;
     const ui = actions.ui;
     const ListLayout = this.listLayout();
     let showModal;
@@ -361,34 +361,34 @@ class UiList extends Component<IListProps, IState> {
       showModal,
     };
     return <div>
-            <ListLayout
-              showAddModal={this.showAddModal.bind(this)}
-              data={data}
-              listRow={(props) => {
-                const rowSelected = selected;
-                const isSelected = this.isSelected(props.row);
-                return <ListRow
-                  {...props}
-                  Checkbox={Checkbox}
-                  canSelect={this.props.canSelect}
-                  selected={isSelected}
-                  view={config.view}
-                  columns={this.columns}
-                  rowClick={this.rowClick.bind(this)}
-                  selectRow={this.selectRow.bind(this)}
-                  deselectRow={this.deselectRow.bind(this)} />;
-              }}
-              toggleAll={this.toggleAll.bind(this)}
-              showModal={this.showModal.bind(this)}
-              search={this.search()}
-              selected={selected}
-              rows={rows}
-              update={this.updateRows.bind(this)}
-              msg={this.messages.emptyData}
-              {...this.props}>
-            </ListLayout>
-          {this.props.children(formModalProps)}
-          </div>;
+      <ListLayout
+        showAddModal={this.showAddModal.bind(this)}
+        data={data}
+        listRow={(props) => {
+          const rowSelected = selected;
+          const isSelected = this.isSelected(props.row);
+          return <ListRow
+            {...props}
+            Checkbox={Checkbox}
+            canSelect={this.props.canSelect}
+            selected={isSelected}
+            view={config.view}
+            columns={this.columns}
+            rowClick={this.rowClick.bind(this)}
+            selectRow={this.selectRow.bind(this)}
+            deselectRow={this.deselectRow.bind(this)} />;
+        }}
+        toggleAll={this.toggleAll.bind(this)}
+        showModal={this.showModal.bind(this)}
+        search={this.search()}
+        selected={selected}
+        rows={rows}
+        update={this.updateRows.bind(this)}
+        msg={this.messages.emptyData}
+        {...this.props}>
+      </ListLayout>
+      {this.props.children(formModalProps)}
+    </div>;
 
   }
 }

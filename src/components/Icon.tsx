@@ -1,4 +1,4 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as classNames from 'classnames';
 import * as React from 'react';
 
@@ -37,7 +37,7 @@ export default ({
     return <span><i className={className} /></span>;
   }
   return <span>
-          <i className={className} ></i>
-          {' '}{label}
-        </span>;
+    <i className={className} ></i>
+    {' '}{label}
+  </span>;
 };

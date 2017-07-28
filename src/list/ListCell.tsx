@@ -1,4 +1,4 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as React from 'react';
 
 interface IProps {
@@ -6,5 +6,5 @@ interface IProps {
   rowClick: (row: IListRow) => void;
 }
 
-export default ({data}: IProps) =>
+export default ({ data }: IProps) =>
   (<div>{data}</div>);

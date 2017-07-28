@@ -1,6 +1,6 @@
-/// <reference path="../interfaces.d.ts" />
+/// <reference path="../index.d.ts" />
 import * as React from 'react';
-import {Component} from 'react';
+import { Component } from 'react';
 import Tip from '../components/Tip';
 import ListCell from './ListCell';
 
@@ -25,7 +25,7 @@ export default class ListRow extends Component<IListRowProps, IState> {
    * @param {Event} e event
    */
   private toggleRow(e: MouseEvent) {
-    const {actions, row, selectRow, deselectRow} = this.props;
+    const { actions, row, selectRow, deselectRow } = this.props;
     const target = e.target as HTMLInputElement;
     if (target.checked) {
       selectRow(row);
@@ -43,28 +43,28 @@ export default class ListRow extends Component<IListRowProps, IState> {
    * @return {Array} Dom nodes
    */
   private cells(): JSX.Element[] {
-    const {row, columns, Checkbox, actions, selected, onClick} = this.props;
+    const { row, columns, Checkbox, actions, selected, onClick } = this.props;
     const columnNames = Object.keys(columns);
     const cells = columnNames.map((columnName: string, key: number) => {
-        const th = columns[columnName];
-        let cell;
+      const th = columns[columnName];
+      let cell;
 
-        if (th.render) {
-          cell = <th.render column={columnName} row={row}
-            rowClick={this.props.rowClick}
-            config={th.config} {...actions} />;
-        } else {
-          cell = <ListCell key={'listcell-' + key}
-            rowClick={this.props.rowClick}
-            data={row[columnName]} {...actions}  />;
-        }
-        if (th.tip) {
-          cell = <Tip config={th.tip} row={row}>{cell}</Tip>;
-        }
-        return (<td onClick={onClick} key={th.id} className={th.class}>
-            {cell}
-          </td>);
-      });
+      if (th.render) {
+        cell = <th.render column={columnName} row={row}
+          rowClick={this.props.rowClick}
+          config={th.config} {...actions} />;
+      } else {
+        cell = <ListCell key={'listcell-' + key}
+          rowClick={this.props.rowClick}
+          data={row[columnName]} {...actions} />;
+      }
+      if (th.tip) {
+        cell = <Tip config={th.tip} row={row}>{cell}</Tip>;
+      }
+      return (<td onClick={onClick} key={th.id} className={th.class}>
+        {cell}
+      </td>);
+    });
 
     if (this.canSelect()) {
       cells.unshift(<td key="list-td-check">
@@ -80,7 +80,7 @@ export default class ListRow extends Component<IListRowProps, IState> {
    */
   public render(): JSX.Element {
     return (<tr>
-        {this.cells()}
-      </tr>);
+      {this.cells()}
+    </tr>);
   }
 }

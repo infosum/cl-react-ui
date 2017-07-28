@@ -7,7 +7,7 @@
 		exports["cl-react-ui"] = factory(require("react"), require("react-bootstrap"), require("react-dom"));
 	else
 		root["cl-react-ui"] = factory(root["React"], root["ReactBootstrap"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_86__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_86__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -84,12 +84,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -175,6 +169,12 @@ var _StringfromCharCode=String.fromCharCode,_Mathround=Math.round,_Mathmin=Math.
 //# sourceMappingURL=reactstrap.es.js.map
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(85), __webpack_require__(3)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 /* 3 */
@@ -2389,7 +2389,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var children = _a.children,
         config = _a.config,
@@ -2481,24 +2481,24 @@ var UiForm = function (_super) {
         return _this;
     }
     UiForm.prototype.componentDidUpdate = function (prevProps) {
-        var _a = this.props,
-            config = _a.config,
-            data = _a.data,
-            errors = _a.errors;
-        this.fields = config.form.fields;
-        var state = {};
-        var visibility = this.makeVisiblity();
-        var newState = {};
-        Object.keys(errors).forEach(function (key) {
-            return state[key] = 'error';
-        });
-        var form = this.state.form;
-        if (!deepEqual(data, prevProps.data)) {
+        if (!deepEqual(this.props, prevProps)) {
+            var _a = this.props,
+                config = _a.config,
+                data = _a.data,
+                errors = _a.errors;
+            this.fields = config.form.fields;
+            var state_1 = {};
+            var visibility = this.makeVisiblity();
+            var newState = {};
+            Object.keys(errors).forEach(function (key) {
+                return state_1[key] = 'error';
+            });
+            var form = this.state.form;
             newState.data = this.makeState(data);
             form = this.createFormData(form, data);
+            this.setLib(this.props);
+            this.setState(__assign({}, newState, { state: state_1, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
         }
-        this.setLib(this.props);
-        this.setState(__assign({}, newState, { state: state, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
     };
     UiForm.prototype.makeVisiblity = function () {
         var _a = this.props.visibility,
@@ -2761,7 +2761,7 @@ exports.default = UiForm;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var actions = _a.actions,
         form = _a.form,
@@ -2816,7 +2816,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var UiButtonGroup = function (_super) {
     __extends(UiButtonGroup, _super);
     function UiButtonGroup(props) {
@@ -2871,7 +2871,7 @@ exports.default = UiButtonGroup;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -2898,7 +2898,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -2919,7 +2919,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -2943,7 +2943,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (props) {
     var FieldComponent = props.FieldComponent,
         errors = props.errors,
@@ -2996,7 +2996,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var index_1 = __webpack_require__(4);
 var Grid = function (_super) {
     __extends(Grid, _super);
@@ -3104,7 +3104,7 @@ exports.default = Grid;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3222,16 +3222,18 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var index_1 = __webpack_require__(4);
 var Lookup = function (_super) {
     __extends(Lookup, _super);
     function Lookup(props) {
         var _this = _super.call(this, props) || this;
         _this.state = { loading: true, search: '', value: '' };
-        _this.get();
         return _this;
     }
+    Lookup.prototype.componentDidMount = function () {
+        this.get();
+    };
     Lookup.prototype.get = function () {
         var _this = this;
         this.setState({ loading: true });
@@ -3358,7 +3360,7 @@ exports.default = Lookup;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3382,7 +3384,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3406,7 +3408,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3421,7 +3423,8 @@ exports.default = function (_a) {
     var opts = options.map(function (option, k) {
         var active = option.value === value;
         return React.createElement(react_bootstrap_1.Radio, { key: k, active: active, value: option.value, onClick: function onClick(e) {
-                return onChange(name, e.target.value);
+                console.log('on click a radio.....');
+                onChange(name, e.target.value);
             } }, option.label);
     });
     return React.createElement("div", null, opts);
@@ -3436,7 +3439,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var field = _a.field,
         name = _a.name,
@@ -3467,7 +3470,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3491,7 +3494,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -3561,7 +3564,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var UiFormLayoutDefault = function (_super) {
     __extends(UiFormLayoutDefault, _super);
     function UiFormLayoutDefault() {
@@ -3613,7 +3616,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var UiFormLayoutModal = function (_super) {
     __extends(UiFormLayoutModal, _super);
     function UiFormLayoutModal() {
@@ -3667,7 +3670,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var Add = function (_super) {
     __extends(Add, _super);
     function Add(props) {
@@ -3720,7 +3723,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var Del = function (_super) {
     __extends(Del, _super);
     function Del(props) {
@@ -3793,7 +3796,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var Toggle = function (_super) {
     __extends(Toggle, _super);
     function Toggle(props) {
@@ -3838,7 +3841,7 @@ exports.default = Toggle;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var react_bootstrap_1 = __webpack_require__(2);
 var ListActions_1 = __webpack_require__(42);
 exports.default = function (_a) {
     var actions = _a.actions,
@@ -3894,7 +3897,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (props) {
     var listActionGroups = [];
     var user = props.user,
@@ -3937,7 +3940,7 @@ exports.Default = Default_1.default;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var actions = _a.actions,
         onSubmit = _a.onSubmit,
@@ -3975,7 +3978,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4003,7 +4006,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4027,7 +4030,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4051,7 +4054,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (props) {
     var FieldComponent = props.FieldComponent,
         errors = props.errors,
@@ -4072,6 +4075,9 @@ exports.default = function (props) {
     var color = validationState;
     if (color === 'error') {
         color = 'danger';
+    }
+    if (field.pristine) {
+        color = '';
     }
     return React.createElement(reactstrap_1.FormGroup, { check: check, color: color, key: id }, controlLabel, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, row: row, state: color, field: field }), React.createElement(reactstrap_1.FormText, null, help), errors.map(function (error, i) {
         return React.createElement(reactstrap_1.FormFeedback, { key: 'help-' + name + '-' + i }, error);
@@ -4114,7 +4120,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var deepEqual = __webpack_require__(5);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var index_1 = __webpack_require__(4);
 var Grid = function (_super) {
     __extends(Grid, _super);
@@ -4222,7 +4228,7 @@ exports.default = Grid;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4340,7 +4346,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var index_1 = __webpack_require__(4);
 var Lookup = function (_super) {
     __extends(Lookup, _super);
@@ -4476,7 +4482,7 @@ exports.default = Lookup;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4500,7 +4506,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4524,7 +4530,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var field = _a.field,
         value = _a.value,
@@ -4558,7 +4564,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var field = _a.field,
         value = _a.value,
@@ -4592,7 +4598,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4616,7 +4622,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var value = _a.value,
         name = _a.name,
@@ -4680,7 +4686,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var fields = __webpack_require__(11);
 var FormGroup_1 = __webpack_require__(48);
 var FormActions_1 = __webpack_require__(44);
@@ -4724,7 +4730,7 @@ exports.default = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var form = _a.form,
         fields = _a.fields,
@@ -4750,7 +4756,7 @@ exports.default = function (_a) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var errors = _a.errors,
         form = _a.form,
@@ -4805,7 +4811,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(1);
+var reactstrap_1 = __webpack_require__(1);
 var Add = function (_super) {
     __extends(Add, _super);
     function Add(props) {
@@ -4824,7 +4830,7 @@ var Add = function (_super) {
         if (!isVisible) {
             return null;
         }
-        return React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
+        return React.createElement(reactstrap_1.Button, { onClick: function onClick(e) {
                 return _this.handleClick(e);
             } }, React.createElement("i", { className: "fa fa-plus" }), " Add");
     };
@@ -4858,7 +4864,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var Del = function (_super) {
     __extends(Del, _super);
     function Del(props) {
@@ -4930,7 +4936,7 @@ var __extends = undefined && undefined.__extends || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var Toggle = function (_super) {
     __extends(Toggle, _super);
     function Toggle(props) {
@@ -4970,7 +4976,7 @@ exports.default = Toggle;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (_a) {
     var field = _a.field,
         value = _a.value,
@@ -5005,7 +5011,7 @@ exports.select = Select_1.default;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 var ListActions_1 = __webpack_require__(69);
 exports.default = function (_a) {
     var actions = _a.actions,
@@ -5061,7 +5067,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var reactstrap_1 = __webpack_require__(2);
+var reactstrap_1 = __webpack_require__(1);
 exports.default = function (props) {
     var user = props.user,
         selected = props.selected,
@@ -5619,13 +5625,13 @@ var _fields = __webpack_require__(9);
 
 var fields = _interopRequireWildcard(_fields);
 
-var _reactBootstrap = __webpack_require__(1);
+var _reactBootstrap = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../interfaces.d.ts" />
+var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../index.d.ts" />
 
 
 var Modal = function Modal(_ref) {
