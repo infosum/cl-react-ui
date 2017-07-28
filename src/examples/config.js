@@ -157,7 +157,7 @@ export default {
           label: 'name',
           optionFitler: (row) => true
         }
-      } as IFieldLookup,
+      },
       sector: {
         id: 'sector',
         value: Date.now(),
