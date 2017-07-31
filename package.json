@@ -103,6 +103,9 @@
     "shasum": "971ba47cb7728129d61e817c8179dbb6ffde2f57",
     "tarball": "https://registry.npmjs.org/cl-react-ui/-/cl-react-ui-1.0.0.tgz"
   },
+  "files": [
+    "dist"
+  ],
   "gitHead": "be79290660b5cbbe7ee1d7cdb8323f84c4dd1d2e",
   "homepage": "https://github.com/cognitivelogic/cl-react-ui#readme",
   "keywords": [
@@ -126,7 +129,6 @@
   },
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
-    "testold": "istanbul cover _mocha --recursive -x '**/*.spec.js' -x '**/config/**' -x '**/node_modules/**' -g './{,!(node_modules)/**/}*.spec.js'",
     "test": "NODE_ENV=test mocha --recursive '**/*.spec.ts*' --compilers ts:ts-node/register,tsx:ts-node/register --require ./test/setup.js --bail",
     "cover": "NODE_ENV=test nyc npm test"
   },

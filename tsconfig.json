@@ -15,7 +15,7 @@
         "target": "es5"
     },
     "include": [
-        "./index.d.ts",
+        "./src/interfaces.d.ts",
         "node_modules/@types/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.tsx"
