@@ -103,10 +103,6 @@
     "shasum": "971ba47cb7728129d61e817c8179dbb6ffde2f57",
     "tarball": "https://registry.npmjs.org/cl-react-ui/-/cl-react-ui-1.0.0.tgz"
   },
-  "files": [
-    "src/interfaces.d.ts",
-    "dist"
-  ],
   "gitHead": "be79290660b5cbbe7ee1d7cdb8323f84c4dd1d2e",
   "homepage": "https://github.com/cognitivelogic/cl-react-ui#readme",
   "keywords": [
@@ -155,5 +151,5 @@
     ],
     "all": true
   },
-  "version": "1.3.10"
+  "version": "1.3.11"
 }
