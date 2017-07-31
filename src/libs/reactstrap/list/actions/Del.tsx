@@ -1,7 +1,8 @@
-/// <reference path="../../../../index.d.ts" />
+
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { IListRow, IUser } from '../../../../../index';
 
 interface IProps {
   del: (type: string, selected: IListRow[], user: any, token?: string) => any;
@@ -13,6 +14,8 @@ interface IProps {
 interface IState {
   showModal: boolean;
 }
+
+const c = {} as IUser;
 /**
  * List row delete button
  */

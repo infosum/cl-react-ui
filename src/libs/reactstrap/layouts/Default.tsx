@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Alert, Form } from 'reactstrap';
+import { IFormLayout } from '../../../../index';
 
 export default ({ form, fields, actions, errors, onSubmit }: IFormLayout) => {
     let alert;

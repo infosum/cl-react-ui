@@ -1,18 +1,23 @@
 {
     "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "jsx": "react",
-      "module": "commonjs",
-      "noImplicitAny": false,
-      "removeComments": true,
-      "sourceMap": true,
-      "strictNullChecks": false,
-      "lib": [ "es6", "dom" ],
-      "target": "es5"
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "sourceMap": true,
+        "strictNullChecks": false,
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "target": "es5"
     },
     "include": [
+        "./index.d.ts",
         "node_modules/@types/**/*.d.ts",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "src/**/*.tsx"
     ]
 }

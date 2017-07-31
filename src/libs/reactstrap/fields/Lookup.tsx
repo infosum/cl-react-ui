@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Input } from 'reactstrap';
+import { FieldLookup, IFieldOption } from '../../../../index';
 import { Icon } from '../../../index';
 
 interface IState {

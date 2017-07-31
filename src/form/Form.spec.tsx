@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { render, shallow } from 'enzyme';
 import * as React from 'react';
+import { ICrudConfig } from '../../index';
 import * as libs from '../libs';
 import FormLayoutDefault from '../libs/react-bootstrap/layouts/Default';
 import Form from './Form';

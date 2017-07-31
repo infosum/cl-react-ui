@@ -1,6 +1,6 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import * as Dropzone from 'react-dropzone';
+import { FieldUpload } from '../../../../index';
 
 export default ({ value, name, onChange, onBlur, field }: FieldUpload) => {
   const { placeholder, multiple } = field;

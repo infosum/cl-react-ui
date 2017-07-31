@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Input, Label } from 'reactstrap';
+import { FieldRadio, IFieldOption } from '../../../../index';
 
 export default ({ field, value, onChange, onBlur, name }: FieldRadio) => {
   let { options } = field;

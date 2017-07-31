@@ -1,8 +1,9 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { ButtonGroup } from 'reactstrap';
 import * as listActions from '../list/actions';
+
+import { IListActionsProps } from '../../../../index';
 
 interface IButtonProps {
   id: string;

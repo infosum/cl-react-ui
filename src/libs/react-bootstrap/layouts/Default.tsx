@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Alert, Well } from 'react-bootstrap';
+import { IFormLayout } from '../../../../index';
 
 class UiFormLayoutDefault extends Component<IFormLayout, {}> {
 

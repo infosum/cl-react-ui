@@ -1,7 +1,7 @@
-/// <reference path="../../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, closeButton, Modal } from 'react-bootstrap';
+import { IListRow } from '../../../../../index';
 
 interface IProps {
   del: (type: string, selected: IListRow[], user: any, token?: string) => any;

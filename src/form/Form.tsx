@@ -1,9 +1,9 @@
-/// <reference path="../index.d.ts" />
 import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import { Component } from 'react';
 import uuid from 'uuid';
 import validate from 'validate-promise';
+import { IFieldConfig, IFormActionsConfig, IFormConfig, IFormErrors, IFormProps, IListRow, IUser } from '../../index';
 import * as libs from '../libs';
 
 let lib;

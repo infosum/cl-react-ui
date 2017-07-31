@@ -1,14 +1,7 @@
-/// <reference path="../../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Input } from 'reactstrap';
-
-interface IFilterProps {
-  field: any;
-  name: string;
-  onBlur: (name: string, value: any) => void;
-  value: any;
-}
+import { IFieldOption, IFilterProps } from '../../../../../index';
 
 export default ({ field, value, onBlur, name }: IFilterProps) => {
   const { options } = field;

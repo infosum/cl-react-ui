@@ -1,6 +1,6 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
+import { FieldSelect, IFieldOption } from '../../../../index';
 
 export default ({ field, name, onChange, value }: FieldSelect) => {
   const { options } = field;

@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import { FieldButtonGroup, IFieldOption } from '../../../../index';
 
 interface IState {
   value: string;

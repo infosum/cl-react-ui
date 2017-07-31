@@ -1,6 +1,6 @@
-/// <reference path="../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
+import { IListActions, IListColumns, IListProps, IListRow } from '../../index';
 import UiForm from '../form/Form';
 import * as libs from '../libs';
 import ListRow from './ListRow';

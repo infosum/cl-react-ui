@@ -1,6 +1,6 @@
-/// <reference path="../index.d.ts" />
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { IIconProps } from '../../index';
 
 export default ({
   icon, color, label, pull, size, stack, inverse, spin,

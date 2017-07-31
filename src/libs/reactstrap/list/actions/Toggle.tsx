@@ -1,7 +1,7 @@
-/// <reference path="../../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Button } from 'reactstrap';
+import { IListRow, IUser } from '../../../../../index';
 
 interface IProps {
   update: (userSelected: IListRow[], update: { [key: string]: any }) => void;

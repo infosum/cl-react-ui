@@ -1,6 +1,6 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Alert, Col, Row, Table, Well } from 'react-bootstrap';
+import { IListRow } from '../../../../index';
 import ListActions from './ListActions';
 
 export default ({ actions, canSelect, data, config, listRow,

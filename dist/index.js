@@ -4865,6 +4865,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(1);
+var c = {};
 var Del = function (_super) {
     __extends(Del, _super);
     function Del(props) {
@@ -5464,7 +5465,6 @@ var ListFilters = function (_super) {
     ListFilters.prototype.render = function () {
         var _this = this;
         var config = this.props.config;
-        console.log('filters', filters);
         if (!config.list.filters) {
             return;
         }
@@ -5631,8 +5631,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var Feedback = _reactBootstrap.FormControl.Feedback; /// <reference path="../../index.d.ts" />
-
+var Feedback = _reactBootstrap.FormControl.Feedback;
 
 var Modal = function Modal(_ref) {
   var showModal = _ref.showModal,

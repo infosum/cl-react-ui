@@ -1,8 +1,8 @@
-/// <reference path="../../../index.d.ts" />
 import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { FieldGrid } from '../../../../index';
 import { Icon } from '../../../index';
 
 interface IState {

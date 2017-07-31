@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { ButtonGroup } from 'reactstrap';
+import { IListActionsProps } from '../../../../index';
 
 export default (props: IListActionsProps): JSX.Element => {
 

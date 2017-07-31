@@ -1,7 +1,7 @@
-/// <reference path="../../../index.d.ts" />
 import * as React from 'react';
 import { Component } from 'react';
 import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { IFormLayout } from '../../../../index';
 
 /**
  * Layout for rendering form in a reactstrap modal

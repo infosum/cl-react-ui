@@ -1,18 +1,18 @@
-interface IUser {
+export interface IUser {
   [key: string]: any;
 }
 
-interface IListRow {
+export interface IListRow {
   [key: string]: any;
 }
 
-interface ITipConfig {
+export interface ITipConfig {
   position: string;
   content: (row: IListRow) => { __html: string };
   trigger?: string
 }
 
-interface ITipProps {
+export interface ITipProps {
   children?: any;
   config: ITipConfig;
   row: IListRow;
@@ -26,7 +26,14 @@ interface ITipProps {
   spin?: boolean
 }
 
-interface IIconProps {
+interface IFilterProps {
+  field: any;
+  name: string;
+  onBlur: (name: string, value: any) => void;
+  value: any;
+}
+
+export interface IIconProps {
   icon?: string;
   color?: string;
   label?: string;
@@ -37,10 +44,11 @@ interface IIconProps {
   spin?: boolean
 }
 
-interface IFormErrors { [key: string]: string[] }
+export interface IFormErrors { [key: string]: string[] }
 
-type defaultFunction = (row: IListRow, field: IFieldConfig) => string;
-interface IFieldConfig {
+export type defaultFunction = (row: IListRow, field: IFieldConfig) => string;
+
+export interface IFieldConfig {
   access?: {
     [key: string]: (field: IFieldConfig, data: IListRow) => boolean;
   };
@@ -65,7 +73,7 @@ interface IFieldConfig {
   value?: string;
 }
 
-interface IFormActionConfig {
+export interface IFormActionConfig {
   action: (e?: MouseEvent) => void;
   id: string;
   type: 'submit' | 'button';
@@ -74,11 +82,11 @@ interface IFormActionConfig {
   style?: string;
 }
 
-interface IFormActionsConfig {
+export interface IFormActionsConfig {
   [key: string]: IFormActionConfig;
 }
 
-interface IFormConfig {
+export interface IFormConfig {
   _title?: (row: IListRow) => string;
   actions?: IFormActionsConfig;
   fields: {
@@ -87,8 +95,7 @@ interface IFormConfig {
   title?: string;
 }
 
-interface IFormField {
-
+export interface IFormField {
   field: IFieldConfig;
   name: string;
   onBlur: (name: string) => void;
@@ -97,14 +104,14 @@ interface IFormField {
   value: string;
 }
 
-interface IFormGroupProps {
+export interface IFormGroupProps {
   FieldComponent: string;
   errors: string[];
   field: IFieldConfig;
   validationState: string;
 }
 
-interface IFormLayout {
+export interface IFormLayout {
   actions: JSX.Element;
   errors: IFormErrors;
   fields: {
@@ -113,9 +120,10 @@ interface IFormLayout {
   form: IFormConfig;
   onSubmit: () => void;
 }
-type FormUpdate = (view: string, field: IFieldConfig, name: string, value: string | number) => void;
 
-interface IFormProps {
+export type FormUpdate = (view: string, field: IFieldConfig, name: string, value: string | number) => void;
+
+export interface IFormProps {
   actions?: IFormActionsConfig;
   className?: string;
   config: {
@@ -135,29 +143,30 @@ interface IFormProps {
 }
 
 // Specific field props
-interface IFieldOption {
+export interface IFieldOption {
   value: string | number;
   [key: string]: string | number;
 }
 
 // -- Button Group
-interface IFieldButtonGroup {
+export interface IFieldButtonGroup {
   field: {
     options: IFieldOption[]
   }
 }
 
-type FieldButtonGroup = IFormField & IFieldButtonGroup;
+export type FieldButtonGroup = IFormField & IFieldButtonGroup;
 
 // -- Grid
-type FieldLookup = IFormField & IFieldLookup;
+export type FieldLookup = IFormField & IFieldLookup;
 
-interface IFieldGrid {
+export interface IFieldGrid {
   field: {
     columns: Array<{ label: string, type: string }>;
   }
 }
-interface IFieldLookupOptions {
+
+export interface IFieldLookupOptions {
   default?: (row, field) => any;
   observe?: number[];
   optGroup?: string;
@@ -166,37 +175,38 @@ interface IFieldLookupOptions {
   optionFitler?: (row: IListRow) => boolean;
   store: (row: IListRow, props?: any) => any;
 }
+
 // -- Lookup
-interface IFieldLookup {
+export interface IFieldLookup {
   field: {
     optGroup?: string;
     options: IFieldLookupOptions;
   }
 }
 
-type FieldGrid = IFormField & IFieldGrid;
+export type FieldGrid = IFormField & IFieldGrid;
 
 // -- Radio
-interface IFieldRadio {
+export interface IFieldRadio {
   field: {
     options: IFieldOption[]
   }
 }
 
-type FieldRadio = IFormField & IFieldRadio;
+export type FieldRadio = IFormField & IFieldRadio;
 
 // -- Select
 
-interface IFieldSelect {
+export interface IFieldSelect {
   field: {
     options: IFieldOption[];
   }
 }
 
-type FieldSelect = IFormField & IFieldSelect;
+export type FieldSelect = IFormField & IFieldSelect;
 
 // -- Upload
-interface IFieldUpload {
+export interface IFieldUpload {
   field: {
     multiple?: boolean;
   },
@@ -207,11 +217,11 @@ interface IFieldUpload {
   }>
 }
 
-type FieldUpload = IFormField & IFieldUpload;
+export type FieldUpload = IFormField & IFieldUpload;
 
 // LISTS
 
-interface IListAction {
+export interface IListAction {
   id: string;
   visible: (user: IUser, selected: IListRow) => boolean;
   render: string;
@@ -220,9 +230,9 @@ interface IListAction {
   };
 }
 
-interface IListActions { [key: string]: IListAction }
+export interface IListActions { [key: string]: IListAction }
 
-interface IListActionsProps {
+export interface IListActionsProps {
   actions: IListActions;
   user: IUser;
   selected: IListRow[];
@@ -232,7 +242,7 @@ interface IListActionsProps {
   update: (selected: IListRow[], update: { [key: string]: string }) => void;
 }
 
-interface IListColumns {
+export interface IListColumns {
   [key: string]: {
     Checkbox: (any) => JSX.Element;
     class?: string;
@@ -244,11 +254,11 @@ interface IListColumns {
   };
 }
 
-interface IFilter {
+export interface IFilter {
   type: 'select';
 }
 
-interface IListConfig {
+export interface IListConfig {
   actions: IListActions[];
   columns: IListColumns;
   filters?: {
@@ -260,7 +270,7 @@ interface IListConfig {
   };
 }
 
-interface ICrudConfig {
+export interface ICrudConfig {
   form: IFormConfig;
   list?: IListConfig;
   messages?: { [key: string]: string };
@@ -269,7 +279,7 @@ interface ICrudConfig {
   lib: 'reactstrap' | 'reactBootstrap';
 }
 
-interface IFormModalProps {
+export interface IFormModalProps {
   actions: {
     formUpdate: FormUpdate;
   };
@@ -280,7 +290,7 @@ interface IFormModalProps {
   showModal: () => void;
 }
 
-interface IListProps {
+export interface IListProps {
   access: {
     add?: (view: string, state: any) => boolean;
     edit?: (view: string, state: any) => boolean;
@@ -310,7 +320,7 @@ interface IListProps {
   layout?: string;
 }
 
-interface IListRowProps {
+export interface IListRowProps {
   actions: IListActions;
   canSelect: (row: IListRow) => void;
   Checkbox: (any) => JSX.Element;
@@ -324,6 +334,6 @@ interface IListRowProps {
   view: string;
 }
 
-interface IListFilterProps {
+export interface IListFilterProps {
   config: ICrudConfig
 }
