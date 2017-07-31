@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Checkbox } from 'react-bootstrap';
-import { IFormField } from '../../../../index';
+import { IFormField } from '../../../interfaces';
 
 export default ({ value, name, onChange, field }: IFormField) => {
   let checked;

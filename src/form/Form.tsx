@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import uuid from 'uuid';
 import validate from 'validate-promise';
-import { IFieldConfig, IFormActionsConfig, IFormConfig, IFormErrors, IFormProps, IListRow, IUser } from '../../index';
+import { IFieldConfig, IFormActionsConfig, IFormConfig, IFormErrors, IFormProps, IListRow, IUser } from '../interfaces';
 import * as libs from '../libs';
 
 let lib;

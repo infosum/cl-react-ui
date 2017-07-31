@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Alert, Modal } from 'react-bootstrap';
-import { IFormLayout } from '../../../../index';
+import { IFormLayout } from '../../../interfaces';
 
 /**
  * Layout for rendering form in a Bootstrap modal

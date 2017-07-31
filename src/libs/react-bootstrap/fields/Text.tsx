@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
-import { IFormField } from '../../../../index';
+import { IFormField } from '../../../interfaces';
 
 export default ({ value, name, onChange, onBlur, field }: IFormField) => {
   const { placeholder } = field;

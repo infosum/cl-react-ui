@@ -1,6 +1,5 @@
-// @flow
-import React, {Component, Element} from 'react';
-import {Table, Button, Input} from 'reactstrap';
+import React, { Component, Element } from 'react';
+import { Table, Button, Input } from 'reactstrap';
 
 
 type Props = {
@@ -41,9 +40,9 @@ class RangeArray extends Component {
    * Add a range
    */
   add() {
-    const {name, onChange} = this.props;
+    const { name, onChange } = this.props;
     let ranges = [...this.state.ranges],
-      lastRange =  [0, 0],
+      lastRange = [0, 0],
       nextRange = [0, 0],
       lastMin = -1,
       lastMax = -1;
@@ -58,7 +57,7 @@ class RangeArray extends Component {
     }
 
     ranges.push(nextRange);
-    this.setState({ranges});
+    this.setState({ ranges });
     onChange(name, ranges);
   }
 
@@ -67,10 +66,10 @@ class RangeArray extends Component {
    * @param {Number} index Array index to remove
    */
   remove(index: number) {
-    const {name, onChange} = this.props;
+    const { name, onChange } = this.props;
     let ranges = [...this.state.ranges]
       .filter((v, i) => i !== index);
-    this.setState({ranges});
+    this.setState({ ranges });
     onChange(name, ranges);
   }
 
@@ -81,10 +80,10 @@ class RangeArray extends Component {
    * @param {String} value Value
    */
   handleChange(i: number, key: 0 | 1, value: string) {
-    const {onChange, name} = this.props;
+    const { onChange, name } = this.props;
     let ranges = [...this.state.ranges];
     ranges[i][key] = parseFloat(value);
-    this.setState({ranges});
+    this.setState({ ranges });
     onChange(name, ranges);
   }
 
@@ -93,7 +92,7 @@ class RangeArray extends Component {
    * @return {Node[]} Dom nodes
    */
   fields(): Element<any>[] {
-    const {ranges} = this.state;
+    const { ranges } = this.state;
 
     return ranges.map((range: [number, number], i: number) => <tr>
       <td>
@@ -138,9 +137,9 @@ class RangeArray extends Component {
           <th>Max</th>
           <th>
             <Button color="link" onClick={e => {
-                e.preventDefault();
-                this.add();
-              }}>
+              e.preventDefault();
+              this.add();
+            }}>
               <i className="fa fa-plus"></i>Add
             </Button>
           </th>

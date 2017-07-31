@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { IListRow, IListRowProps } from '../../index';
+import { IListRow, IListRowProps } from '../interfaces';
 import Tip from '../components/Tip';
 import ListCell from './ListCell';
 

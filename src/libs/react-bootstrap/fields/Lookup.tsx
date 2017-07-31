@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { FormControl } from 'react-bootstrap';
-import { FieldLookup } from '../../../../index';
 import { Icon } from '../../../index';
+import { FieldLookup } from '../../../interfaces';
 
 interface IState {
   loading: boolean;

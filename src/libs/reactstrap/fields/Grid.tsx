@@ -2,8 +2,8 @@ import * as deepEqual from 'deep-equal';
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, Input, Table } from 'reactstrap';
-import { FieldGrid } from '../../../../index';
 import { Icon } from '../../../index';
+import { FieldGrid } from '../../../interfaces';
 
 interface IState {
   rows: any[];

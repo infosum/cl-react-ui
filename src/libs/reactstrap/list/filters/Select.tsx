@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Input } from 'reactstrap';
-import { IFieldOption, IFilterProps } from '../../../../../index';
+import { IFieldOption, IFilterProps } from '../../../../interfaces';
 
 export default ({ field, value, onBlur, name }: IFilterProps) => {
   const { options } = field;

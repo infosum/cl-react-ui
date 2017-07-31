@@ -1,3 +1,3 @@
 import Default from './Default';
 
-export {Default};
+export { Default };

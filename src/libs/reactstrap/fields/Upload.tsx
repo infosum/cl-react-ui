@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Dropzone from 'react-dropzone';
 import { Input } from 'reactstrap';
-import { FieldUpload } from '../../../../index';
+import { FieldUpload } from '../../../interfaces';
 
 export default ({ value, name, onChange, onBlur, field }: FieldUpload) => {
   const { placeholder, multiple } = field;

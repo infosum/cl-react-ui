@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Input, Label } from 'reactstrap';
-import { IFormField } from '../../../../index';
+import { IFormField } from '../../../interfaces';
 
 export default ({ value, name, onChange, field }: IFormField) => {
   let checked;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IListRow } from '../../index';
+import { IListRow } from '../interfaces';
 
 interface IProps {
   data: string | number;

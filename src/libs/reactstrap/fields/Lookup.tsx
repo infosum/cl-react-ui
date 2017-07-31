@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Input } from 'reactstrap';
-import { FieldLookup, IFieldOption } from '../../../../index';
 import { Icon } from '../../../index';
+import { FieldLookup, IFieldOption } from '../../../interfaces';
 
 interface IState {
   loading: boolean;

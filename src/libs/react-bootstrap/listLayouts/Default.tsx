@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Alert, Col, Row, Table, Well } from 'react-bootstrap';
-import { IListRow } from '../../../../index';
+import { IListRow } from '../../../interfaces';
 import ListActions from './ListActions';
 
 export default ({ actions, canSelect, data, config, listRow,

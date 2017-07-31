@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { IListFilterProps } from '../../index';
+import { IListFilterProps } from '../interfaces';
 import * as filters from '../libs/reactstrap/list/filters';
 
 class ListFilters extends Component<IListFilterProps, any> {

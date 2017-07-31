@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { ButtonGroup } from 'reactstrap';
-import { IListActionsProps } from '../../../../index';
+import { IListActionsProps } from '../../../interfaces';
 
 export default (props: IListActionsProps): JSX.Element => {
 

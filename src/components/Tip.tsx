@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { ITipProps } from '../../index';
+import { ITipProps } from '../interfaces';
 
 export default ({ children, config, row }: ITipProps) => {
         const content = <div dangerouslySetInnerHTML={config.content(row)} />;

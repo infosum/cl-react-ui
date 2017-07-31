@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Input } from 'reactstrap';
-import { FieldSelect, IFieldOption } from '../../../../index';
+import { FieldSelect, IFieldOption } from '../../../interfaces';
 
 export default ({ field, value, onBlur, onChange, name }: FieldSelect) => {
   const { options } = field;

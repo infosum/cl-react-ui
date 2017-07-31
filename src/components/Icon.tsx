@@ -1,6 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { IIconProps } from '../../index';
+import { IIconProps } from '../interfaces';
 
 export default ({
   icon, color, label, pull, size, stack, inverse, spin,

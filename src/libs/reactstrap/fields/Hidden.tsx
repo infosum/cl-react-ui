@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Input } from 'reactstrap';
-import { IFormField } from '../../../../index';
+import { IFormField } from '../../../interfaces';
 
 export default ({ value, name, onChange, field }: IFormField) => {
   const { placeholder } = field;

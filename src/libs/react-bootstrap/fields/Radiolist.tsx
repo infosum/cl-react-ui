@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Radio } from 'react-bootstrap';
-import { FieldRadio, IFieldOption } from '../../../../index';
+import { FieldRadio, IFieldOption } from '../../../interfaces';
 
 export default ({ value, name, onChange, field }: FieldRadio) => {
 

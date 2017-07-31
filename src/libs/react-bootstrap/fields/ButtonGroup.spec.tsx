@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { IFieldOption } from '../../../../index';
+import { IFieldOption } from '../../../interfaces';
 import ButtonGroup from './ButtonGroup';
 
 let component;

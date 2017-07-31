@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
-import { FieldSelect, IFieldOption } from '../../../../index';
+import { FieldSelect, IFieldOption } from '../../../interfaces';
 
 export default ({ field, name, onChange, value }: FieldSelect) => {
   const { options } = field;

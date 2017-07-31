@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Alert, Form } from 'reactstrap';
-import { IFormLayout } from '../../../../index';
+import { IFormLayout } from '../../../interfaces';
 
 export default ({ form, fields, actions, errors, onSubmit }: IFormLayout) => {
     let alert;

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { IListRow, IUser } from '../../../../../index';
+import { IListRow, IUser } from '../../../../interfaces';
 
 interface IProps {
   del: (type: string, selected: IListRow[], user: any, token?: string) => any;

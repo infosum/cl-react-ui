@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { IListActions, IListColumns, IListProps, IListRow } from '../../index';
 import UiForm from '../form/Form';
+import { IListActions, IListColumns, IListProps, IListRow } from '../interfaces';
 import * as libs from '../libs';
 import ListRow from './ListRow';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { IListRow, IUser } from '../../../../../index';
+import { IListRow, IUser } from '../../../../interfaces';
 
 interface IProps {
   update: (userSelected: IListRow[], update: { [key: string]: any }) => void;

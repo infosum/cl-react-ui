@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { mount, shallow } from 'enzyme';
 import * as React from 'react';
 import * as sinon from 'sinon';
-import { IListRow } from '../../../../index';
 import { Icon } from '../../../index';
+import { IListRow } from '../../../interfaces';
 import Lookup from './Lookup';
 
 let component;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Input, Label } from 'reactstrap';
-import { FieldRadio, IFieldOption } from '../../../../index';
+import { FieldRadio, IFieldOption } from '../../../interfaces';
 
 export default ({ field, value, onChange, onBlur, name }: FieldRadio) => {
   let { options } = field;

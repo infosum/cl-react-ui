@@ -1,9 +1,8 @@
 import React from 'react';
-import {Button} from 'reactstrap';
-import {fields} from '../index';
-import {validations} from '../index';
+import { Button } from 'reactstrap';
+import { fields, validations } from '../index';
 
-const Claim = ({selected}) => {
+const Claim = ({ selected }) => {
   return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
 };
 
@@ -34,7 +33,7 @@ export default {
     emptyData: 'No data found'
   },
   form: {
-   
+
     actions: {
       submit: {
         id: 'signup-action-submit',
@@ -53,18 +52,18 @@ export default {
       type: {
         id: 'select',
         onChange: (form) => {
-            console.log('on change', form.state);
-            if (form.state.data.type === '1') {
-                form.hideField('toggle');
-            } else {
-                form.showField('toggle');
-            }
+          console.log('on change', form.state);
+          if (form.state.data.type === '1') {
+            form.hideField('toggle');
+          } else {
+            form.showField('toggle');
+          }
         },
         label: 'Select field group',
         type: 'select',
         options: [
-          {value: '1', label: 'one'},
-          {value: '2', label: 'two'}
+          { value: '1', label: 'one' },
+          { value: '2', label: 'two' }
         ]
       },
       toggle: {

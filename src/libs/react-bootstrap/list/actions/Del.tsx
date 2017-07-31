@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, closeButton, Modal } from 'react-bootstrap';
-import { IListRow } from '../../../../../index';
+import { IListRow } from '../../../../interfaces';
 
 interface IProps {
   del: (type: string, selected: IListRow[], user: any, token?: string) => any;

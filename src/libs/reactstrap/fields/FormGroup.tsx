@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormFeedback, FormGroup, FormText, Label } from 'reactstrap';
-import { IFormField, IFormGroupProps } from '../../../../index';
+import { IFormField, IFormGroupProps } from '../../../interfaces';
 
 export default (props: IFormGroupProps & IFormField) => {
   const { FieldComponent, errors, field, onChange, onBlur, name, row, validationState, value } = props;

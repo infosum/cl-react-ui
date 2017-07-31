@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import { FieldButtonGroup, IFieldOption } from '../../../../index';
+import { FieldButtonGroup, IFieldOption } from '../../../interfaces';
 
 interface IState {
   value: string;
