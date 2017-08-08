@@ -187,7 +187,7 @@ export default {
 
         label: 'Claim',
         type: 'text',
-        value: '',
+        value: 'ABCD',
         placeholder: 'Claim code',
         help: 'This will be given to the client allowing them to claim their records'
       },

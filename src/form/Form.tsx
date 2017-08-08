@@ -49,11 +49,15 @@ class UiForm extends Component<IFormProps, IState> {
     const formState = {};
 
     Object.keys(props.errors).forEach((key) => formState[key] = 'error');
+    const values = {};
     Object.keys(this.fields).forEach((key) => {
-      this.fields[key].pristine = true;
+      const field = this.fields[key];
+      field.pristine = true;
+      values[key] = field.value || '';
     });
 
-    const data = this.makeState(props.data);
+    // Merge config field.values into props.data
+    const data = this.makeState({ ...values, ...props.data });
     const state = {
       data,
       errors: props.errors,

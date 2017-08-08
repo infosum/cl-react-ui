@@ -52341,7 +52341,7 @@ exports.default = {
 
         label: 'Claim',
         type: 'text',
-        value: '',
+        value: 'ABCD',
         placeholder: 'Claim code',
         help: 'This will be given to the client allowing them to claim their records'
       },
@@ -52592,10 +52592,13 @@ var UiForm = function (_super) {
         Object.keys(props.errors).forEach(function (key) {
             return formState[key] = 'error';
         });
+        var values = {};
         Object.keys(_this.fields).forEach(function (key) {
-            _this.fields[key].pristine = true;
+            var field = _this.fields[key];
+            field.pristine = true;
+            values[key] = field.value || '';
         });
-        var data = _this.makeState(props.data);
+        var data = _this.makeState(__assign({}, values, props.data));
         var state = {
             data: data,
             errors: props.errors,
