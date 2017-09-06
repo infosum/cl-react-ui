@@ -26,6 +26,11 @@ class UiList extends Component<IListProps, IState> {
   public static defaultProps: Partial<IListProps> = {
     actions: {},
     canSelect: (row) => true,
+    pagination: {
+      limit: 10,
+      offset: 0,
+      total: 10,
+    },
   };
 
   private columns: IListColumns;

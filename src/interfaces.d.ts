@@ -1,3 +1,4 @@
+export type TSortDirection = 'ASC' | 'DESC';
 export interface IUser {
   [key: string]: any;
 }
@@ -290,6 +291,12 @@ export interface IFormModalProps {
   showModal: () => void;
 }
 
+export interface IPagination {
+  total: number;
+  limit: number;
+  offset: number;
+}
+
 export interface IListProps {
   access: {
     add?: (view: string, state: any) => boolean;
@@ -317,7 +324,9 @@ export interface IListProps {
   children?: (IFormModalProps) => any;
   config: ICrudConfig;
   data: IListRow[];
+  getData: (pagination: IPagination) => IListRow[];
   layout?: string;
+  pagination: IPagination;
 }
 
 export interface IListRowProps {

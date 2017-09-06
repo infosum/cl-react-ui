@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Icon, Form, List, ListFilters, validations} from '../index';
+import { Icon, Form, List, ListFilters, validations } from '../index';
 import config from './config';
 import configToggleGroup from './config-toggle-group';
 import CustomLayout from './CustomLayout';
-import {Button, Container, Modal} from 'reactstrap';
+import { Button, Container, Modal } from 'reactstrap';
 
 class Demo extends Component {
 
@@ -13,8 +13,24 @@ class Demo extends Component {
     this.state = {
       lib: 'reactstrap',
       data: [
-        {custom_id: '1', label: 'label 1', claimed: false},
-        {custom_id: '2', label: 'label 2', claimed: true}
+        { custom_id: '1', label: 'label 1', claimed: false },
+        { custom_id: '2', label: 'label 2', claimed: true },
+        { custom_id: '3', label: 'label 3', claimed: false },
+        { custom_id: '4', label: 'label 4', claimed: true },
+        { custom_id: '5', label: 'label 5', claimed: false },
+        { custom_id: '6', label: 'label 6', claimed: true },
+        { custom_id: '7', label: 'label 7', claimed: false },
+        { custom_id: '8', label: 'label 8', claimed: true },
+        { custom_id: '9', label: 'label 9', claimed: false },
+        { custom_id: '10', label: 'label 10', claimed: true },
+        { custom_id: '11', label: 'label 11', claimed: false },
+        { custom_id: '12', label: 'label 12', claimed: true },
+        { custom_id: '13', label: 'label 13', claimed: false },
+        { custom_id: '14', label: 'label 14', claimed: true },
+        { custom_id: '15', label: 'label 15', claimed: false },
+        { custom_id: '16', label: 'label 16', claimed: true },
+        { custom_id: '17', label: 'label 17', claimed: false },
+        { custom_id: '18', label: 'label 18', claimed: true },
       ]
     }
   }
@@ -24,19 +40,19 @@ class Demo extends Component {
       ? 'reactBootstrap'
       : 'reactstrap';
 
-    this.setState({lib})
+    this.setState({ lib })
   }
 
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     const row = {
       label: 'hi'
     };
 
-console.log('data = ', data);
+    console.log('data = ', data);
     const listActions = {
       add: (view, state) => {
-        this.setState({data: data.concat(state)});
+        this.setState({ data: data.concat(state) });
         console.log('save: would normally be connected to a redux action');
       },
       edit: (view, state) => {
@@ -46,32 +62,55 @@ console.log('data = ', data);
       }
     };
 
+    const _getData = (pagination) => {
+      console.log('getData', pagination);
+      const start = pagination.offset * pagination.limit;
+      const end = (pagination.offset + 1) * (pagination.limit);
+      const res = [
+        ...data.slice(start, end)
+      ];
+      console.log('res = ', res);
+      return res;
+    }
+
+    const pagination = {
+      total: 80,
+      limit: 10,
+      offset: 0
+    };
+
     return <Container>
-        <Button onClick={e => this.toggleLib()}>
-          lib: {this.state.lib}
-        </Button>
+      <Button onClick={e => this.toggleLib()}>
+        lib: {this.state.lib}
+      </Button>
 
-        <h1>test form</h1>
-        <Icon icon="leaf"
-          color="info"
-          label="leaf"
-          pull="right"
-          size={3}
-          spin={true} />
+      <h1>test form</h1>
+      <Icon icon="leaf"
+        color="info"
+        label="leaf"
+        pull="right"
+        size={3}
+        spin={true} />
 
-        <List config={config}
-          data={data}
-          actions={listActions}>
-          {({actions, handleUpdate, selected, showModal, close}) => 
+      <List config={config}
+
+        getData={(pagintion) => {
+          _getData(pagination);
+        }}
+        pagination={pagination}
+        actions={listActions}>
+        {({ actions, handleUpdate, selected, showModal, close }) =>
           <div>
             <Modal isOpen={showModal} toggle={close}>
               <Form
-                actions={{close: {
-                  action: close,
-                  id: 'modal-close',
-                  label: 'Close',
-                  type: 'button',
-                }}}
+                actions={{
+                  close: {
+                    action: close,
+                    id: 'modal-close',
+                    label: 'Close',
+                    type: 'button',
+                  }
+                }}
                 data={selected}
                 formUpdate={actions.formUpdate}
                 layout="Modal"
@@ -82,26 +121,26 @@ console.log('data = ', data);
                 }}
               />
             </Modal>
-            <ListFilters 
+            <ListFilters
               config={config} />
           </div>
-          }
-        </List>
+        }
+      </List>
 
-        <Form config={config}
-          layout={CustomLayout}
-          data={row}
-          lib={this.state.lib}
-          errors={{}}
-          onSubmit={e => console.log(e)} />
+      <Form config={config}
+        layout={CustomLayout}
+        data={row}
+        lib={this.state.lib}
+        errors={{}}
+        onSubmit={e => console.log(e)} />
 
-        <Form config={configToggleGroup}
-          data={{}}
-          lib={this.state.lib}
-          errors={{}}
-          onSubmit={e => console.log(e)}
-          visibility={{toggle: false}} />
-      </Container>
+      <Form config={configToggleGroup}
+        data={{}}
+        lib={this.state.lib}
+        errors={{}}
+        onSubmit={e => console.log(e)}
+        visibility={{ toggle: false }} />
+    </Container>
   }
 }
 
