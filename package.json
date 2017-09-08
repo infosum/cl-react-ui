@@ -67,11 +67,14 @@
     "react-dropzone": "^3.13.2",
     "react-transition-group": "^1.1.3",
     "reactstrap": "^4.6.2",
+    "recompose": "^0.25.0",
     "uuid": "^3.0.1",
     "validate-promise": "^2.0.9"
   },
   "description": "Cognitive Logic React UI",
   "devDependencies": {
+    "@kadira/storybook": "^2.35.3",
+    "@storybook/react": "^3.2.8",
     "@types/chai": "^4.0.1",
     "@types/mocha": "^2.2.41",
     "@types/react": "^15.0.25",
@@ -130,7 +133,8 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "test": "NODE_ENV=test mocha --recursive '**/*.spec.ts*' --compilers ts:ts-node/register,tsx:ts-node/register --require ./test/setup.js --bail",
-    "cover": "NODE_ENV=test nyc npm test"
+    "cover": "NODE_ENV=test nyc npm test",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "nyc": {
     "exclude": [
