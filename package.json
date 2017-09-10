@@ -60,6 +60,7 @@
     "url": "https://github.com/cognitivelogic/cl-react-ui/issues"
   },
   "dependencies": {
+    "@types/storybook__react": "^3.0.5",
     "deep-equal": "^1.0.1",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
@@ -73,7 +74,6 @@
   },
   "description": "Cognitive Logic React UI",
   "devDependencies": {
-    "@kadira/storybook": "^2.35.3",
     "@storybook/react": "^3.2.8",
     "@types/chai": "^4.0.1",
     "@types/mocha": "^2.2.41",

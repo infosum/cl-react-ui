@@ -1,5 +1,5 @@
 /* tslint:disable:no-var-require */
-require('babel-register');
+// require('babel-register');
 import * as validations from 'validate-promise';
 import Icon from './components/Icon';
 import Form from './form/Form';
