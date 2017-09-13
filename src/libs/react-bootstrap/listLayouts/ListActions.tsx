@@ -7,7 +7,9 @@ export default (props: IListActionsProps): JSX.Element => {
 
   const listActionGroups: JSX.Element[] = [];
   const { user, selected, actions, config, rowClick } = props;
-
+  if (!config.list.actions) {
+    return;
+  }
   // For each button group
   config.list.actions.forEach((btns, index) => {
     const listActionNames = Object.keys(btns);

@@ -88,6 +88,12 @@ console.log('data = ', data);
           }
         </List>
 
+        <List config={config}
+          data={data}
+          actions={listActions}>
+          
+        </List>
+
         <Form config={config}
           layout={CustomLayout}
           data={row}

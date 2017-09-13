@@ -8248,6 +8248,9 @@ exports.default = function (props) {
         actions = props.actions,
         config = props.config,
         rowClick = props.rowClick;
+    if (!config.list.actions) {
+        return;
+    }
     config.list.actions.forEach(function (btns, index) {
         var listActionNames = Object.keys(btns);
         var listActions = listActionNames.map(function (listAction, key) {
@@ -13600,6 +13603,9 @@ exports.default = function (props) {
         config = props.config,
         rowClick = props.rowClick;
     var listActionGroups = [];
+    if (!config.list.actions) {
+        return;
+    }
     config.list.actions.forEach(function (btns, index) {
         var listActionNames = Object.keys(btns);
         var listActions = listActionNames.map(function (listAction, key) {
