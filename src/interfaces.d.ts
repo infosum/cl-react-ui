@@ -35,7 +35,7 @@ interface IFilterProps {
 
 export interface IIconProps {
   icon?: string;
-  color?: string;
+  color?: 'muted' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'white' | '';
   label?: string;
   pull?: string;
   size?: 0 | 1 | 2 | 3 | 4 | 5;
