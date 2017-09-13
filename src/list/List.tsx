@@ -387,7 +387,7 @@ class UiList extends Component<IListProps, IState> {
         msg={this.messages.emptyData}
         {...this.props}>
       </ListLayout>
-      {this.props.children(formModalProps)}
+      {typeof this.props.children === 'function' && this.props.children(formModalProps)}
     </div>;
 
   }
