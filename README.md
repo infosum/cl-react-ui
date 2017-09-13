@@ -1,6 +1,24 @@
 # cl-react-form
 Simple react form rendering
 
+# Examples
+
+You can try out some of the component via react story book, still a work in progress:
+
+``` bash
+yarn storybook
+```
+
+In the mean time the old examples can be built :
+
+``` bash
+cd src/examples
+yarn build
+google-chrome index.html
+```
+
+
+
 ## Forms
 
 ``` javascript
@@ -165,12 +183,4 @@ import {Icon} from 'cl-react-ui';
   spin: boolean />
 ```
 
-# Examples
 
-To build the example form and list :
-
-```
-cd src/examples
-npm run-script build
-google-chrome index.html
-```
