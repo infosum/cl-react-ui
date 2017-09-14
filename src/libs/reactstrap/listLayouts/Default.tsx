@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { Alert, Col, Input, Row, Table } from 'reactstrap';
 import { IListRow } from '../../../interfaces';
-import PageSize from '../list/PageSize';
-import Paginator from '../list/Paginator';
 
 export default (props) => {
   const { actions, buttons, canSelect, data, config, listRow, msg,
     rowClick, rows, search, selected, showAddModal, toggleAll, update, user } = props;
 
   let list;
-  console.log('pagination', pagination);
+
   const columns = config.list.columns;
   const headings = Object.keys(columns)
     .map((heading: string, key: number): JSX.Element => {
@@ -41,11 +39,6 @@ export default (props) => {
           )}
         </tbody>
       </Table>
-      <Paginator total={pagination.total} limit={pagination.limit} offset={pagination.offset}
-        setPagination={(p) => {
-          getData(p);
-        }} />
-      <PageSize label={pagination.limit} setPageSize={(s) => console.log('setPageSize', s)} />
 
     </div>);
   } else {

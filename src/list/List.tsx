@@ -28,11 +28,6 @@ class UiList extends Component<IListProps, IState> {
     actions: {},
     buttons: () => null,
     canSelect: (row) => true,
-    pagination: {
-      limit: 10,
-      offset: 0,
-      total: 10,
-    },
   };
 
   private columns: IListColumns;
