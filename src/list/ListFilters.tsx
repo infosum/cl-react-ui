@@ -13,7 +13,7 @@ class ListFilters extends Component<IListFilterProps, any> {
     if (!config.list.filters) {
       return;
     }
-    console.log(config.list.filters);
+
     return <div>List Filters
             {
         Object.keys(config.list.filters).map((name) => {
@@ -25,6 +25,7 @@ class ListFilters extends Component<IListFilterProps, any> {
           }
           return <FilterType
             field={field}
+            key={name}
             value=""
             name={name}
             onBlur={this.onBlur.bind(this)} />;

@@ -159,16 +159,11 @@ class UiForm extends Component<IFormProps, IState> {
     const { title } = this.props;
     if (title) {
       form.title = typeof (title) === 'function' ? title(row) : title;
-    } else {
-      // Deprecated just use 'title'
-      if (typeof (form._title) === 'function') {
-        form.title = form._title(row);
-      }
     }
 
     for (name in form.actions) {
-      if (typeof (form.actions[name]._label) === 'function') {
-        form.actions[name].label = form.actions[name]._label(row);
+      if (typeof (form.actions[name].label) === 'function') {
+        form.actions[name].label = form.actions[name].label(row);
       }
     }
     return form;
@@ -444,6 +439,7 @@ class UiForm extends Component<IFormProps, IState> {
       form={this}
       onSubmit={(e) => {
         e.preventDefault();
+        debugger;
         validate(this.toContract(), this.state.data)
           .then(() => {
             this.onSubmit(e, this.state.data);

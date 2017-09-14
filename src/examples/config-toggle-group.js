@@ -38,7 +38,7 @@ export default {
       submit: {
         id: 'signup-action-submit',
         type: 'submit',
-        _label: (row) => row.id === '' ? 'Create' : 'Update',
+        label: (row) => row.id === '' ? 'Create' : 'Update',
         style: 'primary'
       }
     },

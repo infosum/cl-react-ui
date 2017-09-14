@@ -18,9 +18,7 @@ describe('list.actions.Del', () => {
     beforeEach(() => {
       component = shallow(<Del
         del={del}
-        user={user}
-        selected={[]}
-        isVisible={true}></Del>);
+        selected={[]}></Del>);
     });
 
     it('shows a buton (and modal ok & cancel)', () => {
@@ -57,9 +55,7 @@ describe('list.actions.Del', () => {
     beforeEach(() => {
       component = shallow(<Del
         del={del}
-        user={user}
-        selected={[]}
-        isVisible={false}></Del>);
+        selected={[]}></Del>);
     });
 
     it('does not show a buton', () => {

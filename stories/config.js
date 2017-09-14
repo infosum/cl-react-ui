@@ -1,14 +1,15 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import { fields } from '../index';
-import { validations } from '../index';
-import { List, listActions } from '../index';
+import { fields } from '../src';
+import { validations } from '../src';
+import { List, listActions } from '../src';
 
 const Claim = ({ selected }) => {
-  return <Button onClick={(e) => console.log('selected', selected)}>Claim</Button>;
+  return <Button onClick={(e) => console.log('selected', selected)}>Claim </Button>;
 };
 
-export default {
+/* tslint:disable:object-literal-sort-keys */
+const config = {
   view: 'example',
   lib: 'reactstrap',
   primary_key: 'custom_id',
@@ -17,18 +18,19 @@ export default {
     columns: {
       custom_id: {
         id: 'heading-id',
-        label: 'ID'
+        label: 'ID',
       },
       edit: {
         id: 'edit',
         label: 'Edit',
         render: (props) => <Button onClick={(e) => {
           props.rowClick(e, false, props.row);
-        }}>Edit</Button>,
+        }
+        }>Edit </Button>,
       },
       label: {
         id: 'heading-name',
-        label: 'Name'
+        label: 'Name',
       },
       select: {
         id: 'select',
@@ -38,66 +40,24 @@ export default {
         class: 'text-center',
         id: 'heading-claimed',
         label: 'Claimed',
-      }
+      },
     },
     filters: {
       select: {
-        type: 'select'
-      }
+        type: 'select',
+      },
     },
     searchall: {
       label: 'Search',
       like: [
-        'id', 'label'
-      ]
+        'id', 'label',
+      ],
     },
-    actions: [
-      {
-        add: {
-          id: 'list-action-add',
-          visible: () => true,
-          render: (props) => <Button onClick={() => props.showAddModal()}>Add</Button>
-        },
-        // del: {
-        //   id: 'list-action-del',
-        //   visible: () => true,
-        //   //render: (props) => <Button onClick={() => console.log(props)}>Del</Button>
-        //   render: (props) => {
-        //     const Del = listActions.reactstrap.Del;
-        //     return <Del del={(view, data) => console.log('del', props, view, data)}
-        //       isVisible={props.selected.length > 0} selected={props.selected} user={{}} />;
-        //   }
-        // },
-        claim: {
-          id: 'list-action-claim',
-          visible: () => true,
-          render: (props) => <Claim {...props} />
-        },
-        describe: {
-          id: 'list-action-describe',
-          visible: () => true,
-          render: (props) => <Button>Describe</Button>
-        },
-        toggle: {
-          id: 'toggle',
-          visible: () => true,
-          render: listActions.reactstrap.Toggle,
-          config: {
-            update: { admin: false },
-            label: 'User',
-            icon: 'fa fa-user'
-          },
-        }
-      }
-    ]
+
   },
 
-  prefilters: [
-
-  ],
-
   messages: {
-    emptyData: 'No data found'
+    emptyData: 'No data found',
   },
   form: {
     title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
@@ -106,24 +66,24 @@ export default {
         id: 'signup-action-submit',
         type: 'submit',
         label: (row) => row.id === '' ? 'Create record' : 'Save record',
-        style: 'primary'
+        style: 'primary',
       },
       clear: {
         id: 'clear',
         type: 'button',
         label: 'clear',
-        action: (e, form) => {
+        action: (form) => {
           console.log('this gives access to the form', form);
           form.reset();
-        }
-      }
+        },
+      },
     },
     fields: {
       custom_id: {
         id: 'activation-id',
         label: 'ID',
         type: 'text',
-        value: ''
+        value: '',
       },
       select: {
         id: 'select',
@@ -132,8 +92,8 @@ export default {
         type: 'select',
         options: [
           { value: '1', label: 'one' },
-          { value: '2', label: 'two' }
-        ]
+          { value: '2', label: 'two' },
+        ],
       },
       label: {
         id: 'name',
@@ -143,36 +103,36 @@ export default {
         help: 'A descriptive name for the drone',
         validate: {
           promises: [{
-            rule: validations.required
+            rule: validations.required,
           }],
-          msg: (value, data) => 'Name required'
-        }
+          msg: (value, data) => 'Name required',
+        },
       },
       customer: {
         id: 'customer',
         label: 'Customer',
         type: 'lookup',
-        value: 2,
+        value: '2',
         default: (row, field) => {
           console.log(row, field);
           return '3';
         },
         options: {
           store: (row, props) => [
-            { id: 1, name: 'customer 1' },
-            { id: 2, name: 'customer 2' },
-            { id: 3, name: 'customer 3' }
+            { id: '1', name: 'customer 1' },
+            { id: '2', name: 'customer 2' },
+            { id: '3', name: 'customer 3' },
           ],
           key: 'id',
           label: 'name',
-          optionFitler: (row) => true
-        }
+          optionFitler: (row) => true,
+        },
       },
       sector: {
         id: 'sector',
         value: Date.now(),
         label: 'Sector',
-        type: 'Text'
+        type: 'Text',
       },
       radiolist: {
         id: 'radio-list',
@@ -180,17 +140,20 @@ export default {
         label: 'Radio list',
         type: 'radiolist',
         default: 'two',
-        options: {
+        options: [{
+          value: 'One',
           one: 'One',
-          two: 'Two'
-        }
+        }, {
+          value: 'Two',
+          two: 'Two',
+        }],
       },
       upload: {
         id: 'upload',
         type: 'upload',
 
         label: 'Upload',
-        placeholder: 'Drag files here'
+        placeholder: 'Drag files here',
       },
       activation: {
         id: 'activation',
@@ -199,7 +162,7 @@ export default {
         type: 'text',
         value: 'ABCD',
         placeholder: 'Claim code',
-        help: 'This will be given to the client allowing them to claim their records'
+        help: 'This will be given to the client allowing them to claim their records',
       },
 
       claimed: {
@@ -210,8 +173,8 @@ export default {
         help: '',
         vaidationState: '',
         access: {
-          new: () => true
-        }
+          new: () => true,
+        },
       },
       claimedDate: {
         id: 'claimedDate',
@@ -219,8 +182,8 @@ export default {
         label: 'Claimed date',
         type: 'date',
         access: {
-          new: () => true
-        }
+          new: () => true,
+        },
       },
       registered: {
         id: 'registered',
@@ -231,16 +194,16 @@ export default {
         help: '',
         vaidationState: '',
         access: {
-          new: () => true
-        }
+          new: () => true,
+        },
       },
       registeredDate: {
         id: 'registeredDate',
         label: 'Registered date',
         type: 'date',
         access: {
-          new: () => true
-        }
+          new: () => true,
+        },
       },
 
       description: {
@@ -249,8 +212,8 @@ export default {
         type: 'textarea',
         access: {
           new: () => true,
-          edit: () => true
-        }
+          edit: () => true,
+        },
       },
       rangearray: {
         id: 'range-array',
@@ -258,19 +221,19 @@ export default {
         type: 'grid',
         columns: [
           {
-            label: 'Min', type: fields.reactstrap.Text
+            label: 'Min', type: fields.reactstrap.Text,
           },
           {
             label: 'Category',
             type: fields.reactstrap.Lookup,
             options: {
               store: async (row, props) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                   setTimeout(() => {
                     resolve([
                       { id: 1, name: 'cat 1' },
                       { id: 2, name: 'cat 2' },
-                      { id: 3, name: 'cat 3' }
+                      { id: 3, name: 'cat 3' },
                     ]);
                   }, 2000);
                 });
@@ -278,7 +241,7 @@ export default {
 
               key: 'id',
               label: 'name',
-            }
+            },
           },
           {
             label: 'Sub category',
@@ -288,7 +251,7 @@ export default {
               label: 'name',
               observe: [1],
               store: async (row, props) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                   setTimeout(() => {
                     if (row[1] === '1') {
                       resolve([
@@ -298,31 +261,30 @@ export default {
                     resolve([
                       { id: 1, name: 'subcat 1' },
                       { id: 2, name: 'subcat 2' },
-                      { id: 3, name: 'subcat 3' }
+                      { id: 3, name: 'subcat 3' },
                     ]);
                   }, 2000);
                 });
               },
-
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       signupname: {
         id: 'signup-name',
         label: 'Name',
         type: 'text',
-        ref: 'name',
         value: '',
         placeholder: 'Name',
         validate: {
           promises: [{
-            rule: validations.required
+            rule: validations.required,
           }],
-          msg: (value, data) => 'Name required'
-        }
+          msg: (value, data) => 'Name required',
+        },
       },
-    }
-  }
-
+    },
+  },
 };
+
+export default config;

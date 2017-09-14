@@ -17,6 +17,9 @@ class Lookup extends Component<FieldLookup, IState> {
   constructor(props: FieldLookup) {
     super(props);
     this.state = { loading: true, search: '', value: '' };
+  }
+
+  public componentDidMount() {
     this.get();
   }
 

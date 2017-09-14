@@ -2,12 +2,11 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import Icon from '../../../../components/Icon';
 import { IListRow, IUser } from '../../../../interfaces';
 
 interface IProps {
-  del: (type: string, selected: IListRow[], user: any, token?: string) => any;
-  user: any;
-  isVisible: boolean;
+  del: (type: string, selected: IListRow[], token?: string) => any;
   selected: IListRow[];
 }
 
@@ -15,7 +14,6 @@ interface IState {
   showModal: boolean;
 }
 
-const c = {} as IUser;
 /**
  * List row delete button
  */
@@ -52,8 +50,8 @@ export default class Del extends Component<IProps, IState> {
    */
   private handleSubmit(e) {
     e.preventDefault();
-    const { del, user, selected } = this.props;
-    del('user', selected, user);
+    const { del, selected } = this.props;
+    del('user', selected);
     this.close();
   }
 
@@ -61,16 +59,12 @@ export default class Del extends Component<IProps, IState> {
    * Render delete button
    * @return {Dom} node
    */
-  public render(): JSX.Element | null {
-    const { selected, isVisible } = this.props;
-
-    if (!isVisible) {
-      return null;
-    }
+  public render() {
+    const { selected } = this.props;
     return (
       <span>
         <Button onClick={(e) => this.open(e)} >
-          <i className="fa fa-times"></i> Delete
+          <Icon icon="times" label="Delete" />
         </Button>
         <Modal isOpen={this.state.showModal}
           toggle={() => this.close()}

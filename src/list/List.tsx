@@ -24,7 +24,9 @@ interface IState {
 class UiList extends Component<IListProps, IState> {
 
   public static defaultProps: Partial<IListProps> = {
+    access: {},
     actions: {},
+    buttons: () => null,
     canSelect: (row) => true,
     pagination: {
       limit: 10,
@@ -261,26 +263,26 @@ class UiList extends Component<IListProps, IState> {
   }
 
   /**
-   * Update or add a row
+   * Check if a row can be added or updated
    * @param {Event} e .
    * @param {Object} state New state
+   * @return {Boolean} Can update
    */
-  private handleUpdate(e: Event, state: { id: string } = { id: '' }) {
-    const { actions, config, access } = this.props;
+  private handleUpdate(e: Event, state: { id: string } = { id: '' }): boolean {
+    const { config, access } = this.props;
     this.setState({ rowUpdating: true });
     const pk = this.getPrimaryKey();
-    if (!actions) {
-      return;
-    }
+
     if (state[pk] === '' || state[pk] === undefined) {
       if (this.can('add')) {
-        actions.add(config.view, state);
+        return true;
       }
     } else {
       if (this.can('edit')) {
-        actions.edit(config.view, state);
+        return true;
       }
     }
+    return false;
   }
 
   /**
@@ -392,7 +394,7 @@ class UiList extends Component<IListProps, IState> {
         msg={this.messages.emptyData}
         {...this.props}>
       </ListLayout>
-      {this.props.children(formModalProps)}
+      {typeof this.props.children === 'function' && this.props.children(formModalProps)}
     </div>;
 
   }

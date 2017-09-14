@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import Add from './Add';
+import Add, { IProps } from './Add';
 
 let component;
 const evnt = { preventDefault() { console.log('evnt'); } };
-const open = (e: MouseEvent) => {
+const open = () => {
   console.log('open');
 };
 
@@ -14,8 +14,7 @@ describe('list.actions.Add', () => {
   describe('visible', () => {
     beforeEach(() => {
       component = shallow(<Add
-        open={open}
-        isVisible={true}></Add>);
+        showAddModal={open}></Add>);
     });
 
     it('shows a buton', () => {
@@ -31,8 +30,7 @@ describe('list.actions.Add', () => {
   describe('invisible', () => {
     beforeEach(() => {
       component = shallow(<Add
-        open={open}
-        isVisible={false}></Add>);
+        showAddModal={open}></Add>);
     });
 
     it('does not show a buton', () => {

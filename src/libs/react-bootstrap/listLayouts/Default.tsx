@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Alert, Col, Row, Table, Well } from 'react-bootstrap';
 import { IListRow } from '../../../interfaces';
-import ListActions from './ListActions';
 
-export default ({ actions, canSelect, data, config, listRow,
+export default ({ actions, buttons, canSelect, data, config, listRow,
   msg, rowClick, rows, search, selected, showAddModal, toggleAll, update, user }) => {
   let list;
   const columns = config.list.columns;
@@ -49,13 +48,7 @@ export default ({ actions, canSelect, data, config, listRow,
   return (<div>
     <Row>
       <Col md={8}>
-        <ListActions rowClick={rowClick}
-          user={user}
-          selected={selected}
-          actions={actions}
-          config={config}
-          showAddModal={showAddModal}
-          update={update} />
+        {buttons()}
       </Col>
       <Col md={4}>{search}</Col>
     </Row>

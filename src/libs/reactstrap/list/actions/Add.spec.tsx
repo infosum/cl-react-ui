@@ -6,7 +6,7 @@ import Add from './Add';
 
 let component;
 const evnt = { preventDefault() { console.log('evnt'); } };
-const open = (e: MouseEvent) => {
+const open = () => {
   console.log('open');
 };
 
@@ -14,8 +14,7 @@ describe('list.actions.Add', () => {
   describe('visible', () => {
     beforeEach(() => {
       component = shallow(<Add
-        open={open}
-        isVisible={true}></Add>);
+        showAddModal={open}></Add>);
     });
 
     it('shows a button', () => {
@@ -31,8 +30,7 @@ describe('list.actions.Add', () => {
   describe('invisible', () => {
     beforeEach(() => {
       component = shallow(<Add
-        open={open}
-        isVisible={false}></Add>);
+        showAddModal={open}></Add>);
     });
 
     it('does not show a buton', () => {

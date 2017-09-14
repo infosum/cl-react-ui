@@ -36,7 +36,7 @@ interface IFilterProps {
 
 export interface IIconProps {
   icon?: string;
-  color?: string;
+  color?: 'muted' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'white' | '';
   label?: string;
   pull?: string;
   size?: 0 | 1 | 2 | 3 | 4 | 5;
@@ -48,16 +48,18 @@ export interface IIconProps {
 export interface IFormErrors { [key: string]: string[] }
 
 export type defaultFunction = (row: IListRow, field: IFieldConfig) => string;
+export type labelFunction = (row: IListRow) => string;
 
 export interface IFieldConfig {
   access?: {
     [key: string]: (field: IFieldConfig, data: IListRow) => boolean;
   };
+  columns?: any[];
   default?: string | defaultFunction;
   help?: string;
   id: string;
   key?: string;
-  label?: string;
+  label?: string | labelFunction;
   onChange?: (form: any) => void;
   options?: IFieldLookupOptions | IFieldOption[];
   placeholder?: string;
@@ -71,15 +73,14 @@ export interface IFieldConfig {
     }];
     msg: (value: string | number, data: IListRow) => string;
   }
-  value?: string;
+  value?: any;
 }
 
 export interface IFormActionConfig {
-  action: (e?: MouseEvent) => void;
+  action?: (form: any) => void;
   id: string;
   type: 'submit' | 'button';
-  label?: string,
-  _label?: (row: IListRow) => string;
+  label?: string | labelFunction;
   style?: string;
 }
 
@@ -88,12 +89,11 @@ export interface IFormActionsConfig {
 }
 
 export interface IFormConfig {
-  _title?: (row: IListRow) => string;
   actions?: IFormActionsConfig;
   fields: {
     [key: string]: IFieldConfig;
   };
-  title?: string;
+  title?: string | labelFunction;
 }
 
 export interface IFormField {
@@ -233,24 +233,14 @@ export interface IListAction {
 
 export interface IListActions { [key: string]: IListAction }
 
-export interface IListActionsProps {
-  actions: IListActions;
-  user: IUser;
-  selected: IListRow[];
-  config: ICrudConfig;
-  rowClick: (e: MouseEvent, clicked: boolean) => void;
-  showAddModal: () => void;
-  update: (selected: IListRow[], update: { [key: string]: string }) => void;
-}
-
 export interface IListColumns {
   [key: string]: {
-    Checkbox: (any) => JSX.Element;
+    Checkbox?: (any) => JSX.Element;
     class?: string;
     config?: any;
     id?: string;
     label?: string;
-    render: (any) => JSX.Element;
+    render?: (any) => JSX.Element;
     tip?: ITipConfig;
   };
 }
@@ -260,7 +250,6 @@ export interface IFilter {
 }
 
 export interface IListConfig {
-  actions: IListActions[];
   columns: IListColumns;
   filters?: {
     [key: string]: IFilter;
@@ -298,12 +287,13 @@ export interface IPagination {
 }
 
 export interface IListProps {
-  access: {
+  access?: {
     add?: (view: string, state: any) => boolean;
     edit?: (view: string, state: any) => boolean;
     view?: (view: string, state: any) => boolean;
   };
-  actions: {
+  buttons: (props: any) => JSX.Element | null;
+  actions?: {
     add?: (view: string, state: any) => void;
     deselectRow?: (row: IListRow) => void;
     edit?: (view: string, state: any) => void;

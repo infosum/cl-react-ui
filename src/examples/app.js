@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon, Form, List, ListFilters, validations } from '../index';
+
+import { Icon, Form, List, listActions, ListFilters, validations } from '../index';
+
 import config from './config';
 import configToggleGroup from './config-toggle-group';
 import CustomLayout from './CustomLayout';
@@ -49,18 +51,6 @@ class Demo extends Component {
       label: 'hi'
     };
 
-    console.log('data = ', data);
-    const listActions = {
-      add: (view, state) => {
-        this.setState({ data: data.concat(state) });
-        console.log('save: would normally be connected to a redux action');
-      },
-      edit: (view, state) => {
-        var i = data.findIndex(d => d.custom_id === state.custom_id);
-        data[i] = state;
-        console.log('save: would normally be connected to a redux action');
-      }
-    };
 
     const _getData = (pagination) => {
       console.log('getData', pagination);
@@ -79,6 +69,7 @@ class Demo extends Component {
       offset: 0
     };
 
+
     return <Container>
       <Button onClick={e => this.toggleLib()}>
         lib: {this.state.lib}
@@ -93,12 +84,33 @@ class Demo extends Component {
         spin={true} />
 
       <List config={config}
-
         getData={(pagintion) => {
           _getData(pagination);
         }}
         pagination={pagination}
-        actions={listActions}>
+        data={data}
+        buttons={(props) => {
+          const { Del, Add, Edit, Toggle } = listActions.reactstrap;
+          return <div>
+            <Del del={(view, selected) => {
+              const ids = selected.map((d) => d.custom_id);
+              const data = this.state.data.filter((row) => ids.indexOf(row.custom_id) === -1);
+              this.setState({ data });
+            }}
+              selected={props.selected} />
+            <Add showAddModal={props.showAddModal} />
+            <Edit showModal={props.showModal}
+              selected={props.selected} />
+            <Toggle
+              label="User"
+              update={(userSelected) => {
+                console.log('update', userSelected);
+              }}
+              selected={props.selected}
+              icon="user" />
+          </div>
+        }}>
+
         {({ actions, handleUpdate, selected, showModal, close }) =>
           <div>
             <Modal isOpen={showModal} toggle={close}>
@@ -116,7 +128,12 @@ class Demo extends Component {
                 layout="Modal"
                 config={config}
                 onSubmit={(e, state) => {
-                  handleUpdate(e, state);
+                  if (!handleUpdate(e, state)) {
+                    return;
+                  }
+                  const data = [...this.state.data];
+                  data.push(state);
+                  this.setState({ data });
                   close();
                 }}
               />

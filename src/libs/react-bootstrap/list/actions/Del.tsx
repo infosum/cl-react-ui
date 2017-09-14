@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Button, closeButton, Modal } from 'react-bootstrap';
+import Icon from '../../../../components/Icon';
 import { IListRow } from '../../../../interfaces';
-
 interface IProps {
-  del: (type: string, selected: IListRow[], user: any, token?: string) => any;
-  user: any;
-  isVisible: boolean;
+  del: (type: string, selected: IListRow[], token?: string) => any;
   selected: IListRow[];
 }
 
@@ -52,8 +50,8 @@ export default class Del extends Component<IProps, IState> {
    */
   private handleSubmit(e: MouseEvent) {
     e.preventDefault();
-    const { del, user, selected } = this.props;
-    del('user', selected, user);
+    const { del, selected } = this.props;
+    del('user', selected);
     this.close(e);
   }
 
@@ -61,16 +59,13 @@ export default class Del extends Component<IProps, IState> {
    * Render delete button
    * @return {Dom} node
    */
-  public render(): JSX.Element | null {
-    const { selected, isVisible } = this.props;
+  public render() {
+    const { selected } = this.props;
 
-    if (!isVisible) {
-      return null;
-    }
     return (
       <span>
         <Button onClick={(e) => this.open(e)} >
-          <i className="fa fa-times"></i> Delete
+          <Icon icon="times" label="Delete" />
         </Button>
         <Modal show={this.state.showModal} onHide={(e) => this.close(e)}
           container={this}

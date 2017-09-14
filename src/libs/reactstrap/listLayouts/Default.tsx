@@ -3,10 +3,11 @@ import { Alert, Col, Input, Row, Table } from 'reactstrap';
 import { IListRow } from '../../../interfaces';
 import PageSize from '../list/PageSize';
 import Paginator from '../list/Paginator';
-import ListActions from './ListActions';
 
-export default ({ actions, canSelect, config, data, getData, listRow, msg, pagination,
-  rowClick, rows, search, selected, showAddModal, toggleAll, update, user }) => {
+export default (props) => {
+  const { actions, buttons, canSelect, data, config, listRow, msg,
+    rowClick, rows, search, selected, showAddModal, toggleAll, update, user } = props;
+
   let list;
   console.log('pagination', pagination);
   const columns = config.list.columns;
@@ -58,13 +59,7 @@ export default ({ actions, canSelect, config, data, getData, listRow, msg, pagin
   return (<div>
     <Row>
       <Col md={8}>
-        <ListActions rowClick={rowClick}
-          user={user}
-          selected={selected}
-          actions={actions}
-          config={config}
-          showAddModal={showAddModal}
-          update={update} />
+        {buttons(props)}
       </Col>
       <Col md={4}>{search}</Col>
     </Row>
