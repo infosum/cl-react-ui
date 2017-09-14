@@ -62510,6 +62510,9 @@ exports.default = function (props) {
         actions = props.actions,
         config = props.config,
         rowClick = props.rowClick;
+    if (!config.list.actions) {
+        return;
+    }
     config.list.actions.forEach(function (btns, index) {
         var listActionNames = Object.keys(btns);
         var listActions = listActionNames.map(function (listAction, key) {
@@ -62958,9 +62961,11 @@ var Lookup = function (_super) {
     function Lookup(props) {
         var _this = _super.call(this, props) || this;
         _this.state = { loading: true, search: '', value: '' };
-        _this.get();
         return _this;
     }
+    Lookup.prototype.componentDidMount = function () {
+        this.get();
+    };
     Lookup.prototype.get = function () {
         var _this = this;
         this.setState({ loading: true });
@@ -63681,6 +63686,9 @@ exports.default = function (props) {
         config = props.config,
         rowClick = props.rowClick;
     var listActionGroups = [];
+    if (!config.list.actions) {
+        return;
+    }
     config.list.actions.forEach(function (btns, index) {
         var listActionNames = Object.keys(btns);
         var listActions = listActionNames.map(function (listAction, key) {
@@ -64073,7 +64081,6 @@ var ListFilters = function (_super) {
         if (!config.list.filters) {
             return;
         }
-        console.log(config.list.filters);
         return React.createElement("div", null, "List Filters", Object.keys(config.list.filters).map(function (name) {
             var filter = config.list.filters[name];
             var FilterType = filters[filter.type];
@@ -64081,7 +64088,7 @@ var ListFilters = function (_super) {
             if (!field) {
                 console.error('no field found for ' + name);
             }
-            return React.createElement(FilterType, { field: field, value: "", name: name, onBlur: _this.onBlur.bind(_this) });
+            return React.createElement(FilterType, { field: field, key: name, value: "", name: name, onBlur: _this.onBlur.bind(_this) });
         }));
     };
     return ListFilters;
