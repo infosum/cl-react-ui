@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Button, Modal } from 'reactstrap';
+import enhance from '../../../../enhancers/modal';
 import Del from './Del';
 
 let component;
@@ -16,9 +17,9 @@ const user = {
 describe('list.actions.Del', () => {
   describe('visible', () => {
     beforeEach(() => {
-      component = shallow(<Del
+      component = shallow(enhance(<Del
         del={del}
-        selected={[]}></Del>);
+        selected={[]}></Del>));
     });
 
     it('shows a buton (and modal ok & cancel)', () => {
@@ -53,9 +54,9 @@ describe('list.actions.Del', () => {
 
   describe('invisible', () => {
     beforeEach(() => {
-      component = shallow(<Del
+      component = shallow(enhance(<Del
         del={del}
-        selected={[]}></Del>);
+        selected={[]}></Del>));
     });
 
     it('does not show a buton', () => {

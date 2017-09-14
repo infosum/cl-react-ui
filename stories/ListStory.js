@@ -54,7 +54,7 @@ class ListStory extends Component {
       buttons={(props) => {
         const { Del, Add, Edit, Toggle } = listActions.reactstrap;
         return <div>
-          <Del del={(view, selected) => {
+          <Del del={(selected) => {
             const ids = selected.map((d) => d.custom_id);
             const dx = this.state.data.filter((row) => ids.indexOf(row.custom_id) === -1);
             this.setState({ data: dx });
