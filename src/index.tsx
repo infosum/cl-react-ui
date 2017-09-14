@@ -7,6 +7,8 @@ import * as ReactBootstrapFields from './libs/react-bootstrap/fields';
 import * as ReactBootstrapListActions from './libs/react-bootstrap/list/actions';
 import * as ReactStrapFields from './libs/reactstrap/fields';
 import * as ReactStrapListActions from './libs/reactstrap/list/actions';
+import PageSize from './libs/reactstrap/list/PageSize';
+import Paginator from './libs/reactstrap/list/Paginator';
 import List from './list/List';
 import ListFilters from './list/ListFilters';
 
@@ -24,6 +26,8 @@ export {
   Form,
   Icon,
   List,
+  Paginator,
+  PageSize,
   listActions,
   ListFilters,
   fields,
