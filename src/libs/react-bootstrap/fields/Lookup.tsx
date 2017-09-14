@@ -22,6 +22,7 @@ export default class Lookup extends Component<FieldLookup, IState> {
   public componentDidMount() {
     this.get();
   }
+
   /**
    * Get the store data
    * @return {Array} option objects
