@@ -14,7 +14,6 @@ const PageSize: React.SFC<IProps> = ({ pagination, setPagination, sizes }) => {
   const maxOffset = Math.ceil(total / limit);
   return <Input type="select"
     onChange={(e) => {
-      console.log(e.target.value);
       setPagination({ ...pagination, limit: Number(e.target.value) });
     }}>
     {
