@@ -53,61 +53,26 @@ const config = {
         'id', 'label',
       ],
     },
-    actions: [
-      {
-        add: {
-          id: 'list-action-add',
-          visible: () => true,
-          render: (props) => {
-            debugger;
-            return <Button onClick={() => props.showAddModal()}>Add </Button>;
-          },
-        },
-        claim: {
-          id: 'list-action-claim',
-          visible: () => true,
-          render: (props) => <Claim {...props } />,
-        },
-        describe: {
-          id: 'list-action-describe',
-          visible: () => true,
-          render: (props) => <Button>Describe </Button>,
-        },
-        toggle: {
-          id: 'toggle',
-          visible: () => true,
-          render: listActions.reactstrap.Toggle,
-          config: {
-            update: { admin: false },
-            label: 'User',
-            icon: 'fa fa-user',
-          },
-        },
-      },
-    ],
+
   },
-
-  prefilters: [
-
-  ],
 
   messages: {
     emptyData: 'No data found',
   },
   form: {
-    _title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
+    title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
     actions: {
       submit: {
         id: 'signup-action-submit',
         type: 'submit',
-        _label: (row) => row.id === '' ? 'Create record' : 'Save record',
+        label: (row) => row.id === '' ? 'Create record' : 'Save record',
         style: 'primary',
       },
       clear: {
         id: 'clear',
         type: 'button',
         label: 'clear',
-        action: (e, form) => {
+        action: (form) => {
           console.log('this gives access to the form', form);
           form.reset();
         },
@@ -147,16 +112,16 @@ const config = {
         id: 'customer',
         label: 'Customer',
         type: 'lookup',
-        value: 2,
+        value: '2',
         default: (row, field) => {
           console.log(row, field);
           return '3';
         },
         options: {
           store: (row, props) => [
-            { id: 1, name: 'customer 1' },
-            { id: 2, name: 'customer 2' },
-            { id: 3, name: 'customer 3' },
+            { id: '1', name: 'customer 1' },
+            { id: '2', name: 'customer 2' },
+            { id: '3', name: 'customer 3' },
           ],
           key: 'id',
           label: 'name',
@@ -175,10 +140,13 @@ const config = {
         label: 'Radio list',
         type: 'radiolist',
         default: 'two',
-        options: {
+        options: [{
+          value: 'One',
           one: 'One',
+        }, {
+          value: 'Two',
           two: 'Two',
-        },
+        }],
       },
       upload: {
         id: 'upload',
@@ -306,7 +274,6 @@ const config = {
         id: 'signup-name',
         label: 'Name',
         type: 'text',
-        ref: 'name',
         value: '',
         placeholder: 'Name',
         validate: {

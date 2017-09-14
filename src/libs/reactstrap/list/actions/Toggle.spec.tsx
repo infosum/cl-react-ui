@@ -9,12 +9,8 @@ const evnt = { preventDefault() { console.log('evnt'); } };
 const update = () => {
   console.log('update');
 };
-const config = {
-  icon: 'fa fa-star',
-  label: 'Admin',
-  update: { admin: true },
-};
-const filter = (user, selected) => {
+
+const filter = (u, selected) => {
   return [];
 };
 const user = {
@@ -27,7 +23,8 @@ describe('list.actions.Toggle', () => {
       component = shallow(<Toggle
         update={update}
         selected={[]}
-        config={config}
+        icon="star"
+        label="Admin"
         user={user}
         filter={(u, selected) => []}
       ></Toggle>);

@@ -14,7 +14,7 @@ const config = {
   label: 'Admin',
   update: { admin: true },
 };
-const filter = (user, selected) => {
+const filter = (u, selected) => {
   return [];
 };
 const user = {
@@ -27,10 +27,8 @@ describe('list.actions.Toggle', () => {
       component = shallow(<Toggle
         update={update}
         selected={[]}
-        config={config}
         user={user}
-        filter={(u, selected) => []}
-        isVisible={true}></Toggle>);
+        filter={(u, selected) => []}></Toggle>);
     });
 
     it('shows a buton', () => {
@@ -52,10 +50,8 @@ describe('list.actions.Toggle', () => {
       component = shallow(<Toggle
         update={update}
         selected={[]}
-        config={config}
         user={user}
-        filter={filter}
-        isVisible={false}></Toggle>);
+        filter={filter}></Toggle>);
     });
 
     it('does not show a buton', () => {

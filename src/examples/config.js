@@ -58,6 +58,16 @@ export default {
           visible: () => true,
           render: (props) => <Button onClick={() => props.showAddModal()}>Add</Button>
         },
+        // del: {
+        //   id: 'list-action-del',
+        //   visible: () => true,
+        //   //render: (props) => <Button onClick={() => console.log(props)}>Del</Button>
+        //   render: (props) => {
+        //     const Del = listActions.reactstrap.Del;
+        //     return <Del del={(view, data) => console.log('del', props, view, data)}
+        //       isVisible={props.selected.length > 0} selected={props.selected} user={{}} />;
+        //   }
+        // },
         claim: {
           id: 'list-action-claim',
           visible: () => true,
@@ -90,12 +100,12 @@ export default {
     emptyData: 'No data found'
   },
   form: {
-    _title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
+    title: (row) => row.id === '' ? 'Add a record' : 'Edit record',
     actions: {
       submit: {
         id: 'signup-action-submit',
         type: 'submit',
-        _label: (row) => row.id === '' ? 'Create record' : 'Save record',
+        label: (row) => row.id === '' ? 'Create record' : 'Save record',
         style: 'primary'
       },
       clear: {

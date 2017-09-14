@@ -22,10 +22,10 @@ const errors = {
 };
 const config: ICrudConfig = {
   form: {
-    _title: (row) => 'title',
+    title: (row) => 'title',
     actions: {
       add: {
-        _label: (row) => 'title',
+        label: (row) => 'title',
         action: () => {
           console.log('add');
         },
@@ -33,7 +33,7 @@ const config: ICrudConfig = {
         type: 'submit',
       },
       clear: {
-        _label: (row) => 'clear',
+        label: (row) => 'clear',
         action: () => {
           console.log('clear');
         },
@@ -49,8 +49,8 @@ const config: ICrudConfig = {
       label: {
         id: 'label',
         access: {
-          new: (field, data) => true,
-          edit: (field, data) => true,
+          new: (field, d) => true,
+          edit: (field, d) => true,
         },
         default: 'foo',
         type: 'text',
@@ -74,8 +74,8 @@ const config: ICrudConfig = {
         id: 'protected',
         type: 'text',
         access: {
-          new: (field, data) => false,
-          edit: (field, data) => false,
+          new: (field, d) => false,
+          edit: (field, d) => false,
         },
       },
       lookup: {
@@ -165,11 +165,11 @@ describe('Form', () => {
       expect(component.find(FormLayoutDefault)).to.have.length(1);
     });
 
-    it('uses _title func to create title', () => {
+    it('uses title func to create title', () => {
       expect(component.state().form.title).to.equal('title');
     });
 
-    it('uses _title func to create button label', () => {
+    it('uses title func to create button label', () => {
       expect(component.state().form.actions.add.label).to.equal('title');
     });
 
