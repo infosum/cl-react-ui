@@ -439,7 +439,6 @@ class UiForm extends Component<IFormProps, IState> {
       form={this}
       onSubmit={(e) => {
         e.preventDefault();
-        debugger;
         validate(this.toContract(), this.state.data)
           .then(() => {
             this.onSubmit(e, this.state.data);

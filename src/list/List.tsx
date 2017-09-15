@@ -343,6 +343,7 @@ class UiList extends Component<IListProps, IState> {
     const { selected } = this.state;
     const ui = actions.ui;
     const ListLayout = this.listLayout();
+    const pk = this.getPrimaryKey();
     let showModal;
 
     if (ui && ui.modals && ui.modals[config.view]) {
@@ -371,6 +372,7 @@ class UiList extends Component<IListProps, IState> {
           const isSelected = this.isSelected(props.row);
           return <ListRow
             {...props}
+            key={props.row[pk]}
             Checkbox={Checkbox}
             canSelect={this.props.canSelect}
             selected={isSelected}
