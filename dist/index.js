@@ -162,7 +162,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isobject__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isobject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_isobject__);
@@ -4377,7 +4377,7 @@ process.umask = function() { return 0; };
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var classNames = __webpack_require__(12);
+var classNames = __webpack_require__(13);
 var React = __webpack_require__(0);
 exports.default = function (_a) {
     var icon = _a.icon,
@@ -4456,14 +4456,16 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var validations = __webpack_require__(11);
+var validations = __webpack_require__(12);
 exports.validations = validations;
 var Icon_1 = __webpack_require__(4);
 exports.Icon = Icon_1.default;
-var Form_1 = __webpack_require__(26);
+var modal_1 = __webpack_require__(7);
+exports.enhanceWithModal = modal_1.default;
+var Form_1 = __webpack_require__(35);
 exports.Form = Form_1.default;
 var ReactBootstrapFields = __webpack_require__(16);
-var ReactBootstrapListActions = __webpack_require__(14);
+var ReactBootstrapListActions = __webpack_require__(15);
 var ReactStrapFields = __webpack_require__(23);
 var ReactStrapListActions = __webpack_require__(24);
 var PageSize_1 = __webpack_require__(106);
@@ -4489,9 +4491,27 @@ exports.listActions = listActions;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recompose_1 = __webpack_require__(26);
+exports.default = recompose_1.compose(recompose_1.withState('showModal', 'setModal', false), recompose_1.withHandlers({
+    toggle: function toggle(_a) {
+        var setModal = _a.setModal;
+        return function (showModal) {
+            return setModal(!showModal);
+        };
+    }
+}));
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var pSlice = Array.prototype.slice;
-var objectKeys = __webpack_require__(27);
-var isArguments = __webpack_require__(28);
+var objectKeys = __webpack_require__(36);
+var isArguments = __webpack_require__(37);
 
 var deepEqual = module.exports = function (actual, expected, opts) {
   if (!opts) opts = {};
@@ -4586,7 +4606,7 @@ function objEquiv(a, b, opts) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4630,7 +4650,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4692,7 +4712,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4713,7 +4733,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -5344,7 +5364,7 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -5399,7 +5419,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5410,7 +5430,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.reactstrap = exports.reactBootstrap = undefined;
 
-var _reactBootstrap = __webpack_require__(29);
+var _reactBootstrap = __webpack_require__(38);
 
 var rbs = _interopRequireWildcard(_reactBootstrap);
 
@@ -5426,21 +5446,6 @@ exports.reactBootstrap = reactBootstrap;
 exports.reactstrap = reactstrap;
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Add_1 = __webpack_require__(36);
-exports.Add = Add_1.default;
-var Del_1 = __webpack_require__(37);
-exports.Del = Del_1.default;
-var Toggle_1 = __webpack_require__(47);
-exports.Toggle = Toggle_1.default;
-
-/***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5448,15 +5453,12 @@ exports.Toggle = Toggle_1.default;
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recompose_1 = __webpack_require__(38);
-exports.default = recompose_1.compose(recompose_1.withState('showModal', 'setModal', false), recompose_1.withHandlers({
-    toggle: function toggle(_a) {
-        var setModal = _a.setModal;
-        return function (showModal) {
-            return setModal(!showModal);
-        };
-    }
-}));
+var Add_1 = __webpack_require__(45);
+exports.Add = Add_1.default;
+var Del_1 = __webpack_require__(46);
+exports.Del = Del_1.default;
+var Toggle_1 = __webpack_require__(47);
+exports.Toggle = Toggle_1.default;
 
 /***/ }),
 /* 16 */
@@ -6531,7 +6533,7 @@ module.exports = exports['default'];
 
 
 
-var emptyFunction = __webpack_require__(8);
+var emptyFunction = __webpack_require__(9);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -6996,825 +6998,6 @@ module.exports = __webpack_require__(6);
 
 /***/ }),
 /* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-var __assign = undefined && undefined.__assign || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) {
-            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(7);
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var validate_promise_1 = __webpack_require__(11);
-var libs = __webpack_require__(13);
-var lib;
-var fields;
-var FormControl;
-var layouts;
-var Button;
-var UiForm = function (_super) {
-    __extends(UiForm, _super);
-    function UiForm(props) {
-        var _this = _super.call(this, props) || this;
-        var _a = _this.props,
-            config = _a.config,
-            library = _a.library,
-            onSubmit = _a.onSubmit;
-        _this.fields = config.form.fields;
-        var formState = {};
-        Object.keys(props.errors).forEach(function (key) {
-            return formState[key] = 'error';
-        });
-        var values = {};
-        Object.keys(_this.fields).forEach(function (key) {
-            var field = _this.fields[key];
-            field.pristine = true;
-            values[key] = field.value || '';
-        });
-        var data = _this.makeState(__assign({}, values, props.data));
-        var state = {
-            data: data,
-            errors: props.errors,
-            form: config.form,
-            initialState: __assign({}, data),
-            state: formState,
-            visibility: _this.makeVisiblity()
-        };
-        _this.setLib(props);
-        _this.actions = config.form.actions;
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleBlur = _this.handleBlur.bind(_this);
-        _this.onSubmit = onSubmit.bind(_this);
-        state.form = _this.createFormData(state.form, state.data);
-        _this.state = state;
-        return _this;
-    }
-    UiForm.prototype.componentDidUpdate = function (prevProps) {
-        if (!deepEqual(this.props, prevProps)) {
-            var _a = this.props,
-                config = _a.config,
-                data = _a.data,
-                errors = _a.errors;
-            this.fields = config.form.fields;
-            var state_1 = {};
-            var visibility = this.makeVisiblity();
-            var newState = {};
-            Object.keys(errors).forEach(function (key) {
-                return state_1[key] = 'error';
-            });
-            var form = this.state.form;
-            newState.data = this.makeState(data);
-            form = this.createFormData(form, data);
-            this.setLib(this.props);
-            this.setState(__assign({}, newState, { state: state_1, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
-        }
-    };
-    UiForm.prototype.makeVisiblity = function () {
-        var _a = this.props.visibility,
-            visibility = _a === void 0 ? {} : _a;
-        Object.keys(this.fields).forEach(function (key) {
-            if (!visibility.hasOwnProperty(key)) {
-                visibility[key] = true;
-            }
-        });
-        return visibility;
-    };
-    UiForm.prototype.setLib = function (newProps) {
-        var config = newProps.config,
-            library = newProps.library;
-        var libType = config.lib || library || 'reactBootstrap';
-        lib = libs[libType];
-        fields = lib.fields;
-        layouts = lib.layouts;
-        FormControl = lib.FormControl;
-        Button = lib.Button;
-    };
-    UiForm.prototype.makeState = function (data) {
-        var _this = this;
-        var state = {};
-        Object.keys(this.fields).forEach(function (name) {
-            var field = _this.fields[name];
-            var def = field.default;
-            if (data && data[name]) {
-                state[name] = data[name];
-            } else if (def === undefined) {
-                state[name] = '';
-            } else {
-                state[name] = typeof def === 'function' ? def(data, field) : def;
-            }
-        });
-        return state;
-    };
-    UiForm.prototype.createFormData = function (form, row) {
-        var name;
-        var title = this.props.title;
-        if (title) {
-            form.title = typeof title === 'function' ? title(row) : title;
-        }
-        for (name in form.actions) {
-            if (typeof form.actions[name].label === 'function') {
-                form.actions[name].label = form.actions[name].label(row);
-            }
-        }
-        return form;
-    };
-    UiForm.prototype.validateOne = function (field, value, data) {
-        if (data === void 0) {
-            data = {};
-        }
-        if (field.validate === undefined || field.validate.promises === undefined) {
-            return Promise.resolve('');
-        }
-        var validate = function validate(p) {
-            var msg = p.msg || field.validate.msg;
-            return p.rule(value, data, msg, p.arg);
-        };
-        var promises = field.validate.promises.map(validate);
-        return new Promise(function (resolve, reject) {
-            return Promise.all(promises).then(function () {
-                return resolve('success');
-            }).catch(function (e) {
-                return reject(e);
-            });
-        });
-    };
-    UiForm.prototype.getValidationState = function (name) {
-        var _this = this;
-        var field = this.fields[name];
-        var errors = this.state.errors;
-        var state = __assign({}, this.state.state);
-        var i = 0;
-        var value = this.state.data[name];
-        var res = [];
-        var serverError = errors[name] && errors[name].length > 0;
-        var serverSuccess = errors[name] && errors[name].length === 0;
-        if (!field.pristine) {
-            this.validateOne(field, value, this.state.data).then(function (ok) {
-                state[name] = 'success';
-                errors[name] = [];
-                _this.setState({ state: state, errors: errors });
-            }).catch(function (err) {
-                errors[name] = [err];
-                state[name] = 'error';
-                _this.setState({ state: state, errors: errors });
-            });
-        } else {
-            if (serverError) {
-                state[name] = [serverError];
-                state[name] = 'error';
-            }
-            if (serverSuccess) {
-                state[name] = [];
-                state[name] = 'success';
-            }
-        }
-        this.setState({ state: state, errors: errors });
-        return state;
-    };
-    UiForm.prototype.access = function (name) {
-        var field = this.fields[name];
-        var mode = this.state.data.id === '' ? 'new' : 'edit';
-        if (!field.access) {
-            return true;
-        }
-        if (field.access[mode]) {
-            return field.access[mode](field, this.state.data);
-        }
-        return true;
-    };
-    UiForm.prototype.handleChange = function (name, value) {
-        var _a = this.props,
-            formUpdate = _a.formUpdate,
-            config = _a.config;
-        var field = this.fields[name];
-        this.fields[name].pristine = false;
-        if (typeof formUpdate === 'function') {
-            formUpdate(config.view, field, name, value);
-        }
-        var data = this.state.data;
-        data[name] = value;
-        this.setState({ data: data });
-        if (field.onChange) {
-            field.onChange(this);
-        }
-    };
-    UiForm.prototype.formLayout = function () {
-        var layout = this.props.layout;
-        if (typeof layout === 'function') {
-            return layout;
-        }
-        var layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
-        return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
-    };
-    UiForm.prototype.handleBlur = function (name) {
-        this.fields[name].pristine = false;
-        var state = this.getValidationState(name);
-    };
-    UiForm.prototype.getReactField = function (field) {
-        var FieldComponent = null;
-        var type;
-        if (typeof field === 'function') {
-            FieldComponent = field;
-        } else {
-            switch (_typeof(field.type)) {
-                case 'string':
-                    type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
-                    if (fields[type]) {
-                        FieldComponent = fields[type];
-                    }
-                    break;
-                case 'function':
-                    FieldComponent = field.type;
-                    break;
-            }
-        }
-        return FieldComponent;
-    };
-    UiForm.prototype.makeField = function (name, field) {
-        var _this = this;
-        var errors = this.state.errors;
-        var error = errors[name] || [];
-        var FormGroup = lib.FormGroup;
-        var FieldComponent = this.getReactField(field);
-        if (FieldComponent === null) {
-            return null;
-        }
-        return React.createElement(FormGroup, { key: name, errors: error, FieldComponent: FieldComponent, field: field, name: name, row: this.state.data, onBlur: this.handleBlur, onChange: function onChange(fieldName, value) {
-                return _this.handleChange(fieldName, value);
-            }, value: this.state.data[name] || field.value || '', validationState: this.state.state[name] });
-    };
-    UiForm.prototype.toContract = function () {
-        var _this = this;
-        return Object.keys(this.fields).filter(function (name) {
-            return _this.fields[name].validate !== undefined;
-        }).map(function (name) {
-            var field = _this.fields[name].validate;
-            field.key = name;
-            return field;
-        });
-    };
-    UiForm.prototype.failFormSubmission = function (errors) {
-        var state = {};
-        Object.keys(errors).forEach(function (name) {
-            return state[name] = 'error';
-        });
-        this.setState({ state: state, errors: errors });
-    };
-    UiForm.prototype.isVisible = function (name) {
-        return this.state.visibility[name];
-    };
-    UiForm.prototype.showField = function (name) {
-        var visibility = this.state.visibility;
-        visibility[name] = true;
-        this.setState({ visibility: visibility });
-    };
-    UiForm.prototype.hideField = function (name) {
-        var visibility = this.state.visibility;
-        visibility[name] = false;
-        this.setState({ visibility: visibility });
-    };
-    UiForm.prototype.reset = function () {
-        var _this = this;
-        var data = __assign({}, this.state.initialState);
-        this.setState({
-            data: data
-        });
-        Object.keys(this.fields).forEach(function (key) {
-            _this.fields[key].pristine = true;
-        });
-        this.setState({
-            form: this.createFormData(this.state.form, data)
-        });
-    };
-    UiForm.prototype.render = function () {
-        var _this = this;
-        var errors = this.props.errors;
-        var FormActions = lib.FormActions;
-        var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
-                e.preventDefault();
-                validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
-                    _this.onSubmit(e, _this.state.data);
-                    _this.reset();
-                }).catch(_this.failFormSubmission.bind(_this));
-            } });
-        var FormLayout = this.formLayout();
-        var madeFields = {};
-        Object.keys(this.fields).filter(this.access.bind(this)).filter(this.isVisible.bind(this)).forEach(function (name) {
-            var field = _this.fields[name];
-            var madeField = _this.makeField(name, field);
-            if (madeField !== null) {
-                madeFields[name] = madeField;
-            }
-        });
-        return React.createElement(FormLayout, { actions: buttons, errors: errors, fields: madeFields, form: this.state.form, onSubmit: this.onSubmit });
-    };
-    UiForm.defaultProps = {
-        data: {},
-        errors: {},
-        layout: 'reactstrap'
-    };
-    return UiForm;
-}(react_1.Component);
-exports.default = UiForm;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-exports = module.exports = typeof Object.keys === 'function'
-  ? Object.keys : shim;
-
-exports.shim = shim;
-function shim (obj) {
-  var keys = [];
-  for (var key in obj) keys.push(key);
-  return keys;
-}
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-var supportsArgumentsClass = (function(){
-  return Object.prototype.toString.call(arguments)
-})() == '[object Arguments]';
-
-exports = module.exports = supportsArgumentsClass ? supported : unsupported;
-
-exports.supported = supported;
-function supported(object) {
-  return Object.prototype.toString.call(object) == '[object Arguments]';
-};
-
-exports.unsupported = unsupported;
-function unsupported(object){
-  return object &&
-    typeof object == 'object' &&
-    typeof object.length == 'number' &&
-    Object.prototype.hasOwnProperty.call(object, 'callee') &&
-    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
-    false;
-};
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var React = _interopRequireWildcard(_react);
-
-var _FormActions = __webpack_require__(30);
-
-var _FormActions2 = _interopRequireDefault(_FormActions);
-
-var _FormGroup = __webpack_require__(31);
-
-var _FormGroup2 = _interopRequireDefault(_FormGroup);
-
-var _ButtonGroup = __webpack_require__(32);
-
-var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
-
-var _layouts = __webpack_require__(33);
-
-var layouts = _interopRequireWildcard(_layouts);
-
-var _actions = __webpack_require__(14);
-
-var listActions = _interopRequireWildcard(_actions);
-
-var _listLayouts = __webpack_require__(48);
-
-var listLayouts = _interopRequireWildcard(_listLayouts);
-
-var _fields = __webpack_require__(16);
-
-var fields = _interopRequireWildcard(_fields);
-
-var _reactBootstrap = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var Feedback = _reactBootstrap.FormControl.Feedback;
-
-var Modal = function Modal(_ref) {
-  var showModal = _ref.showModal,
-      close = _ref.close,
-      children = _ref.children;
-  return React.createElement(
-    _reactBootstrap.Modal,
-    { show: showModal, onHide: function onHide(e) {
-        return close(e);
-      } },
-    children
-  );
-};
-
-exports.default = {
-  Button: _reactBootstrap.Button,
-  Checkbox: _reactBootstrap.Checkbox,
-  ControlLabel: _reactBootstrap.ControlLabel,
-  fields: fields,
-  Feedback: Feedback,
-  Form: _reactBootstrap.Form,
-  FormActions: _FormActions2.default,
-  FormControl: _reactBootstrap.FormControl,
-  FormGroup: _FormGroup2.default,
-  HelpBlock: _reactBootstrap.HelpBlock,
-  layouts: layouts,
-  listActions: listActions,
-  listLayouts: listLayouts,
-  Modal: Modal
-};
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-exports.default = function (_a) {
-    var actions = _a.actions,
-        form = _a.form,
-        onSubmit = _a.onSubmit;
-    var buttons = Object.keys(actions).map(function (k, index) {
-        var _a = actions[k],
-            action = _a.action,
-            id = _a.id,
-            color = _a.color,
-            style = _a.style,
-            type = _a.type,
-            label = _a.label;
-        var evnt;
-        var handle;
-        if (action) {
-            evnt = action;
-        }
-        if (type === 'submit') {
-            handle = onSubmit;
-        } else {
-            handle = function handle(e) {
-                return evnt(e, form);
-            };
-        }
-        return React.createElement(react_bootstrap_1.Button, { key: id, bsStyle: color, style: style, onClick: handle, type: type ? type : 'button' }, label);
-    });
-    return React.createElement("div", null, buttons);
-};
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-exports.default = function (props) {
-    var FieldComponent = props.FieldComponent,
-        errors = props.errors,
-        field = props.field,
-        onChange = props.onChange,
-        onBlur = props.onBlur,
-        name = props.name,
-        row = props.row,
-        validationState = props.validationState,
-        value = props.value;
-    var label = field.type === 'hidden' || field.label === '' ? null : React.createElement(react_bootstrap_1.ControlLabel, null, field.label);
-    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field, row: row }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
-        return React.createElement(react_bootstrap_1.HelpBlock, { key: 'help-' + name + '-' + i }, error);
-    }));
-};
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-var UiButtonGroup = function (_super) {
-    __extends(UiButtonGroup, _super);
-    function UiButtonGroup(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = { value: '' };
-        return _this;
-    }
-    UiButtonGroup.prototype.buttons = function (field) {
-        var _this = this;
-        var _a = this.props,
-            value = _a.value,
-            name = _a.name;
-        return field.options.map(function (option, k) {
-            var fakeE = {
-                altKey: false,
-                target: { value: option.value }
-            };
-            var key = 'button-group-' + name + '-' + k;
-            var active = value === option.value;
-            var icon;
-            if (option.icon) {
-                var i = 'fa fa-' + option.icon;
-                icon = React.createElement("span", null, React.createElement("i", { className: i }), " ");
-            }
-            return React.createElement(react_bootstrap_1.Button, { key: key, onClick: function onClick(e) {
-                    return _this.handleChange(fakeE);
-                }, active: active }, icon, option.label);
-        });
-    };
-    UiButtonGroup.prototype.handleChange = function (e) {
-        var _a = this.props,
-            onChange = _a.onChange,
-            name = _a.name;
-        var target = e.target;
-        this.setState({ value: target.value });
-        onChange(name, target.value);
-    };
-    UiButtonGroup.prototype.render = function () {
-        var field = this.props.field;
-        return React.createElement("div", { className: "form-group has-feedback" }, React.createElement(react_bootstrap_1.ButtonGroup, null, this.buttons(field)));
-    };
-    return UiButtonGroup;
-}(react_1.Component);
-exports.default = UiButtonGroup;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Modal = exports.Default = undefined;
-
-var _Default = __webpack_require__(34);
-
-var _Default2 = _interopRequireDefault(_Default);
-
-var _Modal = __webpack_require__(35);
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.Default = _Default2.default;
-exports.Modal = _Modal2.default;
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-var UiFormLayoutDefault = function (_super) {
-    __extends(UiFormLayoutDefault, _super);
-    function UiFormLayoutDefault() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UiFormLayoutDefault.prototype.render = function () {
-        var alert = null;
-        var _a = this.props,
-            form = _a.form,
-            fields = _a.fields,
-            actions = _a.actions,
-            errors = _a.errors,
-            onSubmit = _a.onSubmit;
-        var allFields = Object.keys(fields).map(function (n) {
-            return fields[n];
-        });
-        if (errors.message) {
-            alert = React.createElement(react_bootstrap_1.Alert, { bsStyle: "danger" }, React.createElement("p", null, errors.message));
-        }
-        return React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-xs-6" }, React.createElement("h2", { className: "topBar" }, form.title), alert, React.createElement(react_bootstrap_1.Well, null, React.createElement("form", { onSubmit: onSubmit }, allFields, actions))));
-    };
-    return UiFormLayoutDefault;
-}(react_1.Component);
-exports.default = UiFormLayoutDefault;
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-var UiFormLayoutModal = function (_super) {
-    __extends(UiFormLayoutModal, _super);
-    function UiFormLayoutModal() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UiFormLayoutModal.prototype.errors = function () {
-        var alert = null;
-        var errors = this.props.errors;
-        if (errors.message) {
-            alert = React.createElement(react_bootstrap_1.Alert, { bsStyle: "danger" }, React.createElement("p", null, errors.message));
-        }
-        return alert;
-    };
-    UiFormLayoutModal.prototype.render = function () {
-        var _a = this.props,
-            form = _a.form,
-            fields = _a.fields,
-            actions = _a.actions;
-        var allFields = Object.keys(fields).map(function (n) {
-            return fields[n];
-        });
-        return React.createElement("div", null, React.createElement(react_bootstrap_1.Modal.Header, null, React.createElement(react_bootstrap_1.Modal.Title, { id: "add-modal-title" }, form.title)), React.createElement(react_bootstrap_1.Modal.Body, null, this.errors(), React.createElement("form", null, allFields)), React.createElement(react_bootstrap_1.Modal.Footer, null, actions));
-    };
-    return UiFormLayoutModal;
-}(react_1.Component);
-exports.default = UiFormLayoutModal;
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_1 = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-var Icon_1 = __webpack_require__(4);
-var Add = function (_super) {
-    __extends(Add, _super);
-    function Add() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Add.prototype.render = function () {
-        var showAddModal = this.props.showAddModal;
-        return React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
-                return showAddModal();
-            } }, React.createElement(Icon_1.default, { icon: "plus", label: "Add" }));
-    };
-    Add.defaultProps = {
-        showAddModal: function showAddModal() {
-            return null;
-        }
-    };
-    return Add;
-}(react_1.Component);
-exports.default = Add;
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_bootstrap_1 = __webpack_require__(2);
-var Icon_1 = __webpack_require__(4);
-var modal_1 = __webpack_require__(15);
-var Del = function Del(_a) {
-    var toggle = _a.toggle,
-        del = _a.del,
-        selected = _a.selected,
-        showModal = _a.showModal;
-    return React.createElement("span", null, React.createElement(react_bootstrap_1.Button, { onClick: function onClick() {
-            return open();
-        } }, React.createElement(Icon_1.default, { icon: "times", label: "Delete" })), React.createElement(react_bootstrap_1.Modal, { show: showModal, onHide: function onHide() {
-            return toggle(showModal);
-        }, "aria-labelledby": "del-modal-title" }, React.createElement(react_bootstrap_1.Modal.Header, { closeButton: true }, React.createElement(react_bootstrap_1.Modal.Title, { id: "del-modal-title" }, "Delete...")), React.createElement(react_bootstrap_1.Modal.Body, null, React.createElement("h4", null, "Do you want to delete ", selected.length, " records")), React.createElement(react_bootstrap_1.Modal.Footer, null, React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
-            return toggle(showModal);
-        } }, "Cancel"), React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
-            del(selected);
-            toggle(showModal);
-        }, bsStyle: "primary" }, "OK"))));
-};
-exports.Del = Del;
-exports.default = modal_1.default(Del);
-
-/***/ }),
-/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7862,13 +7045,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setObservableConfig", function() { return configureObservable; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_change_emitter__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_change_emitter__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_change_emitter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_change_emitter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_symbol_observable__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_symbol_observable__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_symbol_observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_symbol_observable__);
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "shallowEqual", function() { return __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual___default.a; });
 
@@ -8936,7 +8119,7 @@ var createEventHandler = createEventHandlerWithConfig(config);
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 39 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9009,7 +8192,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 40 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9066,7 +8249,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 /***/ }),
-/* 41 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9123,14 +8306,14 @@ var createChangeEmitter = exports.createChangeEmitter = function createChangeEmi
 };
 
 /***/ }),
-/* 42 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(31);
 
 
 /***/ }),
-/* 43 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9140,7 +8323,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ponyfill = __webpack_require__(46);
+var _ponyfill = __webpack_require__(34);
 
 var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -9163,10 +8346,10 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44), __webpack_require__(45)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32), __webpack_require__(33)(module)))
 
 /***/ }),
-/* 44 */
+/* 32 */
 /***/ (function(module, exports) {
 
 var g;
@@ -9193,7 +8376,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 45 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -9221,7 +8404,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 46 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9248,6 +8431,825 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) {
+            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var deepEqual = __webpack_require__(8);
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var validate_promise_1 = __webpack_require__(12);
+var libs = __webpack_require__(14);
+var lib;
+var fields;
+var FormControl;
+var layouts;
+var Button;
+var UiForm = function (_super) {
+    __extends(UiForm, _super);
+    function UiForm(props) {
+        var _this = _super.call(this, props) || this;
+        var _a = _this.props,
+            config = _a.config,
+            library = _a.library,
+            onSubmit = _a.onSubmit;
+        _this.fields = config.form.fields;
+        var formState = {};
+        Object.keys(props.errors).forEach(function (key) {
+            return formState[key] = 'error';
+        });
+        var values = {};
+        Object.keys(_this.fields).forEach(function (key) {
+            var field = _this.fields[key];
+            field.pristine = true;
+            values[key] = field.value || '';
+        });
+        var data = _this.makeState(__assign({}, values, props.data));
+        var state = {
+            data: data,
+            errors: props.errors,
+            form: config.form,
+            initialState: __assign({}, data),
+            state: formState,
+            visibility: _this.makeVisiblity()
+        };
+        _this.setLib(props);
+        _this.actions = config.form.actions;
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleBlur = _this.handleBlur.bind(_this);
+        _this.onSubmit = onSubmit.bind(_this);
+        state.form = _this.createFormData(state.form, state.data);
+        _this.state = state;
+        return _this;
+    }
+    UiForm.prototype.componentDidUpdate = function (prevProps) {
+        if (!deepEqual(this.props, prevProps)) {
+            var _a = this.props,
+                config = _a.config,
+                data = _a.data,
+                errors = _a.errors;
+            this.fields = config.form.fields;
+            var state_1 = {};
+            var visibility = this.makeVisiblity();
+            var newState = {};
+            Object.keys(errors).forEach(function (key) {
+                return state_1[key] = 'error';
+            });
+            var form = this.state.form;
+            newState.data = this.makeState(data);
+            form = this.createFormData(form, data);
+            this.setLib(this.props);
+            this.setState(__assign({}, newState, { state: state_1, initialState: __assign({}, newState.data), errors: errors, form: form, visibility: visibility }));
+        }
+    };
+    UiForm.prototype.makeVisiblity = function () {
+        var _a = this.props.visibility,
+            visibility = _a === void 0 ? {} : _a;
+        Object.keys(this.fields).forEach(function (key) {
+            if (!visibility.hasOwnProperty(key)) {
+                visibility[key] = true;
+            }
+        });
+        return visibility;
+    };
+    UiForm.prototype.setLib = function (newProps) {
+        var config = newProps.config,
+            library = newProps.library;
+        var libType = config.lib || library || 'reactBootstrap';
+        lib = libs[libType];
+        fields = lib.fields;
+        layouts = lib.layouts;
+        FormControl = lib.FormControl;
+        Button = lib.Button;
+    };
+    UiForm.prototype.makeState = function (data) {
+        var _this = this;
+        var state = {};
+        Object.keys(this.fields).forEach(function (name) {
+            var field = _this.fields[name];
+            var def = field.default;
+            if (data && data[name]) {
+                state[name] = data[name];
+            } else if (def === undefined) {
+                state[name] = '';
+            } else {
+                state[name] = typeof def === 'function' ? def(data, field) : def;
+            }
+        });
+        return state;
+    };
+    UiForm.prototype.createFormData = function (form, row) {
+        var name;
+        var title = this.props.title;
+        if (title) {
+            form.title = typeof title === 'function' ? title(row) : title;
+        }
+        for (name in form.actions) {
+            if (typeof form.actions[name].label === 'function') {
+                form.actions[name].label = form.actions[name].label(row);
+            }
+        }
+        return form;
+    };
+    UiForm.prototype.validateOne = function (field, value, data) {
+        if (data === void 0) {
+            data = {};
+        }
+        if (field.validate === undefined || field.validate.promises === undefined) {
+            return Promise.resolve('');
+        }
+        var validate = function validate(p) {
+            var msg = p.msg || field.validate.msg;
+            return p.rule(value, data, msg, p.arg);
+        };
+        var promises = field.validate.promises.map(validate);
+        return new Promise(function (resolve, reject) {
+            return Promise.all(promises).then(function () {
+                return resolve('success');
+            }).catch(function (e) {
+                return reject(e);
+            });
+        });
+    };
+    UiForm.prototype.getValidationState = function (name) {
+        var _this = this;
+        var field = this.fields[name];
+        var errors = this.state.errors;
+        var state = __assign({}, this.state.state);
+        var i = 0;
+        var value = this.state.data[name];
+        var res = [];
+        var serverError = errors[name] && errors[name].length > 0;
+        var serverSuccess = errors[name] && errors[name].length === 0;
+        if (!field.pristine) {
+            this.validateOne(field, value, this.state.data).then(function (ok) {
+                state[name] = 'success';
+                errors[name] = [];
+                _this.setState({ state: state, errors: errors });
+            }).catch(function (err) {
+                errors[name] = [err];
+                state[name] = 'error';
+                _this.setState({ state: state, errors: errors });
+            });
+        } else {
+            if (serverError) {
+                state[name] = [serverError];
+                state[name] = 'error';
+            }
+            if (serverSuccess) {
+                state[name] = [];
+                state[name] = 'success';
+            }
+        }
+        this.setState({ state: state, errors: errors });
+        return state;
+    };
+    UiForm.prototype.access = function (name) {
+        var field = this.fields[name];
+        var mode = this.state.data.id === '' ? 'new' : 'edit';
+        if (!field.access) {
+            return true;
+        }
+        if (field.access[mode]) {
+            return field.access[mode](field, this.state.data);
+        }
+        return true;
+    };
+    UiForm.prototype.handleChange = function (name, value) {
+        var _a = this.props,
+            formUpdate = _a.formUpdate,
+            config = _a.config;
+        var field = this.fields[name];
+        this.fields[name].pristine = false;
+        if (typeof formUpdate === 'function') {
+            formUpdate(config.view, field, name, value);
+        }
+        var data = this.state.data;
+        data[name] = value;
+        this.setState({ data: data });
+        if (field.onChange) {
+            field.onChange(this);
+        }
+    };
+    UiForm.prototype.formLayout = function () {
+        var layout = this.props.layout;
+        if (typeof layout === 'function') {
+            return layout;
+        }
+        var layoutName = layout && layout[0].toUpperCase() + layout.slice(1);
+        return layouts[layoutName] ? layouts[layoutName] : layouts.Default;
+    };
+    UiForm.prototype.handleBlur = function (name) {
+        this.fields[name].pristine = false;
+        var state = this.getValidationState(name);
+    };
+    UiForm.prototype.getReactField = function (field) {
+        var FieldComponent = null;
+        var type;
+        if (typeof field === 'function') {
+            FieldComponent = field;
+        } else {
+            switch (_typeof(field.type)) {
+                case 'string':
+                    type = field.type && field.type[0].toUpperCase() + field.type.slice(1);
+                    if (fields[type]) {
+                        FieldComponent = fields[type];
+                    }
+                    break;
+                case 'function':
+                    FieldComponent = field.type;
+                    break;
+            }
+        }
+        return FieldComponent;
+    };
+    UiForm.prototype.makeField = function (name, field) {
+        var _this = this;
+        var errors = this.state.errors;
+        var error = errors[name] || [];
+        var FormGroup = lib.FormGroup;
+        var FieldComponent = this.getReactField(field);
+        if (FieldComponent === null) {
+            return null;
+        }
+        return React.createElement(FormGroup, { key: name, errors: error, FieldComponent: FieldComponent, field: field, name: name, row: this.state.data, onBlur: this.handleBlur, onChange: function onChange(fieldName, value) {
+                return _this.handleChange(fieldName, value);
+            }, value: this.state.data[name] || field.value || '', validationState: this.state.state[name] });
+    };
+    UiForm.prototype.toContract = function () {
+        var _this = this;
+        return Object.keys(this.fields).filter(function (name) {
+            return _this.fields[name].validate !== undefined;
+        }).map(function (name) {
+            var field = _this.fields[name].validate;
+            field.key = name;
+            return field;
+        });
+    };
+    UiForm.prototype.failFormSubmission = function (errors) {
+        var state = {};
+        Object.keys(errors).forEach(function (name) {
+            return state[name] = 'error';
+        });
+        this.setState({ state: state, errors: errors });
+    };
+    UiForm.prototype.isVisible = function (name) {
+        return this.state.visibility[name];
+    };
+    UiForm.prototype.showField = function (name) {
+        var visibility = this.state.visibility;
+        visibility[name] = true;
+        this.setState({ visibility: visibility });
+    };
+    UiForm.prototype.hideField = function (name) {
+        var visibility = this.state.visibility;
+        visibility[name] = false;
+        this.setState({ visibility: visibility });
+    };
+    UiForm.prototype.reset = function () {
+        var _this = this;
+        var data = __assign({}, this.state.initialState);
+        this.setState({
+            data: data
+        });
+        Object.keys(this.fields).forEach(function (key) {
+            _this.fields[key].pristine = true;
+        });
+        this.setState({
+            form: this.createFormData(this.state.form, data)
+        });
+    };
+    UiForm.prototype.render = function () {
+        var _this = this;
+        var errors = this.props.errors;
+        var FormActions = lib.FormActions;
+        var buttons = React.createElement(FormActions, { actions: this.actions, form: this, onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                validate_promise_1.default(_this.toContract(), _this.state.data).then(function () {
+                    _this.onSubmit(e, _this.state.data);
+                    _this.reset();
+                }).catch(_this.failFormSubmission.bind(_this));
+            } });
+        var FormLayout = this.formLayout();
+        var madeFields = {};
+        Object.keys(this.fields).filter(this.access.bind(this)).filter(this.isVisible.bind(this)).forEach(function (name) {
+            var field = _this.fields[name];
+            var madeField = _this.makeField(name, field);
+            if (madeField !== null) {
+                madeFields[name] = madeField;
+            }
+        });
+        return React.createElement(FormLayout, { actions: buttons, errors: errors, fields: madeFields, form: this.state.form, onSubmit: this.onSubmit });
+    };
+    UiForm.defaultProps = {
+        data: {},
+        errors: {},
+        layout: 'reactstrap'
+    };
+    return UiForm;
+}(react_1.Component);
+exports.default = UiForm;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+exports = module.exports = typeof Object.keys === 'function'
+  ? Object.keys : shim;
+
+exports.shim = shim;
+function shim (obj) {
+  var keys = [];
+  for (var key in obj) keys.push(key);
+  return keys;
+}
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+var supportsArgumentsClass = (function(){
+  return Object.prototype.toString.call(arguments)
+})() == '[object Arguments]';
+
+exports = module.exports = supportsArgumentsClass ? supported : unsupported;
+
+exports.supported = supported;
+function supported(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+};
+
+exports.unsupported = unsupported;
+function unsupported(object){
+  return object &&
+    typeof object == 'object' &&
+    typeof object.length == 'number' &&
+    Object.prototype.hasOwnProperty.call(object, 'callee') &&
+    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
+    false;
+};
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var React = _interopRequireWildcard(_react);
+
+var _FormActions = __webpack_require__(39);
+
+var _FormActions2 = _interopRequireDefault(_FormActions);
+
+var _FormGroup = __webpack_require__(40);
+
+var _FormGroup2 = _interopRequireDefault(_FormGroup);
+
+var _ButtonGroup = __webpack_require__(41);
+
+var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
+
+var _layouts = __webpack_require__(42);
+
+var layouts = _interopRequireWildcard(_layouts);
+
+var _actions = __webpack_require__(15);
+
+var listActions = _interopRequireWildcard(_actions);
+
+var _listLayouts = __webpack_require__(48);
+
+var listLayouts = _interopRequireWildcard(_listLayouts);
+
+var _fields = __webpack_require__(16);
+
+var fields = _interopRequireWildcard(_fields);
+
+var _reactBootstrap = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Feedback = _reactBootstrap.FormControl.Feedback;
+
+var Modal = function Modal(_ref) {
+  var showModal = _ref.showModal,
+      close = _ref.close,
+      children = _ref.children;
+  return React.createElement(
+    _reactBootstrap.Modal,
+    { show: showModal, onHide: function onHide(e) {
+        return close(e);
+      } },
+    children
+  );
+};
+
+exports.default = {
+  Button: _reactBootstrap.Button,
+  Checkbox: _reactBootstrap.Checkbox,
+  ControlLabel: _reactBootstrap.ControlLabel,
+  fields: fields,
+  Feedback: Feedback,
+  Form: _reactBootstrap.Form,
+  FormActions: _FormActions2.default,
+  FormControl: _reactBootstrap.FormControl,
+  FormGroup: _FormGroup2.default,
+  HelpBlock: _reactBootstrap.HelpBlock,
+  layouts: layouts,
+  listActions: listActions,
+  listLayouts: listLayouts,
+  Modal: Modal
+};
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+exports.default = function (_a) {
+    var actions = _a.actions,
+        form = _a.form,
+        onSubmit = _a.onSubmit;
+    var buttons = Object.keys(actions).map(function (k, index) {
+        var _a = actions[k],
+            action = _a.action,
+            id = _a.id,
+            color = _a.color,
+            style = _a.style,
+            type = _a.type,
+            label = _a.label;
+        var evnt;
+        var handle;
+        if (action) {
+            evnt = action;
+        }
+        if (type === 'submit') {
+            handle = onSubmit;
+        } else {
+            handle = function handle(e) {
+                return evnt(e, form);
+            };
+        }
+        return React.createElement(react_bootstrap_1.Button, { key: id, bsStyle: color, style: style, onClick: handle, type: type ? type : 'button' }, label);
+    });
+    return React.createElement("div", null, buttons);
+};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+exports.default = function (props) {
+    var FieldComponent = props.FieldComponent,
+        errors = props.errors,
+        field = props.field,
+        onChange = props.onChange,
+        onBlur = props.onBlur,
+        name = props.name,
+        row = props.row,
+        validationState = props.validationState,
+        value = props.value;
+    var label = field.type === 'hidden' || field.label === '' ? null : React.createElement(react_bootstrap_1.ControlLabel, null, field.label);
+    return React.createElement(react_bootstrap_1.FormGroup, { key: field.id, controlId: field.id, validationState: validationState }, label, React.createElement(FieldComponent, { value: value, name: name, onChange: onChange, onBlur: onBlur, field: field, row: row }), React.createElement(react_bootstrap_1.HelpBlock, null, field.help), errors.map(function (error, i) {
+        return React.createElement(react_bootstrap_1.HelpBlock, { key: 'help-' + name + '-' + i }, error);
+    }));
+};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+var UiButtonGroup = function (_super) {
+    __extends(UiButtonGroup, _super);
+    function UiButtonGroup(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { value: '' };
+        return _this;
+    }
+    UiButtonGroup.prototype.buttons = function (field) {
+        var _this = this;
+        var _a = this.props,
+            value = _a.value,
+            name = _a.name;
+        return field.options.map(function (option, k) {
+            var fakeE = {
+                altKey: false,
+                target: { value: option.value }
+            };
+            var key = 'button-group-' + name + '-' + k;
+            var active = value === option.value;
+            var icon;
+            if (option.icon) {
+                var i = 'fa fa-' + option.icon;
+                icon = React.createElement("span", null, React.createElement("i", { className: i }), " ");
+            }
+            return React.createElement(react_bootstrap_1.Button, { key: key, onClick: function onClick(e) {
+                    return _this.handleChange(fakeE);
+                }, active: active }, icon, option.label);
+        });
+    };
+    UiButtonGroup.prototype.handleChange = function (e) {
+        var _a = this.props,
+            onChange = _a.onChange,
+            name = _a.name;
+        var target = e.target;
+        this.setState({ value: target.value });
+        onChange(name, target.value);
+    };
+    UiButtonGroup.prototype.render = function () {
+        var field = this.props.field;
+        return React.createElement("div", { className: "form-group has-feedback" }, React.createElement(react_bootstrap_1.ButtonGroup, null, this.buttons(field)));
+    };
+    return UiButtonGroup;
+}(react_1.Component);
+exports.default = UiButtonGroup;
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Modal = exports.Default = undefined;
+
+var _Default = __webpack_require__(43);
+
+var _Default2 = _interopRequireDefault(_Default);
+
+var _Modal = __webpack_require__(44);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Default = _Default2.default;
+exports.Modal = _Modal2.default;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+var UiFormLayoutDefault = function (_super) {
+    __extends(UiFormLayoutDefault, _super);
+    function UiFormLayoutDefault() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UiFormLayoutDefault.prototype.render = function () {
+        var alert = null;
+        var _a = this.props,
+            form = _a.form,
+            fields = _a.fields,
+            actions = _a.actions,
+            errors = _a.errors,
+            onSubmit = _a.onSubmit;
+        var allFields = Object.keys(fields).map(function (n) {
+            return fields[n];
+        });
+        if (errors.message) {
+            alert = React.createElement(react_bootstrap_1.Alert, { bsStyle: "danger" }, React.createElement("p", null, errors.message));
+        }
+        return React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-xs-6" }, React.createElement("h2", { className: "topBar" }, form.title), alert, React.createElement(react_bootstrap_1.Well, null, React.createElement("form", { onSubmit: onSubmit }, allFields, actions))));
+    };
+    return UiFormLayoutDefault;
+}(react_1.Component);
+exports.default = UiFormLayoutDefault;
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+var UiFormLayoutModal = function (_super) {
+    __extends(UiFormLayoutModal, _super);
+    function UiFormLayoutModal() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UiFormLayoutModal.prototype.errors = function () {
+        var alert = null;
+        var errors = this.props.errors;
+        if (errors.message) {
+            alert = React.createElement(react_bootstrap_1.Alert, { bsStyle: "danger" }, React.createElement("p", null, errors.message));
+        }
+        return alert;
+    };
+    UiFormLayoutModal.prototype.render = function () {
+        var _a = this.props,
+            form = _a.form,
+            fields = _a.fields,
+            actions = _a.actions;
+        var allFields = Object.keys(fields).map(function (n) {
+            return fields[n];
+        });
+        return React.createElement("div", null, React.createElement(react_bootstrap_1.Modal.Header, null, React.createElement(react_bootstrap_1.Modal.Title, { id: "add-modal-title" }, form.title)), React.createElement(react_bootstrap_1.Modal.Body, null, this.errors(), React.createElement("form", null, allFields)), React.createElement(react_bootstrap_1.Modal.Footer, null, actions));
+    };
+    return UiFormLayoutModal;
+}(react_1.Component);
+exports.default = UiFormLayoutModal;
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_1 = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+var Icon_1 = __webpack_require__(4);
+var Add = function (_super) {
+    __extends(Add, _super);
+    function Add() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Add.prototype.render = function () {
+        var showAddModal = this.props.showAddModal;
+        return React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
+                return showAddModal();
+            } }, React.createElement(Icon_1.default, { icon: "plus", label: "Add" }));
+    };
+    Add.defaultProps = {
+        showAddModal: function showAddModal() {
+            return null;
+        }
+    };
+    return Add;
+}(react_1.Component);
+exports.default = Add;
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_bootstrap_1 = __webpack_require__(2);
+var Icon_1 = __webpack_require__(4);
+var modal_1 = __webpack_require__(7);
+var Del = function Del(_a) {
+    var toggle = _a.toggle,
+        del = _a.del,
+        selected = _a.selected,
+        showModal = _a.showModal;
+    return React.createElement("span", null, React.createElement(react_bootstrap_1.Button, { onClick: function onClick() {
+            return open();
+        } }, React.createElement(Icon_1.default, { icon: "times", label: "Delete" })), React.createElement(react_bootstrap_1.Modal, { show: showModal, onHide: function onHide() {
+            return toggle(showModal);
+        }, "aria-labelledby": "del-modal-title" }, React.createElement(react_bootstrap_1.Modal.Header, { closeButton: true }, React.createElement(react_bootstrap_1.Modal.Title, { id: "del-modal-title" }, "Delete...")), React.createElement(react_bootstrap_1.Modal.Body, null, React.createElement("h4", null, "Do you want to delete ", selected.length, " records")), React.createElement(react_bootstrap_1.Modal.Footer, null, React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
+            return toggle(showModal);
+        } }, "Cancel"), React.createElement(react_bootstrap_1.Button, { onClick: function onClick(e) {
+            del(selected);
+            toggle(showModal);
+        }, bsStyle: "primary" }, "OK"))));
+};
+exports.Del = Del;
+exports.default = modal_1.default(Del);
 
 /***/ }),
 /* 47 */
@@ -9468,7 +9470,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(7);
+var deepEqual = __webpack_require__(8);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var react_bootstrap_1 = __webpack_require__(2);
@@ -10029,11 +10031,11 @@ exports.default = function (_a) {
 
 
 
-var emptyFunction = __webpack_require__(8);
-var invariant = __webpack_require__(9);
+var emptyFunction = __webpack_require__(9);
+var invariant = __webpack_require__(10);
 var warning = __webpack_require__(18);
 
-var ReactPropTypesSecret = __webpack_require__(10);
+var ReactPropTypesSecret = __webpack_require__(11);
 var checkPropTypes = __webpack_require__(64);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -10550,9 +10552,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(9);
+  var invariant = __webpack_require__(10);
   var warning = __webpack_require__(18);
-  var ReactPropTypesSecret = __webpack_require__(10);
+  var ReactPropTypesSecret = __webpack_require__(11);
   var loggedTypeFailures = {};
 }
 
@@ -10618,9 +10620,9 @@ module.exports = checkPropTypes;
 
 
 
-var emptyFunction = __webpack_require__(8);
-var invariant = __webpack_require__(9);
-var ReactPropTypesSecret = __webpack_require__(10);
+var emptyFunction = __webpack_require__(9);
+var invariant = __webpack_require__(10);
+var ReactPropTypesSecret = __webpack_require__(11);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -13731,7 +13733,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = __webpack_require__(7);
+var deepEqual = __webpack_require__(8);
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(1);
@@ -14502,7 +14504,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(1);
 var Icon_1 = __webpack_require__(4);
-var modal_1 = __webpack_require__(15);
+var modal_1 = __webpack_require__(7);
 var Del = function Del(_a) {
     var _toggle = _a.toggle,
         del = _a.del,
@@ -14768,7 +14770,7 @@ var __assign = undefined && undefined.__assign || Object.assign || function (t) 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
-var libs = __webpack_require__(13);
+var libs = __webpack_require__(14);
 var ListRow_1 = __webpack_require__(109);
 var layouts;
 var lib;

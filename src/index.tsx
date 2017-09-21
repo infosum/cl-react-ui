@@ -2,6 +2,7 @@
 // require('babel-register');
 import * as validations from 'validate-promise';
 import Icon from './components/Icon';
+import enhanceWithModal from './enhancers/modal';
 import Form from './form/Form';
 import * as ReactBootstrapFields from './libs/react-bootstrap/fields';
 import * as ReactBootstrapListActions from './libs/react-bootstrap/list/actions';
@@ -23,6 +24,7 @@ const listActions = {
 };
 
 export {
+  enhanceWithModal,
   Form,
   Icon,
   List,
