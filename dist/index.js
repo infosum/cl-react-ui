@@ -14360,6 +14360,7 @@ exports.default = function (_a) {
             color = _a.color,
             type = _a.type,
             label = _a.label,
+            size = _a.size,
             style = _a.style;
         var evnt;
         var handle;
@@ -14373,7 +14374,7 @@ exports.default = function (_a) {
                 return evnt(e, form);
             };
         }
-        return React.createElement(reactstrap_1.Button, { key: id, color: color, onClick: handle, style: (typeof style === "undefined" ? "undefined" : _typeof(style)) === 'object' ? style : {}, type: type ? type : 'button' }, label);
+        return React.createElement(reactstrap_1.Button, { key: id, color: color, onClick: handle, size: size, style: (typeof style === "undefined" ? "undefined" : _typeof(style)) === 'object' ? style : {}, type: type ? type : 'button' }, label);
     });
     return React.createElement("div", null, buttons);
 };
