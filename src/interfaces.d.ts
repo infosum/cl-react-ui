@@ -64,6 +64,7 @@ export interface IFieldConfig {
   options?: IFieldLookupOptions | IFieldOption[];
   placeholder?: string;
   pristine?: boolean;
+  size?: 'lg' | 'sm';
   type: string;
   vaidationState?: string;
   validate?: {

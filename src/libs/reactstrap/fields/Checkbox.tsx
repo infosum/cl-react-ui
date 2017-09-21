@@ -9,12 +9,13 @@ export default ({ value, name, onChange, field }: IFormField) => {
   } else {
     checked = (value === '1' || value === 'true');
   }
-  const { label } = field;
+  const { label, size } = field;
 
   return (<Label check>
     <Input
       type="checkbox"
       checked={checked}
+      size={size}
       value={'1'}
       onClick={(e) => {
         const target = e.target as HTMLInputElement;

@@ -3,13 +3,16 @@ import { Component } from 'react';
 import { Input } from 'reactstrap';
 import { IFormField } from '../../../interfaces';
 
-export default ({ value, name, onChange, onBlur, field }: IFormField) => {
-  const { placeholder } = field;
+const Text: React.SFC<IFormField> = ({ value, name, onChange, onBlur, field }) => {
+  const { placeholder, size } = field;
   return <Input
     type="text"
     value={value}
+    size={size}
     placeholder={placeholder}
     onBlur={() => onBlur(name)}
     onChange={(e) => onChange(name, e.target.value)}
   />;
 };
+
+export default Text;

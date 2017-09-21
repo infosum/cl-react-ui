@@ -20,21 +20,5 @@ describe('list.actions.Add', () => {
     it('shows a buton', () => {
       expect(component.find(Button)).to.have.length(1);
     });
-
-    it('opens', () => {
-      component.simulate('click', evnt);
-      expect(component.state().open).to.equal(true);
-    });
-  });
-
-  describe('invisible', () => {
-    beforeEach(() => {
-      component = shallow(<Add
-        showAddModal={open}></Add>);
-    });
-
-    it('does not show a buton', () => {
-      expect(component.type()).to.equal(null);
-    });
   });
 });

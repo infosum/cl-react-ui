@@ -4,9 +4,10 @@ import { Input } from 'reactstrap';
 import { IFormField } from '../../../interfaces';
 
 export default ({ value, name, onChange, onBlur, field }: IFormField) => {
-  const { placeholder } = field;
+  const { placeholder, size } = field;
   return <Input
     type="number"
+    size={size}
     value={value}
     placeholder={placeholder}
     onBlur={() => onBlur(name)}

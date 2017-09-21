@@ -44,7 +44,8 @@ class Lookup extends Component<FieldLookup, IState> {
    */
   public componentDidUpdate(prevProps) {
     const { name, onChange, row, field } = this.props;
-    const observe = field.options.observe;
+    const { options, size } = field;
+    const observe = options.observe;
     const isObserved = (value, index) => observe.indexOf(index) !== -1;
     if (!observe || observe.length === 0) {
       return;
@@ -64,13 +65,14 @@ class Lookup extends Component<FieldLookup, IState> {
     let group;
     this.groupedData = {};
     const { field, row } = this.props;
-    if (field.options.optGroup === undefined) {
+    const { options } = field;
+    if (options.optGroup === undefined) {
       group = '';
     } else {
-      group = field.options.optGroup;
+      group = options.optGroup;
     }
 
-    const storeData = await field.options.store(row, this.props);
+    const storeData = await options.store(row, this.props);
     storeData.forEach((data) => {
       const thisGroup = data[group];
       if (this.groupedData[thisGroup] === undefined) {
@@ -149,10 +151,13 @@ class Lookup extends Component<FieldLookup, IState> {
     }
 
     const opts = this.mapDataToOpts(this.state.storeData);
-    const { value, onBlur, name } = this.props;
+    const { value, onBlur, name, field } = this.props;
+    const { placeholder, size } = field;
 
     return (<Input type="select"
       value={value}
+      size={size}
+      placeholder={placeholder}
       onBlur={() => onBlur(name)}
       onChange={(e) => {
         this.handleChange(e);

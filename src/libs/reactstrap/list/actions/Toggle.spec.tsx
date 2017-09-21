@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'reactstrap';
+import Icon from '../../../../components/Icon';
 import Toggle from './Toggle';
 
 let component;
@@ -35,13 +36,9 @@ describe('list.actions.Toggle', () => {
     });
 
     it('has a star icon', () => {
-      expect(component.find('.fa-star')).to.have.length(1);
+      expect(component.find(Icon)).to.have.length(1);
     });
 
-    it('sets state on click', () => {
-      component.find(Button).first().simulate('click', evnt);
-      expect(component.state().admin).to.equal(true);
-    });
   });
 
 });

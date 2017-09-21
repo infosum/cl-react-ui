@@ -7,6 +7,8 @@ import config from './config';
 import { Icon, Form, List, ListFilters } from '../src';
 import { Container, Col, Modal, Row } from 'reactstrap';
 import ListStory from './ListStory';
+import TextFieldStory from './TextFieldStory';
+
 setAddon(JSXAddon);
 
 const stories = storiesOf('Icon', module);
@@ -37,4 +39,11 @@ listStories.add('list', () => {
       </Col>
     </Row>
   </Container>
+})
+
+const fieldStories = storiesOf('Fields', module);
+fieldStories.addDecorator(withKnobs);
+
+fieldStories.add('text', () => {
+  return <TextFieldStory />
 })

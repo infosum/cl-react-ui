@@ -138,6 +138,7 @@ describe('Form', () => {
   describe('render', () => {
     beforeEach(() => {
       component = shallow(<Form
+        title={() => 'title'}
         config={config}
         errors={{}}
         data={data}

@@ -4,7 +4,7 @@ import { Input, Label } from 'reactstrap';
 import { FieldRadio, IFieldOption } from '../../../interfaces';
 
 export default ({ field, value, onChange, onBlur, name }: FieldRadio) => {
-  let { options } = field;
+  let { options, size } = field;
 
   if (!Array.isArray(field.options)) {
     options = Object.keys(options).map((key) => (
@@ -21,6 +21,7 @@ export default ({ field, value, onChange, onBlur, name }: FieldRadio) => {
           key={k}
           name={name}
           defaultChecked={active}
+          size={size}
           value={option.value}
           onBlur={() => onBlur(name)}
           onClick={(e) => {

@@ -4,7 +4,7 @@ import { Input } from 'reactstrap';
 import { FieldSelect, IFieldOption } from '../../../interfaces';
 
 export default ({ field, value, onBlur, onChange, name }: FieldSelect) => {
-  const { options } = field;
+  const { options, size } = field;
   let opts;
   if (Array.isArray(options)) {
     opts = options.map((option: IFieldOption, k) =>
@@ -23,6 +23,7 @@ export default ({ field, value, onBlur, onChange, name }: FieldSelect) => {
 
   return (<Input
     type="select"
+    size={size}
     value={value}
     onBlur={() => onBlur(name)}
     onChange={(e) => {

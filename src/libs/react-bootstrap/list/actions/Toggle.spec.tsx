@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import Icon from '../../../../components/Icon';
 import Toggle from './Toggle';
 
 let component;
@@ -10,7 +11,6 @@ const update = () => {
   console.log('update');
 };
 const config = {
-  icon: 'fa fa-star',
   label: 'Admin',
   update: { admin: true },
 };
@@ -26,6 +26,7 @@ describe('list.actions.Toggle', () => {
     beforeEach(() => {
       component = shallow(<Toggle
         update={update}
+        icon="star"
         selected={[]}
         user={user}
         filter={(u, selected) => []}></Toggle>);
@@ -36,26 +37,8 @@ describe('list.actions.Toggle', () => {
     });
 
     it('has a star icon', () => {
-      expect(component.find('.fa-star')).to.have.length(1);
-    });
-
-    it('sets state on click', () => {
-      component.find(Button).first().simulate('click', evnt);
-      expect(component.state().admin).to.equal(true);
+      expect(component.find(Icon)).to.have.length(1);
     });
   });
 
-  describe('invisible', () => {
-    beforeEach(() => {
-      component = shallow(<Toggle
-        update={update}
-        selected={[]}
-        user={user}
-        filter={filter}></Toggle>);
-    });
-
-    it('does not show a buton', () => {
-      expect(component.type()).to.equal(null);
-    });
-  });
 });
