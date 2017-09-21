@@ -87,7 +87,7 @@ const config = {
       },
       select: {
         id: 'select',
-
+        size: 'sm',
         label: 'select',
         type: 'select',
         options: [
@@ -97,7 +97,7 @@ const config = {
       },
       label: {
         id: 'name',
-
+        size: 'sm',
         label: 'Name',
         type: 'text',
         help: 'A descriptive name for the drone',

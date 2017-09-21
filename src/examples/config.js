@@ -106,7 +106,7 @@ export default {
         id: 'signup-action-submit',
         type: 'submit',
         label: (row) => row.id === '' ? 'Create record' : 'Save record',
-        style: 'primary'
+        color: 'primary'
       },
       clear: {
         id: 'clear',

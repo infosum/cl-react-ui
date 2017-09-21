@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 export default ({ actions, form, onSubmit }) => {
   const buttons = Object.keys(actions)
     .map((k: string, index: number) => {
-      const { action, id, style, type, label } = actions[k];
+      const { action, id, color, style, type, label } = actions[k];
       let evnt;
       let handle;
 
@@ -19,7 +19,8 @@ export default ({ actions, form, onSubmit }) => {
 
       return (<Button
         key={id}
-        bsStyle={style}
+        bsStyle={color}
+        style={style}
         onClick={handle}
         type={type ? type : 'button'}>
         {label}
