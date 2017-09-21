@@ -8,6 +8,7 @@ import { Icon, Form, List, ListFilters } from '../src';
 import { Container, Col, Modal, Row } from 'reactstrap';
 import ListStory from './ListStory';
 import TextFieldStory from './TextFieldStory';
+import DeleteButtonStory from './DeleteButtonStory';
 
 setAddon(JSXAddon);
 
@@ -47,3 +48,9 @@ fieldStories.addDecorator(withKnobs);
 fieldStories.add('text', () => {
   return <TextFieldStory />
 })
+
+const listButtonStories = storiesOf('List Buttons', module)
+listButtonStories.addDecorator(withKnobs);
+listButtonStories.add('Delete', () => {
+  return <DeleteButtonStory />
+});

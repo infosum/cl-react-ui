@@ -14507,8 +14507,9 @@ var Del = function Del(_a) {
     var _toggle = _a.toggle,
         del = _a.del,
         selected = _a.selected,
+        size = _a.size,
         showModal = _a.showModal;
-    return React.createElement("span", null, React.createElement(reactstrap_1.Button, { onClick: function onClick() {
+    return React.createElement("span", null, React.createElement(reactstrap_1.Button, { size: size, onClick: function onClick() {
             return _toggle(showModal);
         } }, React.createElement(Icon_1.default, { icon: "times", label: "Delete" })), React.createElement(reactstrap_1.Modal, { isOpen: showModal, toggle: function toggle() {
             return _toggle(showModal);

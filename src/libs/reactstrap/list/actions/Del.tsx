@@ -9,12 +9,14 @@ import { IListRow, IUser } from '../../../../interfaces';
 interface IProps {
   del: (selected: IListRow[]) => void;
   selected: IListRow[];
+  size?: string;
   showModal: boolean;
   toggle: (showModal: boolean) => void;
 }
 
-const Del: React.SFC<IProps> = ({ toggle, del, selected, showModal }) => <span>
-  <Button onClick={() => toggle(showModal)} >
+const Del: React.SFC<IProps> = ({ toggle, del, selected, size, showModal }) => <span>
+  <Button size={size}
+    onClick={() => toggle(showModal)} >
     <Icon icon="times" label="Delete" />
   </Button>
   <Modal isOpen={showModal}
