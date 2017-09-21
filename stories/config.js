@@ -66,12 +66,15 @@ const config = {
         id: 'signup-action-submit',
         type: 'submit',
         label: (row) => row.id === '' ? 'Create record' : 'Save record',
-        style: 'primary',
+        color: 'primary',
       },
       clear: {
         id: 'clear',
         type: 'button',
         label: 'clear',
+        style: {
+          float: 'left',
+        },
         action: (form) => {
           console.log('this gives access to the form', form);
           form.reset();

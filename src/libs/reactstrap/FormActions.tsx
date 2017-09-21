@@ -22,7 +22,7 @@ export default ({ actions, onSubmit, form }) => {
         key={id}
         color={color}
         onClick={handle}
-        style={style}
+        style={typeof style === 'object' ? style : {}}
         type={type ? type : 'button'}>
         {label}
       </Button>);
