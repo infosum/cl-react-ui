@@ -7484,6 +7484,7 @@ exports.default = function (_a) {
         var _a = actions[k],
             action = _a.action,
             id = _a.id,
+            color = _a.color,
             style = _a.style,
             type = _a.type,
             label = _a.label;
@@ -7499,7 +7500,7 @@ exports.default = function (_a) {
                 return evnt(e, form);
             };
         }
-        return React.createElement(react_bootstrap_1.Button, { key: id, bsStyle: style, onClick: handle, type: type ? type : 'button' }, label);
+        return React.createElement(react_bootstrap_1.Button, { key: id, bsStyle: color, style: style, onClick: handle, type: type ? type : 'button' }, label);
     });
     return React.createElement("div", null, buttons);
 };
@@ -13639,8 +13640,9 @@ exports.default = function (_a) {
     } else {
         checked = value === '1' || value === 'true';
     }
-    var label = field.label;
-    return React.createElement(reactstrap_1.Label, { check: true }, React.createElement(reactstrap_1.Input, { type: "checkbox", checked: checked, value: '1', onClick: function onClick(e) {
+    var label = field.label,
+        size = field.size;
+    return React.createElement(reactstrap_1.Label, { check: true }, React.createElement(reactstrap_1.Input, { type: "checkbox", checked: checked, size: size, value: '1', onClick: function onClick(e) {
             var target = e.target;
             return onChange(name, target.checked);
         } }), ' ', label);
@@ -13662,8 +13664,9 @@ exports.default = function (_a) {
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    var placeholder = field.placeholder;
-    return React.createElement(reactstrap_1.Input, { type: "date", value: value, placeholder: placeholder, onBlur: function onBlur() {
+    var placeholder = field.placeholder,
+        size = field.size;
+    return React.createElement(reactstrap_1.Input, { type: "date", size: size, value: value, placeholder: placeholder, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
@@ -13686,8 +13689,9 @@ exports.default = function (_a) {
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    var placeholder = field.placeholder;
-    return React.createElement(reactstrap_1.Input, { type: "email", value: value, placeholder: placeholder, onBlur: function onBlur() {
+    var placeholder = field.placeholder,
+        size = field.size;
+    return React.createElement(reactstrap_1.Input, { type: "email", value: value, size: size, placeholder: placeholder, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
@@ -13985,7 +13989,9 @@ var Lookup = function (_super) {
             onChange = _a.onChange,
             row = _a.row,
             field = _a.field;
-        var observe = field.options.observe;
+        var options = field.options,
+            size = field.size;
+        var observe = options.observe;
         var isObserved = function isObserved(value, index) {
             return observe.indexOf(index) !== -1;
         };
@@ -14001,18 +14007,19 @@ var Lookup = function (_super) {
     Lookup.prototype.getStoreData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var group, _a, field, row, storeData;
+            var group, _a, field, row, options, storeData;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         this.groupedData = {};
                         _a = this.props, field = _a.field, row = _a.row;
-                        if (field.options.optGroup === undefined) {
+                        options = field.options;
+                        if (options.optGroup === undefined) {
                             group = '';
                         } else {
-                            group = field.options.optGroup;
+                            group = options.optGroup;
                         }
-                        return [4, field.options.store(row, this.props)];
+                        return [4, options.store(row, this.props)];
                     case 1:
                         storeData = _b.sent();
                         storeData.forEach(function (data) {
@@ -14074,8 +14081,11 @@ var Lookup = function (_super) {
         var _a = this.props,
             value = _a.value,
             _onBlur = _a.onBlur,
-            name = _a.name;
-        return React.createElement(reactstrap_1.Input, { type: "select", value: value, onBlur: function onBlur() {
+            name = _a.name,
+            field = _a.field;
+        var placeholder = field.placeholder,
+            size = field.size;
+        return React.createElement(reactstrap_1.Input, { type: "select", value: value, size: size, placeholder: placeholder, onBlur: function onBlur() {
                 return _onBlur(name);
             }, onChange: function onChange(e) {
                 _this.handleChange(e);
@@ -14101,8 +14111,9 @@ exports.default = function (_a) {
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    var placeholder = field.placeholder;
-    return React.createElement(reactstrap_1.Input, { type: "number", value: value, placeholder: placeholder, onBlur: function onBlur() {
+    var placeholder = field.placeholder,
+        size = field.size;
+    return React.createElement(reactstrap_1.Input, { type: "number", size: size, value: value, placeholder: placeholder, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
@@ -14125,8 +14136,9 @@ exports.default = function (_a) {
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    var placeholder = field.placeholder;
-    return React.createElement(reactstrap_1.Input, { type: "password", value: value, placeholder: placeholder, onBlur: function onBlur() {
+    var placeholder = field.placeholder,
+        size = field.size;
+    return React.createElement(reactstrap_1.Input, { type: "password", size: size, value: value, placeholder: placeholder, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
@@ -14149,7 +14161,8 @@ exports.default = function (_a) {
         onChange = _a.onChange,
         _onBlur = _a.onBlur,
         name = _a.name;
-    var options = field.options;
+    var options = field.options,
+        size = field.size;
     if (!Array.isArray(field.options)) {
         options = Object.keys(options).map(function (key) {
             return { value: key, label: options[key] };
@@ -14157,7 +14170,7 @@ exports.default = function (_a) {
     }
     var opts = options.map(function (option, k) {
         var active = option.value === value;
-        return React.createElement(reactstrap_1.Label, { check: true, key: k }, React.createElement(reactstrap_1.Input, { type: "radio", key: k, name: name, defaultChecked: active, value: option.value, onBlur: function onBlur() {
+        return React.createElement(reactstrap_1.Label, { check: true, key: k }, React.createElement(reactstrap_1.Input, { type: "radio", key: k, name: name, defaultChecked: active, size: size, value: option.value, onBlur: function onBlur() {
                 return _onBlur(name);
             }, onClick: function onClick(e) {
                 var target = e.target;
@@ -14183,7 +14196,8 @@ exports.default = function (_a) {
         _onBlur = _a.onBlur,
         _onChange = _a.onChange,
         name = _a.name;
-    var options = field.options;
+    var options = field.options,
+        size = field.size;
     var opts;
     if (Array.isArray(options)) {
         opts = options.map(function (option, k) {
@@ -14194,7 +14208,7 @@ exports.default = function (_a) {
             return React.createElement("option", { key: key, value: key }, options[key]);
         });
     }
-    return React.createElement(reactstrap_1.Input, { type: "select", value: value, onBlur: function onBlur() {
+    return React.createElement(reactstrap_1.Input, { type: "select", size: size, value: value, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             _onChange(name, e.target.value);
@@ -14211,19 +14225,21 @@ exports.default = function (_a) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(1);
-exports.default = function (_a) {
+var Text = function Text(_a) {
     var value = _a.value,
         name = _a.name,
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    var placeholder = field.placeholder;
-    return React.createElement(reactstrap_1.Input, { type: "text", value: value, placeholder: placeholder, onBlur: function onBlur() {
+    var placeholder = field.placeholder,
+        size = field.size;
+    return React.createElement(reactstrap_1.Input, { type: "text", value: value, size: size, placeholder: placeholder, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
         } });
 };
+exports.default = Text;
 
 /***/ }),
 /* 93 */
@@ -14241,7 +14257,9 @@ exports.default = function (_a) {
         _onChange = _a.onChange,
         _onBlur = _a.onBlur,
         field = _a.field;
-    return React.createElement(reactstrap_1.Input, { type: "textarea", value: value, placeholder: field.placeholder, onBlur: function onBlur() {
+    var size = field.size,
+        placeholder = field.placeholder;
+    return React.createElement(reactstrap_1.Input, { type: "textarea", size: size, placeholder: placeholder, value: value, onBlur: function onBlur() {
             return _onBlur(name);
         }, onChange: function onChange(e) {
             return _onChange(name, e.target.value);
@@ -14326,6 +14344,8 @@ exports.default = function (props) {
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var reactstrap_1 = __webpack_require__(1);
@@ -14337,9 +14357,10 @@ exports.default = function (_a) {
         var _a = actions[k],
             action = _a.action,
             id = _a.id,
-            style = _a.style,
+            color = _a.color,
             type = _a.type,
-            label = _a.label;
+            label = _a.label,
+            style = _a.style;
         var evnt;
         var handle;
         if (action) {
@@ -14352,7 +14373,7 @@ exports.default = function (_a) {
                 return evnt(e, form);
             };
         }
-        return React.createElement(reactstrap_1.Button, { key: id, color: style, onClick: handle, type: type ? type : 'button' }, label);
+        return React.createElement(reactstrap_1.Button, { key: id, color: color, onClick: handle, style: (typeof style === "undefined" ? "undefined" : _typeof(style)) === 'object' ? style : {}, type: type ? type : 'button' }, label);
     });
     return React.createElement("div", null, buttons);
 };
