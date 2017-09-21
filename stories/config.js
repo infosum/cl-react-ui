@@ -72,6 +72,7 @@ const config = {
         id: 'clear',
         type: 'button',
         label: 'clear',
+        size: 'sm',
         style: {
           float: 'left',
         },

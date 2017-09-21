@@ -5,7 +5,7 @@ export default ({ actions, onSubmit, form }) => {
 
   const buttons = Object.keys(actions)
     .map((k: string, index: number) => {
-      const { action, id, color, type, label, style } = actions[k];
+      const { action, id, color, type, label, size, style } = actions[k];
       let evnt;
       let handle;
 
@@ -22,6 +22,7 @@ export default ({ actions, onSubmit, form }) => {
         key={id}
         color={color}
         onClick={handle}
+        size={size}
         style={typeof style === 'object' ? style : {}}
         type={type ? type : 'button'}>
         {label}
