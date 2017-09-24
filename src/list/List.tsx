@@ -44,6 +44,7 @@ class UiList extends Component<IListProps, IState> {
     this.messages = config.messages;
     this.close = this.close.bind(this);
     this.filterRows = this.filterRows.bind(this);
+    this.clearSelected = this.clearSelected.bind(this);
     this.setLib(props);
     this.state = {
       allToggled: false,
@@ -365,6 +366,7 @@ class UiList extends Component<IListProps, IState> {
     };
     return <div>
       <ListLayout
+        clearSelected={this.clearSelected}
         showAddModal={this.showAddModal.bind(this)}
         data={data}
         listRow={(props) => {

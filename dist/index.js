@@ -14785,6 +14785,7 @@ var UiList = function (_super) {
         _this.messages = config.messages;
         _this.close = _this.close.bind(_this);
         _this.filterRows = _this.filterRows.bind(_this);
+        _this.clearSelected = _this.clearSelected.bind(_this);
         _this.setLib(props);
         _this.state = {
             allToggled: false,
@@ -15024,7 +15025,7 @@ var UiList = function (_super) {
             selected: selected.length === 0 ? {} : selected[0],
             showModal: showModal
         };
-        return React.createElement("div", null, React.createElement(ListLayout, __assign({ showAddModal: this.showAddModal.bind(this), data: data, listRow: function listRow(props) {
+        return React.createElement("div", null, React.createElement(ListLayout, __assign({ clearSelected: this.clearSelected, showAddModal: this.showAddModal.bind(this), data: data, listRow: function listRow(props) {
                 var rowSelected = selected;
                 var isSelected = _this.isSelected(props.row);
                 return React.createElement(ListRow_1.default, __assign({}, props, { key: props.row[pk], Checkbox: Checkbox, canSelect: _this.props.canSelect, selected: isSelected, view: config.view, columns: _this.columns, rowClick: _this.rowClick.bind(_this), selectRow: _this.selectRow.bind(_this), deselectRow: _this.deselectRow.bind(_this) }));
