@@ -7,26 +7,30 @@ var webpack = require('webpack'),
   plugins = [
     new webpack.NoEmitOnErrorsPlugin()
   ],
-  rules = [{
-    test: /\.ts(x?)$/,
-    exclude: /node_modules/,
-    use: [
-      {
-        loader: 'babel-loader'
-      },
-      {
-        loader: 'ts-loader'
-      }
-    ]
-  }, {
-    test: /\.js$/,
-    exclude: /node_modules/,
-    use: [
-      {
-        loader: 'babel-loader'
-      }
-    ]
-  }];
+  rules = [
+    {
+      test: /\.css$/, use: 'css-loader',
+    },
+    {
+      test: /\.ts(x?)$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: 'babel-loader'
+        },
+        {
+          loader: 'ts-loader'
+        }
+      ]
+    }, {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: 'babel-loader'
+        }
+      ]
+    }];
 
 module.exports = {
   devtool: 'cheap-module-source-map',
