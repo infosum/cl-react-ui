@@ -99,6 +99,15 @@ const config = {
           { value: '2', label: 'two' },
         ],
       },
+      reactSelect: {
+        id: 'select',
+        label: 'react select',
+        type: 'reactSelect',
+        options: [
+          { value: '1', label: 'one' },
+          { value: '2', label: 'two' },
+        ],
+      },
       label: {
         id: 'name',
         size: 'sm',

@@ -6,7 +6,7 @@ import * as filters from '../libs/reactstrap/list/filters';
 class ListFilters extends Component<IListFilterProps, any> {
 
   private onBlur(name, value) {
-    console.log('on Blur', name, value);
+    // console.log('on Blur', name, value);
   }
   public render() {
     const { config } = this.props;
