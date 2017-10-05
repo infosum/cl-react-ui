@@ -137,7 +137,7 @@ export interface IFormProps {
   errors?: IFormErrors;
   formUpdate: FormUpdate;
   layout?: string;
-  library?: 'reactstrap' | 'reactBootstrap';
+  library?: 'reactstrap';
   onSubmit: (e: MouseEvent, data: any) => void;
   title?: (row: IListRow) => string | string;
   visibility?: {
@@ -268,7 +268,7 @@ export interface ICrudConfig {
   messages?: { [key: string]: string };
   primary_key?: string;
   view: string;
-  lib: 'reactstrap' | 'reactBootstrap';
+  lib: 'reactstrap';
 }
 
 export interface IFormModalProps {

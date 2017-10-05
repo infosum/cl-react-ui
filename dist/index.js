@@ -9647,6 +9647,7 @@ var React = __webpack_require__(0);
 var react_1 = __webpack_require__(0);
 var validate_promise_1 = __webpack_require__(12);
 var libs = __webpack_require__(16);
+console.log('libs', libs);
 var lib;
 var fields;
 var FormControl;
@@ -9722,7 +9723,8 @@ var UiForm = function (_super) {
     UiForm.prototype.setLib = function (newProps) {
         var config = newProps.config,
             library = newProps.library;
-        var libType = config.lib || library || 'reactBootstrap';
+        var libType = config.lib || library || 'reactstrap';
+        console.log('libType', libType);
         lib = libs[libType];
         fields = lib.fields;
         layouts = lib.layouts;
@@ -16549,7 +16551,7 @@ var UiList = function (_super) {
     UiList.prototype.setLib = function (newProps) {
         var config = newProps.config,
             library = newProps.library;
-        var libType = config.lib || library || 'reactBootstrap';
+        var libType = config.lib || library || 'reactstrap';
         lib = libs[libType];
         layouts = lib.listLayouts;
         Checkbox = lib.Checkbox;

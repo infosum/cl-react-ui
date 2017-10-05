@@ -65,7 +65,7 @@ class UiList extends Component<IListProps, IState> {
    */
   private setLib(newProps) {
     const { config, library } = newProps;
-    const libType = config.lib || library || 'reactBootstrap';
+    const libType = config.lib || library || 'reactstrap';
     lib = libs[libType];
     layouts = lib.listLayouts;
     Checkbox = lib.Checkbox;

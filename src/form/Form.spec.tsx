@@ -95,7 +95,7 @@ const config: ICrudConfig = {
       },
     },
   },
-  lib: 'reactBootstrap',
+  lib: 'reactstrap',
   view: 'drone',
 };
 const data = {

@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import validate from 'validate-promise';
 import { IFieldConfig, IFormActionsConfig, IFormConfig, IFormErrors, IFormProps, IListRow, IUser } from '../interfaces';
 import * as libs from '../libs';
+console.log('libs', libs);
 
 let lib;
 let fields;
@@ -115,7 +116,8 @@ class UiForm extends Component<IFormProps, IState> {
    */
   private setLib(newProps) {
     const { config, library } = newProps;
-    const libType = config.lib || library || 'reactBootstrap';
+    const libType = config.lib || library || 'reactstrap';
+    console.log('libType', libType);
     lib = libs[libType];
     fields = lib.fields;
     layouts = lib.layouts;
