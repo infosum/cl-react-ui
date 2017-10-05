@@ -3,7 +3,7 @@ import { render, shallow } from 'enzyme';
 import * as React from 'react';
 import { ICrudConfig } from '../interfaces';
 import * as libs from '../libs';
-import FormLayoutDefault from '../libs/react-bootstrap/layouts/Default';
+import FormLayoutDefault from '../libs/reactstrap/layouts/Default';
 import Form from './Form';
 
 /* tslint:disable:object-literal-sort-keys */

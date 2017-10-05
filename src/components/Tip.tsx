@@ -1,19 +1,15 @@
 import * as React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { UncontrolledTooltip } from 'reactstrap';
 import { ITipProps } from '../interfaces';
 
 export default ({ children, config, row }: ITipProps) => {
-        const content = <div dangerouslySetInnerHTML={config.content(row)} />;
-        const trigger = config.trigger ? config.trigger : ['hover', 'focus'];
-        const id = 'tip-' + row.id;
-        const tooltip = (
-                <Tooltip id={id}>{content}</Tooltip>
-        );
+  const content = <div dangerouslySetInnerHTML={config.content(row)} />;
+  const id = 'tip-' + row.id;
 
-        return (
-                <OverlayTrigger placement={config.position}
-                        trigger={trigger} overlay={tooltip}>
-                        <div>{children}</div>
-                </OverlayTrigger>
-        );
+  return (
+    <span>
+      <span id={id}>{children}</span>
+      <UncontrolledTooltip placement={config.placement} target={id}>{content}</UncontrolledTooltip>
+    </span>
+  );
 };

@@ -8,6 +8,8 @@ import { Icon, Form, List, ListFilters } from '../src';
 import { Container, Col, Modal, Row } from 'reactstrap';
 import ListStory from './ListStory';
 import TextFieldStory from './TextFieldStory';
+import EmailFieldStory from './EmailFieldStory';
+import ReactSelectFieldStory from './ReactSelectFieldStory';
 import DeleteButtonStory from './DeleteButtonStory';
 
 setAddon(JSXAddon);
@@ -47,6 +49,14 @@ fieldStories.addDecorator(withKnobs);
 
 fieldStories.add('text', () => {
   return <TextFieldStory />
+})
+
+fieldStories.add('email', () => {
+  return <EmailFieldStory />
+})
+
+fieldStories.add('react-select', () => {
+  return <ReactSelectFieldStory />
 })
 
 const listButtonStories = storiesOf('List Buttons', module)

@@ -1,3 +1,5 @@
+import { UncontrolledProps as UncontrollerTipProps } from 'reactstrap/lib/Tooltip';
+
 export type TSortDirection = 'ASC' | 'DESC';
 export interface IUser {
   [key: string]: any;
@@ -8,14 +10,13 @@ export interface IListRow {
 }
 
 export interface ITipConfig {
-  position: string;
   content: (row: IListRow) => { __html: string };
   trigger?: string
 }
 
 export interface ITipProps {
   children?: any;
-  config: ITipConfig;
+  config: ITipConfig & UncontrollerTipProps;
   row: IListRow;
   icon?: string;
   color?: string;
@@ -242,7 +243,7 @@ export interface IListColumns {
     id?: string;
     label?: string;
     render?: (any) => JSX.Element;
-    tip?: ITipConfig;
+    tip?: ITipConfig & UncontrollerTipProps;
   };
 }
 

@@ -8,6 +8,7 @@ import Lookup from './Lookup';
 import Number from './Number';
 import Password from './Password';
 import Radiolist from './Radiolist';
+import ReactSelect from './ReactSelect';
 import Select from './Select';
 import Text from './Text';
 import Textarea from './Textarea';
@@ -23,6 +24,7 @@ export {
   Password,
   Grid,
   Radiolist,
+  ReactSelect,
   Select,
   Text,
   Textarea,

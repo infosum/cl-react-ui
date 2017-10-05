@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { IListRow, IListRowProps } from '../interfaces';
 import Tip from '../components/Tip';
+import { IListRow, IListRowProps } from '../interfaces';
 import ListCell from './ListCell';
 
 interface IState {
@@ -52,13 +52,14 @@ export default class ListRow extends Component<IListRowProps, IState> {
       if (th.render) {
         cell = <th.render column={columnName} row={row}
           rowClick={this.props.rowClick}
-          config={th.config} {...actions} />;
+          config={th.config} {...this.props} />;
       } else {
         cell = <ListCell key={'listcell-' + key}
           rowClick={this.props.rowClick}
-          data={row[columnName]} {...actions} />;
+          data={row[columnName]} {...this.props} />;
       }
       if (th.tip) {
+        th.tip.target = `cell-${columnName}-${key}`;
         cell = <Tip config={th.tip} row={row}>{cell}</Tip>;
       }
       return (<td onClick={onClick} key={th.id} className={th.class}>
